@@ -1,16 +1,16 @@
 {
-  "title": "Forward Widgets",
+  "title": "Ma's Widgets",
   "description": "Forward Official Widgets",
   "icon": "https://assets.vvebo.vip/scripts/icon.png",
   "widgets": [
     {
-      "id": "forward.tmdb",
-      "title": "TMDB",
-      "description": "获取 TMDB 的榜单数据",
+      "id": "Letterboxd",
+      "title": "Letterboxd片單-奧斯卡",
+      "description": "解析Letterboxd片单内的影片",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Forward",
-      "url": "https://assets.vvebo.vip/scripts/tmdb.js"
+      "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/Oscar.js"
     }
   ]
 }
