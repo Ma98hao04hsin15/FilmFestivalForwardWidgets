@@ -4,7 +4,7 @@ WidgetMetadata = {
   version: "1.0.3",
   requiredVersion: "0.0.1",
   description: "获取 TMDB 的出品公司数据",
-  author: "Forward",
+  author: "Ma",
   site: "https://github.com/Ma98hao04hsin/ForwardWidgets",
   modules: [
     {
