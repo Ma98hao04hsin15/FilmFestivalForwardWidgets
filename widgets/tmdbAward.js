@@ -4,7 +4,7 @@ WidgetMetadata = {
   version: "1.1.0",
   requiredVersion: "0.0.1",
   description: "获取 TMDB 的奖项数据",
-  author: "Forward",
+  author: "Ma",
   site: "https://github.com/InchStudio/ForwardWidgets",
   modules: [
     {
