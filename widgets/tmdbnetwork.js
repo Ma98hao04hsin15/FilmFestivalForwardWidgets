@@ -165,6 +165,26 @@ WidgetMetadata = {
               title: "Mango TV",
               value: "1631",
             },
+            {
+              title: "Zhejiang Television",
+              value: "989",
+            },
+            {
+              title: "Anhui Television",
+              value: "1161",
+            },
+            {
+              title: "Beijing Television",
+              value: "455",
+            },
+            {
+              title: "Migu Video",
+              value: "6357",
+            },
+            {
+              title: "Dragon Television",
+              value: "1056",
+            },
           ]
         },
         {
