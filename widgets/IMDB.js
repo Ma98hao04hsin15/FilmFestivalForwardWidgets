@@ -30,6 +30,7 @@ var WidgetMetadata = {
           placeholders: [
             { title: "时下热门电影", value: "https://www.imdb.com/chart/moviemeter/" },
             { title: "时下热门剧集", value: "https://www.imdb.com/chart/tvmeter/" },
+            { title: "2月串流平台上新預告", value: "https://www.imdb.com/list/ls4154318555/?ref_=uspf_t_28" },
           ],
         },
         {
