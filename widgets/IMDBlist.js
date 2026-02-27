@@ -20,7 +20,7 @@ var WidgetMetadata = {
           name: "list_url",
           title: "片单链接",
           type: "input",
-          description: "",
+          description: "IMDB 片单的完整链接，例如：https://www.imdb.com/list/ls591141212/",
           placeholders: [
             {
               title: "IMDB Top 250 电影",
@@ -201,11 +201,16 @@ async function loadImdbList(params = {}) {
     listUrl = "https://www.imdb.com" + (listUrl.startsWith("/") ? "" : "/") + listUrl;
   }
 
-  // 拼接分页参数（片单用 start，chart 无分页）
+  // 移除末尾已有的 start 参数（避免重复）
+  listUrl = listUrl.replace(/[?&]start=\d+/, "");
+
+  // IMDB 片单（/list/ls...）：每页 100 筆，start 从 1 开始
+  // IMDB chart（/chart/top/ 等）：一次性全部，无分页
   const isChart = listUrl.includes("/chart/");
   let pageUrl = listUrl;
-  if (!isChart && page > 1) {
-    const start = (page - 1) * 100;
+  if (!isChart) {
+    // page=1 → start=1，page=2 → start=101，page=3 → start=201 ...
+    const start = (page - 1) * 100 + 1;
     const separator = listUrl.includes("?") ? "&" : "?";
     pageUrl = `${listUrl}${separator}start=${start}`;
   }
@@ -273,8 +278,8 @@ async function searchImdb(params = {}) {
     throw new Error("请输入搜索关键词");
   }
 
-  const start = (page - 1) * 20;
-  let searchUrl = `https://www.imdb.com/search/title/?title=${encodeURIComponent(query)}&start=${start + 1}`;
+  const start = (page - 1) * 50 + 1;
+  let searchUrl = `https://www.imdb.com/search/title/?title=${encodeURIComponent(query)}&start=${start}`;
   if (type !== "all") {
     searchUrl += `&title_type=${encodeURIComponent(type)}`;
   }
