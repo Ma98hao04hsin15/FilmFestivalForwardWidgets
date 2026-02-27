@@ -1,11 +1,11 @@
 WidgetMetadata = {
   id: "tmdbcompany",
   title: "TMDB出品公司",
-  version: "1.0.3",
+  version: "1.0.1",
   requiredVersion: "0.0.1",
-  description: "获取 TMDB 的出品公司数据",
+  description: "获取 TMDB 出品公司的榜单数据",
   author: "Ma",
-  site: "https://github.com/Ma98hao04hsin/ForwardWidgets",
+  site: "https://github.com/Ma98hao04hsin15/ForwardWidgets",
   modules: [
     {
       id: "companies",
@@ -20,7 +20,7 @@ WidgetMetadata = {
             {
               title: "迪士尼",
               value: "2",
-            },  
+            },
             {
               title: "华纳兄弟",
               value: "174",
@@ -48,11 +48,11 @@ WidgetMetadata = {
             {
               title: "Marvel",
               value: "420",
-            },
+            },			
             {
               title: "Pixar",
               value: "3",
-            },            
+            },                  
             {
               title: "DreamWorks Animation",
               value: "521",
