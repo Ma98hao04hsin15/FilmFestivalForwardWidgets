@@ -1,340 +1,287 @@
-// IMDB 片单组件
+// =============UserScript=============
+// @name         IMDB 片单组件
+// @version      2.0.0
+// @description  抓取 IMDB 自定义片单、排行榜，支持分页
+// @author       Claude (参考 阿米诺斯 combined.js)
+// =============UserScript=============
+
 var WidgetMetadata = {
-  id: "imdb_list",
+  id: "imdb_list_widget",
   title: "IMDB 片单",
-  description: "抓取 IMDB 片单数据，支持自定义片单 URL",
+  description: "抓取 IMDB 片单、榜单数据，支持翻页。使用 LD+JSON 解析，每次全量加载后本地分页。",
   author: "Claude",
   site: "https://www.imdb.com",
-  version: "1.0.0",
+  version: "2.0.0",
   requiredVersion: "0.0.1",
-  detailCacheDuration: 3600,
+  detailCacheDuration: 60,
   modules: [
     {
-      title: "IMDB 片单",
-      description: "输入 IMDB 片单链接，抓取片单中的影片信息",
+      title: "IMDB 自定义片单",
+      description: "输入任意 IMDB 片单或榜单链接，如 https://www.imdb.com/list/ls591141212/",
       requiresWebView: false,
-      functionName: "loadImdbList",
+      functionName: "loadImdbCustomList",
       cacheDuration: 3600,
       params: [
         {
-          name: "list_url",
-          title: "片单链接",
+          name: "url",
+          title: "🔗 片单链接",
           type: "input",
-          description: "IMDB 片单的完整链接，例如：https://www.imdb.com/list/ls591141212/",
+          description: "输入 IMDB 片单完整链接，或 ls 开头的片单 ID",
           placeholders: [
-            {
-              title: "IMDB Top 250 电影",
-              value: "https://www.imdb.com/chart/top/",
-            },
-            {
-              title: "IMDB Top 250 电视",
-              value: "https://www.imdb.com/chart/toptv/",
-            },
-            {
-              title: "IMDB 票房冠军",
-              value: "https://www.imdb.com/chart/boxoffice/",
-            },
-            {
-              title: "IMDB 最受期待",
-              value: "https://www.imdb.com/chart/moviemeter/",
-            },
-            {
-              title: "Most popular TV shows",
-              value: "https://www.imdb.com/chart/tvmeter/?ref_=ls_nv_menu",
-            },
-            {
-              title: "Most popular Movie",
-              value: "https://www.imdb.com/chart/moviemeter/?ref_=chttvm_nv_menu",
-            },
+            { title: "时下热门电影", value: "https://www.imdb.com/chart/moviemeter/" },
+            { title: "时下热门剧集", value: "https://www.imdb.com/chart/tvmeter/" },
           ],
         },
         {
           name: "page",
           title: "页码",
           type: "page",
+        },
+        {
+          name: "limit",
+          title: "每页数量",
+          type: "constant",
+          value: "20",
         },
       ],
     },
     {
-      title: "IMDB 搜索",
-      description: "搜索 IMDB 上的影片或剧集",
+      title: "IMDB Top 250 电影",
+      description: "IMDB 用户评分最高的 250 部电影",
       requiresWebView: false,
-      functionName: "searchImdb",
-      cacheDuration: 3600,
+      functionName: "loadImdbTop250Movies",
+      cacheDuration: 86400,
       params: [
         {
-          name: "query",
-          title: "搜索关键词",
-          type: "input",
-          description: "输入影片或剧集名称",
-        },
-        {
-          name: "type",
-          title: "类型",
-          type: "enumeration",
-          enumOptions: [
-            { title: "全部", value: "all" },
-            { title: "电影", value: "movie" },
-            { title: "剧集", value: "tv series" },
-          ],
+          name: "url",
+          title: "🔗 列表地址",
+          type: "constant",
+          value: "https://www.imdb.com/chart/top/",
         },
         {
           name: "page",
           title: "页码",
           type: "page",
+        },
+        {
+          name: "limit",
+          title: "每页数量",
+          type: "constant",
+          value: "20",
+        },
+      ],
+    },
+    {
+      title: "IMDB Top 250 剧集",
+      description: "IMDB 用户评分最高的 250 部剧集",
+      requiresWebView: false,
+      functionName: "loadImdbTop250TV",
+      cacheDuration: 86400,
+      params: [
+        {
+          name: "url",
+          title: "🔗 列表地址",
+          type: "constant",
+          value: "https://www.imdb.com/chart/toptv/",
+        },
+        {
+          name: "page",
+          title: "页码",
+          type: "page",
+        },
+        {
+          name: "limit",
+          title: "每页数量",
+          type: "constant",
+          value: "20",
         },
       ],
     },
   ],
-  search: {
-    title: "搜索 IMDB",
-    functionName: "searchImdb",
-    params: [
-      {
-        name: "type",
-        title: "类型",
-        type: "enumeration",
-        value: "all",
-        enumOptions: [
-          { title: "全部", value: "all" },
-          { title: "电影", value: "movie" },
-          { title: "剧集", value: "tv series" },
-        ],
-      },
-    ],
-  },
 };
 
-// ─── 通用 headers ───────────────────────────────────────────────────────────────
-const HEADERS = {
+// ─── 通用 Headers ──────────────────────────────────────────────────────────────
+const IMDB_HEADERS = {
   "User-Agent":
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
-    "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-  "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-  Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+    "(KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+  "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
+  Referer: "https://www.imdb.com/",
 };
 
-// ─── 从 IMDB id 解析 TMDB 数据 ──────────────────────────────────────────────────
-async function fetchTmdbByImdbId(imdbId) {
-  try {
-    const res = await Widget.tmdb.get(`/find/${imdbId}`, {
-      params: {
-        external_source: "imdb_id",
-        language: "zh-CN",
-      },
-    });
-    if (!res) return null;
-
-    const movie = res.movie_results && res.movie_results[0];
-    const tv = res.tv_results && res.tv_results[0];
-    const item = movie || tv;
-    if (!item) return null;
-
-    const mediaType = movie ? "movie" : "tv";
-    return {
-      id: `${mediaType}.${item.id}`,
-      type: "tmdb",
-      mediaType,
-      title: item.title || item.name,
-      posterPath: item.poster_path
-        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-        : null,
-      backdropPath: item.backdrop_path
-        ? `https://image.tmdb.org/t/p/w780${item.backdrop_path}`
-        : null,
-      releaseDate: item.release_date || item.first_air_date,
-      rating: item.vote_average ? String(item.vote_average.toFixed(1)) : null,
-      description: item.overview,
-    };
-  } catch (e) {
-    console.error("fetchTmdbByImdbId 失败:", imdbId, e);
-    return null;
-  }
+// ─── 分页辅助 ──────────────────────────────────────────────────────────────────
+function calcPagination(params) {
+  const page = parseInt(params.page) || 1;
+  const limit = parseInt(params.limit) || 20;
+  const start = (page - 1) * limit;
+  return { page, limit, start };
 }
 
-// ─── 从 HTML 中提取单个列表项 ────────────────────────────────────────────────────
-function parseListItems($) {
-  const items = [];
+// ─── 规范化 URL ────────────────────────────────────────────────────────────────
+function normalizeImdbUrl(input) {
+  input = (input || "").trim();
+  // 纯 ls 片单 ID
+  if (/^ls\d+$/.test(input)) {
+    return `https://www.imdb.com/list/${input}/`;
+  }
+  // 已是完整 URL
+  if (input.startsWith("http")) {
+    return input;
+  }
+  // 相对路径
+  return "https://www.imdb.com" + (input.startsWith("/") ? "" : "/") + input;
+}
 
-  // IMDB 片单页面结构（/list/ls...）
-  $(".lister-item").each((i, el) => {
-    const $el = $(el);
-    const link = $el.find("h3.lister-item-header a").attr("href") || "";
-    const imdbId = (link.match(/\/title\/(tt\d+)/) || [])[1];
-    const title = $el.find("h3.lister-item-header a").text().trim();
-    const year = $el.find("h3.lister-item-header .lister-item-year").text().replace(/[()]/g, "").trim();
-    const rating = $el.find(".ipl-rating-star__rating").first().text().trim();
-    const description = $el.find(".lister-item-content p").last().text().trim();
-    const posterUrl = $el.find(".lister-item-image img").attr("loadlate") ||
-      $el.find(".lister-item-image img").attr("src") || "";
-
-    if (imdbId && title) {
-      items.push({ imdbId, title, year, rating, description, posterUrl });
-    }
-  });
-
-  // IMDB chart 页面结构（/chart/top/ 等）
-  if (items.length === 0) {
-    $(".ipc-metadata-list-summary-item, .cli-children").each((i, el) => {
-      const $el = $(el);
-      const link = $el.find("a.ipc-title-link-wrapper, a[href*='/title/tt']").first().attr("href") || "";
-      const imdbId = (link.match(/\/title\/(tt\d+)/) || [])[1];
-      const title =
-        $el.find(".ipc-title__text").text().replace(/^\d+\.\s*/, "").trim() ||
-        $el.find("h3.ipc-title__text").text().replace(/^\d+\.\s*/, "").trim();
-      const year = $el.find(".cli-title-metadata-item, .sc-f30335b4-4").first().text().trim();
-      const rating = $el.find(".ipc-rating-star--rating, .ratingGroup--imdb-rating").first().text().trim();
-      const posterUrl = $el.find("img.ipc-image").attr("src") || "";
-
-      if (imdbId && title) {
-        items.push({ imdbId, title, year, rating, description: "", posterUrl });
-      }
-    });
+// ─── 核心：从 IMDB 页面解析所有条目 ──────────────────────────────────────────
+// 策略1：解析 LD+JSON（结构化数据，最可靠）
+// 策略2：解析 __NEXT_DATA__ JSON（新版 IMDB 页面）
+// 策略3：CSS 选择器兜底
+async function fetchAllImdbItems(url) {
+  const response = await Widget.http.get(url, { headers: IMDB_HEADERS });
+  if (!response || !response.data) {
+    throw new Error("获取 IMDB 页面失败：" + url);
   }
 
+  const html = response.data;
+  const items = [];
+
+  // ── 策略 1：LD+JSON ──────────────────────────────────────────────────────────
+  const ldJsonMatch = html.match(
+    /<script type="application\/ld\+json">([\s\S]*?)<\/script>/
+  );
+  if (ldJsonMatch && ldJsonMatch[1]) {
+    try {
+      const json = JSON.parse(ldJsonMatch[1]);
+      if (json && json.itemListElement && Array.isArray(json.itemListElement)) {
+        for (const entry of json.itemListElement) {
+          const item = entry.item || entry;
+          const urlStr = item.url || "";
+          const idMatch = urlStr.match(/(tt\d+)/);
+          if (idMatch) {
+            items.push({
+              id: idMatch[1],
+              type: "imdb",
+              title: item.name || "Unknown Title",
+              coverUrl: item.image || undefined,
+            });
+          }
+        }
+        if (items.length > 0) {
+          console.log(`LD+JSON 解析到 ${items.length} 条`);
+          return items;
+        }
+      }
+    } catch (e) {
+      console.warn("LD+JSON 解析失败:", e.message);
+    }
+  }
+
+  // ── 策略 2：__NEXT_DATA__ JSON ───────────────────────────────────────────────
+  const nextDataMatch = html.match(
+    /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/
+  );
+  if (nextDataMatch && nextDataMatch[1]) {
+    try {
+      const nextData = JSON.parse(nextDataMatch[1]);
+      // 尝试从 pageProps 中找列表数据
+      const props = nextData?.props?.pageProps;
+      const listItems =
+        props?.listData?.items ||
+        props?.chartData?.data?.rankings ||
+        props?.mainColumnData?.listPage?.items?.edges ||
+        [];
+
+      for (const entry of listItems) {
+        // 不同字段名兼容
+        const node = entry.node || entry.item || entry;
+        const id =
+          node.id ||
+          (node.const && node.const.match?.(/tt\d+/)?.[0]) ||
+          "";
+        const title =
+          node.titleText?.text ||
+          node.title ||
+          node.primaryText?.text ||
+          "Unknown";
+        const posterUrl =
+          node.primaryImage?.url || node.image?.url || undefined;
+
+        if (id && /^tt\d+$/.test(id)) {
+          items.push({ id, type: "imdb", title, coverUrl: posterUrl });
+        }
+      }
+
+      if (items.length > 0) {
+        console.log(`__NEXT_DATA__ 解析到 ${items.length} 条`);
+        return items;
+      }
+    } catch (e) {
+      console.warn("__NEXT_DATA__ 解析失败:", e.message);
+    }
+  }
+
+  // ── 策略 3：CSS 选择器兜底 ───────────────────────────────────────────────────
+  const $ = Widget.html.load(html);
+
+  $("ul.ipc-metadata-list > li, .lister-list > tr, .ipc-metadata-list-summary-item").each((_, el) => {
+    const $el = $(el);
+
+    // 提取链接 → tt ID
+    const link =
+      $el.find("a.ipc-title-link-wrapper").first().attr("href") ||
+      $el.find("a[href*='/title/tt']").first().attr("href") ||
+      "";
+    const idMatch = link.match(/(tt\d+)/);
+    if (!idMatch) return;
+
+    const id = idMatch[1];
+
+    // 提取标题
+    const rawTitle =
+      $el.find(".ipc-title__text, .titleColumn a, h3.ipc-title__text").first().text().trim() ||
+      "Unknown";
+    const title = rawTitle.replace(/^\d+\.\s*/, ""); // 去序号
+
+    // 提取封面
+    const coverUrl =
+      $el.find("img.ipc-image, .ipc-poster img, .posterColumn img").attr("src") ||
+      $el.find("img").first().attr("src") ||
+      undefined;
+
+    items.push({ id, type: "imdb", title, coverUrl });
+  });
+
+  console.log(`CSS 选择器兜底解析到 ${items.length} 条`);
   return items;
 }
 
-// ─── 加载 IMDB 片单 ──────────────────────────────────────────────────────────────
-async function loadImdbList(params = {}) {
-  const page = parseInt(params.page) || 1;
-  let listUrl = (params.list_url || "").trim();
+// ─── 通用加载函数 ──────────────────────────────────────────────────────────────
+async function loadImdbItems(params) {
+  const rawUrl = params.url || "";
+  const url = normalizeImdbUrl(rawUrl);
+  const { start, limit } = calcPagination(params);
 
-  if (!listUrl) {
-    throw new Error("请填写 IMDB 片单链接");
-  }
+  const allItems = await fetchAllImdbItems(url);
+  const paged = allItems.slice(start, start + limit);
 
-  // 规范化 URL
-  if (!listUrl.startsWith("http")) {
-    listUrl = "https://www.imdb.com" + (listUrl.startsWith("/") ? "" : "/") + listUrl;
-  }
-
-  // 移除末尾已有的 start 参数（避免重复）
-  listUrl = listUrl.replace(/[?&]start=\d+/, "");
-
-  // IMDB 片单（/list/ls...）：每页 100 筆，start 从 1 开始
-  // IMDB chart（/chart/top/ 等）：一次性全部，无分页
-  const isChart = listUrl.includes("/chart/");
-  let pageUrl = listUrl;
-  if (!isChart) {
-    // page=1 → start=1，page=2 → start=101，page=3 → start=201 ...
-    const start = (page - 1) * 100 + 1;
-    const separator = listUrl.includes("?") ? "&" : "?";
-    pageUrl = `${listUrl}${separator}start=${start}`;
-  }
-
-  console.log("请求 URL:", pageUrl);
-
-  const response = await Widget.http.get(pageUrl, { headers: HEADERS });
-  if (!response || !response.data) {
-    throw new Error("获取页面数据失败");
-  }
-
-  const $ = Widget.html.load(response.data);
-  const rawItems = parseListItems($);
-
-  console.log("解析到条目数:", rawItems.length);
-
-  if (rawItems.length === 0) {
-    return [];
-  }
-
-  // 并发请求 TMDB 数据（最多 10 个并发）
-  const CONCURRENCY = 10;
-  const results = [];
-
-  for (let i = 0; i < rawItems.length; i += CONCURRENCY) {
-    const chunk = rawItems.slice(i, i + CONCURRENCY);
-    const chunkResults = await Promise.all(
-      chunk.map(async (item) => {
-        const tmdb = await fetchTmdbByImdbId(item.imdbId);
-        if (tmdb) {
-          return {
-            ...tmdb,
-            // 若 TMDB 没有海报，回退到 IMDB 海报
-            posterPath: tmdb.posterPath || item.posterUrl || null,
-            rating: tmdb.rating || item.rating || null,
-            description: tmdb.description || item.description || null,
-          };
-        }
-
-        // TMDB 查不到时，直接用 IMDB id 回退
-        return {
-          id: item.imdbId,
-          type: "imdb",
-          title: item.title,
-          posterPath: item.posterUrl || null,
-          releaseDate: item.year || null,
-          rating: item.rating || null,
-          description: item.description || null,
-        };
-      })
-    );
-    results.push(...chunkResults);
-  }
-
-  return results.filter(Boolean);
+  console.log(
+    `总条目 ${allItems.length}，第 ${params.page || 1} 页，返回 ${paged.length} 条`
+  );
+  return paged;
 }
 
-// ─── 搜索 IMDB ───────────────────────────────────────────────────────────────────
-async function searchImdb(params = {}) {
-  const query = (params.query || "").trim();
-  const type = params.type || "all";
-  const page = parseInt(params.page) || 1;
-
-  if (!query) {
-    throw new Error("请输入搜索关键词");
+// ─── 对外暴露的模块函数 ────────────────────────────────────────────────────────
+async function loadImdbCustomList(params = {}) {
+  if (!params.url || params.url.trim() === "") {
+    throw new Error("请填写 IMDB 片单链接或片单 ID（如 ls591141212）");
   }
+  return loadImdbItems(params);
+}
 
-  const start = (page - 1) * 50 + 1;
-  let searchUrl = `https://www.imdb.com/search/title/?title=${encodeURIComponent(query)}&start=${start}`;
-  if (type !== "all") {
-    searchUrl += `&title_type=${encodeURIComponent(type)}`;
-  }
+async function loadImdbTop250Movies(params = {}) {
+  return loadImdbItems(params);
+}
 
-  console.log("搜索 URL:", searchUrl);
-
-  const response = await Widget.http.get(searchUrl, { headers: HEADERS });
-  if (!response || !response.data) {
-    throw new Error("搜索失败");
-  }
-
-  const $ = Widget.html.load(response.data);
-  const rawItems = parseListItems($);
-
-  console.log("搜索结果数:", rawItems.length);
-
-  if (rawItems.length === 0) return [];
-
-  const CONCURRENCY = 10;
-  const results = [];
-
-  for (let i = 0; i < rawItems.length; i += CONCURRENCY) {
-    const chunk = rawItems.slice(i, i + CONCURRENCY);
-    const chunkResults = await Promise.all(
-      chunk.map(async (item) => {
-        const tmdb = await fetchTmdbByImdbId(item.imdbId);
-        if (tmdb) {
-          return {
-            ...tmdb,
-            posterPath: tmdb.posterPath || item.posterUrl || null,
-            rating: tmdb.rating || item.rating || null,
-            description: tmdb.description || item.description || null,
-          };
-        }
-        return {
-          id: item.imdbId,
-          type: "imdb",
-          title: item.title,
-          posterPath: item.posterUrl || null,
-          releaseDate: item.year || null,
-          rating: item.rating || null,
-          description: item.description || null,
-        };
-      })
-    );
-    results.push(...chunkResults);
-  }
-
-  return results.filter(Boolean);
+async function loadImdbTop250TV(params = {}) {
+  return loadImdbItems(params);
 }
