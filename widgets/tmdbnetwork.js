@@ -3,20 +3,20 @@ WidgetMetadata = {
   title: "TMDB播出平台",
   version: "1.0.3",
   requiredVersion: "0.0.1",
-  description: "获取 TMDB 的播出平台数据",
-  author: "Ma",
-  site: "https://github.com/Ma98hao04hsin/ForwardWidgets",
+  description: "获取 TMDB 播出平台的榜单数据",
+  author: "Forward",
+  site: "https://github.com/Ma98hao04hsin15/ForwardWidgets",
   modules: [
     {
-      id: "network",
+      id: "networks",
       title: "播出平台",
-      functionName: "network",
+      functionName: "networks",
       params: [
         {
-          name: "with_network",
+          name: "with_networks",
           title: "播出平台",
-          type: "enumeration",
-          enumOptions: [
+          type: "input",
+          placeholders: [
             {
               title: "Netflix",
               value: "213",
@@ -38,13 +38,9 @@ WidgetMetadata = {
               value: "453",
             },
             {
-              title: "Amazon Prime Video",
+              title: "Prime Video",
               value: "1024",
-            },
-            {
-              title: "Peacock",
-              value: "3353",
-            },
+            }, 
             {
               title: "Paramount+",
               value: "4330",
@@ -185,7 +181,7 @@ WidgetMetadata = {
               title: "Dragon Television",
               value: "1056",
             },
-          ]
+          ],
         },
         {
           name: "page",
@@ -198,8 +194,8 @@ WidgetMetadata = {
           type: "language",
           value: "zh-CN",
         },
-      ]
-    },
+      ],
+    }
   ],
 };
 
@@ -213,7 +209,23 @@ async function fetchData(api, params, forceMediaType) {
     }
 
     console.log(response);
-    const data = response.results;
+    let data = response.results;
+    
+    // 如果没有 forceMediaType，先过滤只保留 movie 和 tv 的数据
+    if (!forceMediaType) {
+      data = data.filter((item) => {
+        let mediaType = item.media_type;
+        if (mediaType == null) {
+          if (item.title) {
+            mediaType = "movie";
+          } else {
+            mediaType = "tv";
+          }
+        }
+        return mediaType === "movie" || mediaType === "tv";
+      });
+    }
+    
     const result = data.map((item) => {
       let mediaType = item.media_type;
       if (forceMediaType) {
@@ -224,7 +236,7 @@ async function fetchData(api, params, forceMediaType) {
         } else {
           mediaType = "tv";
         }
-      }
+      } 
       return {
         id: item.id,
         type: "tmdb",
@@ -235,8 +247,10 @@ async function fetchData(api, params, forceMediaType) {
         posterPath: item.poster_path,
         rating: item.vote_average,
         mediaType: mediaType,
+        genreTitle: genreTitleWith(item.genre_ids),
       };
     });
+    
     return result;
   } catch (error) {
     console.error("调用 TMDB API 失败:", error);
@@ -369,4 +383,58 @@ async function list(params = {}) {
   }
 
   return tmdbIds;
+}
+
+function genreTitleWith(genre_ids) {
+  if (!genre_ids) {
+    return "";
+  }
+  const genreDict = [
+    {"id": 10759, "name": "动作冒险"},
+    {"id": 16, "name": "动画"},
+    {"id": 35, "name": "喜剧"},
+    {"id": 80, "name": "犯罪"},
+    {"id": 99, "name": "纪录"},
+    {"id": 18, "name": "剧情"},
+    {"id": 10751, "name": "家庭"},
+    {"id": 10762, "name": "儿童"},
+    {"id": 9648, "name": "悬疑"},
+    {"id": 10763, "name": "新闻"},
+    {"id": 10764, "name": "真人秀"},
+    {"id": 10765, "name": "Sci-Fi & Fantasy"},
+    {"id": 10766, "name": "肥皂剧"},
+    {"id": 10767, "name": "脱口秀"},
+    {"id": 10768, "name": "War & Politics"},
+    {"id": 37, "name": "西部"},
+    {"id": 28, "name": "动作"},
+    {"id": 12, "name": "冒险"},
+    {"id": 16, "name": "动画"},
+    {"id": 35, "name": "喜剧"},
+    {"id": 80, "name": "犯罪"},
+    {"id": 99, "name": "纪录"},
+    {"id": 18, "name": "剧情"},
+    {"id": 10751, "name": "家庭"},
+    {"id": 14, "name": "奇幻"},
+    {"id": 36, "name": "历史"},
+    {"id": 27, "name": "恐怖"},
+    {"id": 10402, "name": "音乐"},
+    {"id": 9648, "name": "悬疑"},
+    {"id": 10749, "name": "爱情"},
+    {"id": 878, "name": "科幻"},
+    {"id": 10770, "name": "电视电影"},
+    {"id": 53, "name": "惊悚"},
+    {"id": 10752, "name": "战争"},
+    {"id": 37, "name": "西部"},
+  ]
+  if (genre_ids.length > 2) {
+    genre_ids = genre_ids.slice(0, 2);
+  }
+  const result = genre_ids.map(id => {
+    const genre = genreDict.find(genre => genre.id == id);
+    if (genre) {
+      return genre.name;
+    }
+    return null;
+  }).filter(genre => genre !== null).join(", ");
+  return result;
 }
