@@ -8,81 +8,13 @@
 WidgetMetadata = {
     id: "letterboxd_widget",
     title: "Letterboxd 片单",
-    description: "解析 Letterboxd 片单与热门电影，通过 IMDB ID 匹配影视数据",
+    description: "解析 Letterboxd 片单，通过 IMDB ID 匹配影视数据",
     author: "Claude",
     site: "https://letterboxd.com",
     version: "1.0.0",
     requiredVersion: "0.0.1",
     detailCacheDuration: 60,
     modules: [
-        // ── 热门电影 ──────────────────────────────────────────────────────────
-        {
-            title: "Letterboxd 热门电影",
-            description: "Letterboxd 热门电影榜单",
-            requiresWebView: false,
-            functionName: "loadPopularItems",
-            cacheDuration: 3600,
-            params: [
-                {
-                    name: "range",
-                    title: "时间范围",
-                    type: "enumeration",
-                    value: "this/week",
-                    enumOptions: [
-                        { title: "本周", value: "this/week" },
-                        { title: "本月", value: "this/month" },
-                        { title: "本年", value: "this/year" },
-                        { title: "所有时间", value: "alltime" },
-                    ],
-                },
-                {
-                    name: "genre",
-                    title: "类型",
-                    type: "enumeration",
-                    value: "default",
-                    enumOptions: [
-                        { title: "所有类型", value: "default" },
-                        { title: "动作", value: "action" },
-                        { title: "冒险", value: "adventure" },
-                        { title: "动画", value: "animation" },
-                        { title: "喜剧", value: "comedy" },
-                        { title: "犯罪", value: "crime" },
-                        { title: "纪录片", value: "documentary" },
-                        { title: "剧情", value: "drama" },
-                        { title: "家庭", value: "family" },
-                        { title: "奇幻", value: "fantasy" },
-                        { title: "历史", value: "history" },
-                        { title: "恐怖", value: "horror" },
-                        { title: "音乐", value: "music" },
-                        { title: "悬疑", value: "mystery" },
-                        { title: "爱情", value: "romance" },
-                        { title: "科幻", value: "science-fiction" },
-                        { title: "惊悚", value: "thriller" },
-                        { title: "战争", value: "war" },
-                        { title: "西部", value: "western" },
-                    ],
-                },
-                {
-                    name: "decade",
-                    title: "年代",
-                    type: "enumeration",
-                    value: "default",
-                    enumOptions: [
-                        { title: "所有年代", value: "default" },
-                        { title: "2020年代", value: "2020s" },
-                        { title: "2010年代", value: "2010s" },
-                        { title: "2000年代", value: "2000s" },
-                        { title: "1990年代", value: "1990s" },
-                        { title: "1980年代", value: "1980s" },
-                        { title: "1970年代", value: "1970s" },
-                        { title: "1960年代", value: "1960s" },
-                        { title: "1950年代", value: "1950s" },
-                    ],
-                },
-                { name: "page", title: "页码", type: "page" },
-            ],
-        },
-        // ── 自定义片单 ────────────────────────────────────────────────────────
         {
             title: "Letterboxd 自定义片单",
             description: "输入任意 Letterboxd 片单链接",
@@ -365,12 +297,6 @@ async function fetchFromLetterboxd(baseUrl, params) {
 }
 
 // ─── 模块函数 ─────────────────────────────────────────────────────────────────
-
-async function loadPopularItems(params = {}) {
-    const range = params.range || "this/week";
-    const baseUrl = `https://letterboxd.com/films/popular/${range}/`;
-    return fetchFromLetterboxd(baseUrl, params);
-}
 
 async function loadListItems(params = {}) {
     const inputType = params.input_type || "select";
