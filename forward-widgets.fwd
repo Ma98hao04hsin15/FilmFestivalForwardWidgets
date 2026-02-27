@@ -33,7 +33,7 @@
     {
       "id": "tmdbnetwork",
       "title": "TMDB播出平台",
-      "description": "获取 TMDB 的播出平台数据",
+      "description": "获取 TMDB 播出平台的榜单数据",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Ma",
