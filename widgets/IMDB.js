@@ -31,6 +31,11 @@ var WidgetMetadata = {
             { title: "时下热门电影", value: "https://www.imdb.com/chart/moviemeter/" },
             { title: "时下热门剧集", value: "https://www.imdb.com/chart/tvmeter/" },
             { title: "2月串流平台上新預告", value: "https://www.imdb.com/list/ls4154318555/?ref_=uspf_t_28" },
+            { title: "2月Netflix上新預告", value: "https://www.imdb.com/list/ls4159048857/?ref_=watch_wchgd_1_1_c_wtw_netflix_feb26_cta" },
+            { title: "2月PrimeVideo上新預告", value: "https://www.imdb.com/list/ls4159784385/?ref_=watch_wchgd_1_2_wtw_prime_feb26_i" },
+            { title: "2月HBOMax上新預告", value: "https://www.imdb.com/list/ls4159792578/?ref_=watch_wchgd_1_3_wtw_max_feb26_i" },
+            { title: "2月Hulu上新預告", value: "https://www.imdb.com/list/ls4159071027/?ref_=watch_wchgd_1_4_wtw_hulu_feb2026_i" },
+            { title: "2月Netflix上新預告", value: "https://www.imdb.com/list/ls4159048857/?ref_=watch_wchgd_1_1_c_wtw_netflix_feb26_cta" },            
           ],
         },
         {
