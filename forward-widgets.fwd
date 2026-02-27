@@ -24,7 +24,7 @@
     {
       "id": "tmdbcompany",
       "title": "TMDB出品公司",
-      "description": "获取 TMDB 的出品公司数据",
+      "description": "获取 TMDB 出品公司的数据",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Ma",
