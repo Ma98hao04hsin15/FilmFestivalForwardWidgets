@@ -4,7 +4,7 @@ WidgetMetadata = {
   version: "1.0.3",
   requiredVersion: "0.0.1",
   description: "获取 TMDB 播出平台的榜单数据",
-  author: "Forward",
+  author: "Ma",
   site: "https://github.com/Ma98hao04hsin15/ForwardWidgets",
   modules: [
     {
