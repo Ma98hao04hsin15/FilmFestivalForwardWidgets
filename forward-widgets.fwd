@@ -48,5 +48,14 @@
       "author": "Claude",
       "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/IMDB.js"
     },
+    {
+      "id": "letterboxd_widget",
+      "title": "Letterboxd 片单",
+      "description": "解析 Letterboxd 片单与热门电影，通过 IMDB ID 匹配影视数据",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.0",
+      "author": "Claude",
+      "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/Letterboxd.js"
+    },
   ]
 }
