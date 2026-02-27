@@ -43,7 +43,7 @@ var WidgetMetadata = {
               value: "https://www.imdb.com/chart/tvmeter/?ref_=ls_nv_menu",
             },
             {
-              title: "Most popular TV shows",
+              title: "Most popular Movie",
               value: "https://www.imdb.com/chart/moviemeter/?ref_=chttvm_nv_menu",
             },
           ],
