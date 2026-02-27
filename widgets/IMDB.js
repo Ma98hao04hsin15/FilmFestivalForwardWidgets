@@ -38,6 +38,14 @@ var WidgetMetadata = {
               title: "IMDB 最受期待",
               value: "https://www.imdb.com/chart/moviemeter/",
             },
+            {
+              title: "Most popular TV shows",
+              value: "https://www.imdb.com/chart/tvmeter/?ref_=ls_nv_menu",
+            },
+            {
+              title: "Most popular TV shows",
+              value: "https://www.imdb.com/chart/moviemeter/?ref_=chttvm_nv_menu",
+            },
           ],
         },
         {
