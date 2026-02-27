@@ -4,7 +4,7 @@ var WidgetMetadata = {
   title: "IMDB 片单",
   description: "抓取 IMDB 片单数据，支持自定义片单 URL",
   author: "Claude",
-  site: "https://www.imdb.com",
+  site: "https://github.com/Ma98hao04hsin15/ForwardWidgets",
   version: "1.0.0",
   requiredVersion: "0.0.1",
   detailCacheDuration: 3600,
