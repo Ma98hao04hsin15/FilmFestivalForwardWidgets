@@ -11,58 +11,6 @@ WidgetMetadata = {
   detailCacheDuration: 86400,
   modules: [
     {
-      title: "奥斯卡获奖影片",
-      description: "浏览历届奥斯卡金像奖获奖影片",
-      requiresWebView: false,
-      functionName: "loadAwardWinners",
-      cacheDuration: 86400,
-      params: [
-        {
-          name: "ceremony",
-          title: "届次",
-          type: "enumeration",
-          value: "97",
-          enumOptions: [
-            { title: "第97届 (2025)", value: "97" },
-            { title: "第96届 (2024)", value: "96" },
-            { title: "第95届 (2023)", value: "95" },
-            { title: "第94届 (2022)", value: "94" },
-            { title: "第93届 (2021)", value: "93" },
-            { title: "第92届 (2020)", value: "92" },
-            { title: "第91届 (2019)", value: "91" },
-            { title: "第90届 (2018)", value: "90" },
-            { title: "第89届 (2017)", value: "89" },
-            { title: "第88届 (2016)", value: "88" },
-            { title: "第87届 (2015)", value: "87" },
-            { title: "第86届 (2014)", value: "86" },
-            { title: "第85届 (2013)", value: "85" },
-            { title: "第84届 (2012)", value: "84" },
-            { title: "第83届 (2011)", value: "83" },
-            { title: "第82届 (2010)", value: "82" },
-            { title: "第81届 (2009)", value: "81" },
-            { title: "第80届 (2008)", value: "80" },
-            { title: "第79届 (2007)", value: "79" },
-            { title: "第78届 (2006)", value: "78" },
-            { title: "第77届 (2005)", value: "77" },
-            { title: "第76届 (2004)", value: "76" },
-            { title: "第75届 (2003)", value: "75" },
-            { title: "第74届 (2002)", value: "74" },
-            { title: "第73届 (2001)", value: "73" },
-          ],
-        },
-        {
-          name: "filter",
-          title: "筛选",
-          type: "enumeration",
-          value: "winner",
-          enumOptions: [
-            { title: "仅获奖", value: "winner" },
-            { title: "全部提名", value: "all" },
-          ],
-        },
-      ],
-    },
-    {
       title: "奥斯卡最佳影片",
       description: "历届奥斯卡最佳影片获奖作品",
       requiresWebView: false,
@@ -310,72 +258,7 @@ function toWidgetItems(items) {
 // ─── 模块函数 ────────────────────────────────────────────────────────────────
 
 /**
- * 获取指定届次的奥斯卡获奖/提名影片
- */
-async function loadAwardWinners(params = {}) {
-  const ceremony = params.ceremony || "97";
-  const filterMode = params.filter || "winner";
-
-  try {
-    const html = await fetchAwardPage(ceremony);
-    const parsed = parseAwardItems(html);
-
-    if (parsed.length === 0) {
-      console.warn("未解析到任何影片，尝试备用方案");
-      return await loadAwardWinnersViaApi(ceremony, filterMode);
-    }
-
-    const filtered =
-      filterMode === "winner" ? parsed.filter((i) => i.isWinner) : parsed;
-
-    const result = toWidgetItems(filtered);
-    console.log(`返回 ${result.length} 部影片`);
-    return result;
-  } catch (error) {
-    console.error("加载失败:", error);
-    // 降级：使用内置最佳影片数据
-    return await loadAwardWinnersViaApi(ceremony, filterMode);
-  }
-}
-
-/**
- * 备用方案：通过 TMDB API 搜索该届奥斯卡提名
- */
-async function loadAwardWinnersViaApi(ceremony, filterMode) {
-  console.log("使用备用方案，通过 TMDB API 获取数据");
-
-  // 根据届次推算颁奖年份（奥斯卡届次 = 年份 - 1928 + 1）
-  const awardYear = parseInt(ceremony) + 1928 - 1;
-
-  const results = await Widget.tmdb.get("/discover/movie", {
-    params: {
-      language: "zh-CN",
-      "primary_release_year": awardYear,
-      sort_by: "vote_average.desc",
-      "vote_count.gte": 100,
-    },
-  });
-
-  if (!results || !results.results) return [];
-
-  return results.results.slice(0, 20).map((item) => ({
-    id: String(item.id),
-    type: "tmdb",
-    mediaType: "movie",
-    title: item.title || item.original_title,
-    rating: item.vote_average ? String(item.vote_average.toFixed(1)) : undefined,
-    releaseDate: item.release_date,
-    posterPath: item.poster_path
-      ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-      : undefined,
-    backdropPath: item.backdrop_path
-      ? `https://image.tmdb.org/t/p/w1280${item.backdrop_path}`
-      : undefined,
-  }));
-}
-
-/**
- * 历届奥斯卡最佳影片
+ * 历届奥斯卡最佳影片獲獎作品
  */
 async function loadBestPictures(params = {}) {
   const page = parseInt(params.page) || 1;
@@ -427,7 +310,7 @@ async function loadBestPictures(params = {}) {
 }
 
 /**
- * 历届奥斯卡最佳影片提名
+ * 历届奥斯卡最佳影片提名作品
  */
 async function loadBestPicturesnominee(params = {}) {
   const page = parseInt(params.page) || 1;
