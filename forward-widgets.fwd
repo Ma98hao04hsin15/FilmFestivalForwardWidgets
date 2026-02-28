@@ -66,14 +66,5 @@
       "author": "Claude",
       "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/tmdb.js"
     },
-    {
-      "id": "person.movie.tmdb",
-      "title": "TMDB人物影视作品",
-      "description": "获取 TMDB 个人相关作品数据（支持地区筛选）",
-      "requiredVersion": "0.0.1",
-      "version": "1.0.0",
-      "author": "Claude",
-      "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/TMDBperson.js"
-    },
   ]
 }
