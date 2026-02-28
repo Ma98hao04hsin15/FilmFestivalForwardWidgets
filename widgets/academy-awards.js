@@ -1,278 +1,206 @@
-// ============================================================
-// 奥斯卡金像奖 ForwardWidget v2.0
-// 数据来源：TMDB Official API
-// 需要自备 TMDB API Read Access Token
-// 获取地址：https://www.themoviedb.org/settings/api
-// ============================================================
-
 var WidgetMetadata = {
-  id: "tmdb_academy_awards",
-  title: "奥斯卡金像奖",
-  description: "通过 TMDB API 浏览奥斯卡各届提名及获奖影片",
+  id: "academy_awards_tmdb",
+  title: "奧斯卡金像獎",
+  description: "從 TMDB 獲取第 83～97 屆奧斯卡入圍及獲獎電影列表",
   author: "ForwardWidget",
   site: "https://www.themoviedb.org",
-  version: "2.0.0",
+  version: "1.0.0",
   requiredVersion: "0.0.1",
-  detailCacheDuration: 3600,
+  detailCacheDuration: 86400,
   modules: [
     {
-      title: "奥斯卡年度影片",
-      description: "按届数浏览奥斯卡年度优质影片",
-      requiresWebView: false,
-      functionName: "getOscarMovies",
-      cacheDuration: 3600,
-      params: [
-        {
-          name: "api_token",
-          title: "TMDB API Token",
-          type: "input",
-          description: "填入你的 TMDB API Read Access Token（themoviedb.org/settings/api）",
-          value: "7d6f70d5503a84d6a3d3db3e6c4a3afe",
-        },
-        {
-          name: "ceremony",
-          title: "届数",
-          type: "enumeration",
-          description: "选择奥斯卡颁奖典礼届数",
-          value: "97",
-          enumOptions: [
-            { title: "第97届 (2025)", value: "97" },
-            { title: "第96届 (2024)", value: "96" },
-            { title: "第95届 (2023)", value: "95" },
-            { title: "第94届 (2022)", value: "94" },
-            { title: "第93届 (2021)", value: "93" },
-            { title: "第92届 (2020)", value: "92" },
-            { title: "第91届 (2019)", value: "91" },
-            { title: "第90届 (2018)", value: "90" },
-            { title: "第89届 (2017)", value: "89" },
-            { title: "第88届 (2016)", value: "88" },
-          ],
-        },
-        {
-          name: "sort",
-          title: "排序",
-          type: "enumeration",
-          value: "vote_average.desc",
-          enumOptions: [
-            { title: "评分最高", value: "vote_average.desc" },
-            { title: "最受欢迎", value: "popularity.desc" },
-            { title: "最新上映", value: "primary_release_date.desc" },
-          ],
-        },
-        {
-          name: "page",
-          title: "页码",
-          type: "page",
-          value: "1",
-        },
-      ],
-    },
-    {
-      title: "历届最佳影片",
-      description: "浏览所有奥斯卡历史最佳影片得主",
-      requiresWebView: false,
-      functionName: "getBestPictureWinners",
+      title: "獲獎 / 提名電影",
+      description: "選擇屆次與篩選條件，返回 TMDB 格式電影列表",
+      requiresWebView: true,
+      functionName: "getAwardMovies",
       cacheDuration: 86400,
       params: [
         {
-          name: "api_token",
-          title: "TMDB API Token",
-          type: "input",
-          description: "填入你的 TMDB API Read Access Token",
-          value: "",
+          name: "ceremony",
+          title: "屆次",
+          type: "enumeration",
+          description: "選擇奧斯卡屆次",
+          value: "97",
+          enumOptions: [
+            { title: "第 97 屆（2025）", value: "97" },
+            { title: "第 96 屆（2024）", value: "96" },
+            { title: "第 95 屆（2023）", value: "95" },
+            { title: "第 94 屆（2022）", value: "94" },
+            { title: "第 93 屆（2021）", value: "93" },
+            { title: "第 92 屆（2020）", value: "92" },
+            { title: "第 91 屆（2019）", value: "91" },
+            { title: "第 90 屆（2018）", value: "90" },
+            { title: "第 89 屆（2017）", value: "89" },
+            { title: "第 88 屆（2016）", value: "88" },
+            { title: "第 87 屆（2015）", value: "87" },
+            { title: "第 86 屆（2014）", value: "86" },
+            { title: "第 85 屆（2013）", value: "85" },
+            { title: "第 84 屆（2012）", value: "84" },
+            { title: "第 83 屆（2011）", value: "83" }
+          ]
         },
         {
-          name: "page",
-          title: "页码",
-          type: "page",
-          value: "1",
-        },
-      ],
-    },
-    {
-      title: "搜索影片",
-      description: "搜索电影并查看详情",
-      requiresWebView: false,
-      functionName: "searchMovies",
-      cacheDuration: 300,
-      params: [
-        {
-          name: "api_token",
-          title: "TMDB API Token",
-          type: "input",
-          description: "填入你的 TMDB API Read Access Token",
-          value: "",
-        },
-        {
-          name: "query",
-          title: "关键词",
-          type: "input",
-          value: "",
-          placeholders: [
-            { title: "Anora", value: "Anora" },
-            { title: "Oppenheimer", value: "Oppenheimer" },
-            { title: "Everything Everywhere", value: "Everything Everywhere All at Once" },
-          ],
-        },
-      ],
-    },
-  ],
+          name: "filter",
+          title: "篩選",
+          type: "enumeration",
+          description: "顯示全部提名或僅獲獎電影",
+          value: "winners",
+          enumOptions: [
+            { title: "僅獲獎", value: "winners" },
+            { title: "全部（含提名）", value: "all" }
+          ]
+        }
+      ]
+    }
+  ]
 };
 
-// -------------------------------------------------------
-// 工具：构建 TMDB API 请求头
-// -------------------------------------------------------
-function buildHeaders(token) {
-  if (!token || token.trim() === "") {
-    throw new Error(
-      "请先填写 TMDB API Token\n获取地址：https://www.themoviedb.org/settings/api"
-    );
-  }
-  return {
-    Authorization: `Bearer ${token.trim()}`,
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  };
-}
-
-// -------------------------------------------------------
-// 工具：届数 → 候选影片的上映年份区间
-// 奥斯卡通常于每年 1-3 月举行，评选上一年度影片
-// 第97届(2025年举行) → 评选 2024 年影片
-// -------------------------------------------------------
-function getCeremonyYearRange(ceremony) {
-  const num = parseInt(ceremony, 10);
-  // 第1届=1929年举行，评选1927-1928年影片
-  // 简化：第N届 ≈ 评选 (1928 + N - 2) 年的影片
-  const filmYear = 1926 + num;
-  return {
-    from: `${filmYear}-01-01`,
-    to: `${filmYear}-12-31`,
-  };
-}
-
-// -------------------------------------------------------
-// 工具：TMDB movie 对象 → ForwardWidget 格式
-// -------------------------------------------------------
-function formatMovie(movie, label) {
-  const title = movie.title || movie.name || "";
-  const releaseDate = movie.release_date || movie.first_air_date || "";
-  const posterPath = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
-    : "";
-  const backdropPath = movie.backdrop_path
-    ? `https://image.tmdb.org/t/p/w780${movie.backdrop_path}`
-    : "";
-  const rating = movie.vote_average
-    ? String(Number(movie.vote_average).toFixed(1))
-    : "";
-
-  return {
-    id: `movie.${movie.id}`,
-    type: "tmdb",
-    title: title,
-    posterPath: posterPath,
-    backdropPath: backdropPath,
-    releaseDate: releaseDate,
-    mediaType: "movie",
-    rating: rating,
-    genreTitle: label || "",
-    description: movie.overview || "",
-    link: `https://www.themoviedb.org/movie/${movie.id}`,
-  };
-}
-
-// -------------------------------------------------------
-// 模块1：按届数获取年度优质影片
-// -------------------------------------------------------
-async function getOscarMovies(params = {}) {
-  const token = params.api_token || "";
+async function getAwardMovies(params = {}) {
   const ceremony = params.ceremony || "97";
-  const sort = params.sort || "vote_average.desc";
-  const page = params.page || "1";
+  const filter = params.filter || "winners";
 
-  const headers = buildHeaders(token);
-  const { from, to } = getCeremonyYearRange(ceremony);
+  const url = `https://www.themoviedb.org/award/1-academy-awards/ceremony/${ceremony}?language=zh-TW`;
 
-  const url =
-    `https://api.themoviedb.org/3/discover/movie` +
-    `?language=zh-CN` +
-    `&sort_by=${sort}` +
-    `&vote_count.gte=200` +
-    `&vote_average.gte=7.0` +
-    `&primary_release_date.gte=${from}` +
-    `&primary_release_date.lte=${to}` +
-    `&page=${page}`;
-
-  const response = await Widget.http.get(url, { headers });
-
-  if (!response || !response.data || !response.data.results) {
-    throw new Error("TMDB API 请求失败，请检查 Token 是否正确");
+  let response;
+  try {
+    response = await Widget.http.get(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
+        "Accept": "text/html,application/xhtml+xml,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+      }
+    });
+  } catch (error) {
+    console.error("請求失敗:", error);
+    throw new Error("無法載入 TMDB 頁面，請稍後再試");
   }
 
-  const results = response.data.results;
-  if (!results.length) {
-    throw new Error(`第 ${ceremony} 届奥斯卡年度暂无数据`);
+  const $ = Widget.html.load(response.data);
+
+  // 用來去重：movieId -> item
+  const movieMap = {};
+
+  // TMDB award 頁面結構：
+  // 每個 award category 為 .award_category
+  // 每個提名項目為 .award_item
+  // 獲獎項目帶有 .winner class
+  // 電影連結為 a[href*="/movie/"]，帶有 data-id 或從 href 提取 id
+
+  // 解析每個獎項分類
+  $(".award_category").each((i, category) => {
+    $(category).find(".award_item").each((j, item) => {
+      const isWinner = $(item).hasClass("winner");
+
+      // 篩選邏輯
+      if (filter === "winners" && !isWinner) return;
+
+      // 找到電影連結
+      const movieLink = $(item).find("a[href*='/movie/']").first();
+      if (!movieLink.length) return;
+
+      const href = movieLink.attr("href") || "";
+      // href 格式: /movie/12345-movie-title 或 /movie/12345
+      const movieIdMatch = href.match(/\/movie\/(\d+)/);
+      if (!movieIdMatch) return;
+
+      const movieId = movieIdMatch[1];
+
+      // 避免重複加入相同電影（多個獎項提名同一部片）
+      if (movieMap[movieId]) {
+        // 若之前是提名、現在是獲獎，升級為獲獎
+        if (isWinner) {
+          movieMap[movieId]._isWinner = true;
+        }
+        return;
+      }
+
+      // 解析電影資訊
+      const title =
+        $(item).find(".title").first().text().trim() ||
+        $(item).find("h2").first().text().trim() ||
+        movieLink.attr("title") ||
+        movieLink.text().trim();
+
+      const posterImg = $(item).find("img").first();
+      let posterPath = posterImg.attr("src") || posterImg.attr("data-src") || "";
+      // 從 TMDB 縮略圖 URL 提取 poster path
+      // 例如 https://www.themoviedb.org/t/p/w94_and_h141_bestv2/abc123.jpg
+      const posterMatch = posterPath.match(/\/t\/p\/[^/]+(\/.+)$/);
+      if (posterMatch) {
+        posterPath = posterMatch[1];
+      }
+
+      const releaseYear = $(item).find(".release_date, .year").first().text().trim();
+
+      movieMap[movieId] = {
+        id: `movie.${movieId}`,
+        type: "tmdb",
+        mediaType: "movie",
+        title: title,
+        posterPath: posterPath || undefined,
+        releaseDate: releaseYear || undefined,
+        _isWinner: isWinner,
+        _href: href
+      };
+    });
+  });
+
+  // 若用 .award_category 沒取到，嘗試備用 selector
+  if (Object.keys(movieMap).length === 0) {
+    // 備用方案：直接找所有帶 /movie/ 的卡片連結
+    $("a[href*='/movie/']").each((i, el) => {
+      const href = $(el).attr("href") || "";
+      const movieIdMatch = href.match(/\/movie\/(\d+)/);
+      if (!movieIdMatch) return;
+
+      const movieId = movieIdMatch[1];
+      if (movieMap[movieId]) return;
+
+      // 找最近的容器確認是否為獲獎
+      const container = $(el).closest("li, .item, .card, article");
+      const isWinner = container.hasClass("winner") || container.find(".winner_icon, .award_winner").length > 0;
+
+      if (filter === "winners" && !isWinner) return;
+
+      const title =
+        $(el).attr("title") ||
+        container.find("h2, h3, .title").first().text().trim() ||
+        $(el).text().trim();
+
+      if (!title) return;
+
+      const posterImg = container.find("img").first();
+      let posterPath = posterImg.attr("src") || posterImg.attr("data-src") || "";
+      const posterMatch = posterPath.match(/\/t\/p\/[^/]+(\/.+)$/);
+      if (posterMatch) posterPath = posterMatch[1];
+
+      movieMap[movieId] = {
+        id: `movie.${movieId}`,
+        type: "tmdb",
+        mediaType: "movie",
+        title: title,
+        posterPath: posterPath || undefined,
+        _isWinner: isWinner
+      };
+    });
   }
 
-  const label = `第${ceremony}届奥斯卡年度`;
-  return results.map((m) => formatMovie(m, label));
-}
+  const results = Object.values(movieMap);
 
-// -------------------------------------------------------
-// 模块2：历届最佳影片得主
-// 使用 TMDB 公开 List ID=28（Best Picture Winners）
-// -------------------------------------------------------
-async function getBestPictureWinners(params = {}) {
-  const token = params.api_token || "";
-  const page = params.page || "1";
-
-  const headers = buildHeaders(token);
-
-  // TMDB List API
-  const url = `https://api.themoviedb.org/3/list/28?language=zh-CN&page=${page}`;
-  const response = await Widget.http.get(url, { headers });
-
-  if (!response || !response.data) {
-    throw new Error("无法获取最佳影片列表");
+  if (results.length === 0) {
+    throw new Error("未能解析到電影資料，頁面結構可能已更新");
   }
 
-  const items = response.data.items || [];
-  if (!items.length) {
-    throw new Error("列表为空或 Token 无效");
-  }
+  // 排序：獲獎在前，提名在後
+  results.sort((a, b) => {
+    if (a._isWinner && !b._isWinner) return -1;
+    if (!a._isWinner && b._isWinner) return 1;
+    return 0;
+  });
 
-  return items.map((m) => formatMovie(m, "🏆 最佳影片"));
-}
-
-// -------------------------------------------------------
-// 模块3：搜索
-// -------------------------------------------------------
-async function searchMovies(params = {}) {
-  const token = params.api_token || "";
-  const query = (params.query || "").trim();
-
-  if (!query) throw new Error("请输入搜索关键词");
-
-  const headers = buildHeaders(token);
-
-  const url =
-    `https://api.themoviedb.org/3/search/movie` +
-    `?query=${encodeURIComponent(query)}` +
-    `&language=zh-CN` +
-    `&include_adult=false` +
-    `&page=1`;
-
-  const response = await Widget.http.get(url, { headers });
-
-  if (!response || !response.data || !response.data.results) {
-    throw new Error("搜索失败，请检查 Token");
-  }
-
-  const results = response.data.results;
-  if (!results.length) {
-    throw new Error(`未找到"${query}"相关影片`);
-  }
-
-  return results.map((m) => formatMovie(m, m.vote_average >= 7 ? "⭐ 高分" : "电影"));
+  // 清理內部欄位後返回
+  return results.map(({ _isWinner, _href, ...item }) => ({
+    ...item,
+    description: _isWinner ? "🏆 獲獎" : "提名"
+  }));
 }
