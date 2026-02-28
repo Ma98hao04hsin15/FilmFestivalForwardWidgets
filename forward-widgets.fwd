@@ -13,9 +13,9 @@
       "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/Oscar.js"
     },
     {
-      "id": "tmdbAwards",
-      "title": "TMDB獎項",
-      "description": "TMDB獎項",
+      "id": "oscars",
+      "title": "oscars靜態模塊",
+      "description": "TMDB奥斯卡金像奖提名及获奖影片",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Ma",
