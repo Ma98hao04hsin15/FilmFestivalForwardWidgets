@@ -281,7 +281,7 @@ async function getOscars97(params = {}) {
     const category = params.category || "oscars";
 	
     switch (category) {
-		case "oscars":
+		case "all":
             return Oscars97;
 			
         case "winner":
