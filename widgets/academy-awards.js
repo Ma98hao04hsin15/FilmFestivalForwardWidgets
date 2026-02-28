@@ -98,20 +98,6 @@ const BEST_PICTURES = [
   { id: "376867", year: 2017, title: "Moonlight", ceremony: 89 },
   { id: "314365", year: 2016, title: "Spotlight", ceremony: 88 },
   { id: "194662", year: 2015, title: "Birdman", ceremony: 87 },
- /** { id: "76203", year: 2014, title: "12 Years a Slave", ceremony: 86 },*/
- /** { id: "68734", year: 2013, title: "Argo", ceremony: 85 },*/
- /**  { id: "74643", year: 2012, title: "The Artist", ceremony: 84 },*/
- /**  { id: "45269", year: 2011, title: "The King's Speech", ceremony: 83 },*/
- /** { id: "12162", year: 2010, title: "The Hurt Locker", ceremony: 82 },*/
- /** { id: "12405", year: 2009, title: "Slumdog Millionaire", ceremony: 81 },*/
- /** { id: "6977", year: 2008, title: "No Country for Old Men", ceremony: 80 },*/
- /** { id: "1640", year: 2007, title: "The Departed", ceremony: 79 },*/
- /** { id: "1725", year: 2006, title: "Crash", ceremony: 78 },*/
- /** { id: "70", year: 2005, title: "Million Dollar Baby", ceremony: 77 },*/
- /** { id: "122", year: 2004, title: "The Lord of the Rings: The Return of the King", ceremony: 76 },*/
- /** { id: "1574", year: 2003, title: "Chicago", ceremony: 75 },*/
- /** { id: "453", year: 2002, title: "A Beautiful Mind", ceremony: 74 },*/
- /** { id: "98", year: 2001, title: "Gladiator", ceremony: 73 }*/
 ];
 // ─── 工具函数 ────────────────────────────────────────────────────────────────
 
