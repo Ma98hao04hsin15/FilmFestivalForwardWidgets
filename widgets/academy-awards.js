@@ -98,6 +98,7 @@ const BEST_PICTURES = [
   { id: "376867", year: 2017, title: "Moonlight", ceremony: 89 },
   { id: "314365", year: 2016, title: "Spotlight", ceremony: 88 },
   { id: "194662", year: 2015, title: "Birdman", ceremony: 87 },
+  { id: "76203", year: 2014, title: "12 Years a Slave", ceremony: 86 },
 ];
 // ─── 工具函数 ────────────────────────────────────────────────────────────────
 
