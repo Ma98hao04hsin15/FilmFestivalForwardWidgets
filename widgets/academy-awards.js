@@ -7,10 +7,10 @@
 
 WidgetMetadata = {
     id: "oscars",
-    title: "第97届奥斯卡金像奖",
+    title: "oscars靜態模塊",
     version: "1.0.0",
     requiredVersion: "0.0.1",
-    description: "第97届奥斯卡金像奖（2025）提名及获奖影片，数据来源：TMDB",
+    description: "TMDB奥斯卡金像奖提名及获奖影片",
     author: "ForwardWidget",
     modules: [
         {
