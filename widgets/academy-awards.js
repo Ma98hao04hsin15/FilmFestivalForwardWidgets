@@ -11,7 +11,7 @@ WidgetMetadata = {
   detailCacheDuration: 86400,
   modules: [
     {
-      title: "奥斯卡最佳影片",
+      title: "🏆歷屆奧斯卡最佳影片獲獎作品",
       description: "历届奥斯卡最佳影片获奖作品",
       requiresWebView: false,
       functionName: "loadBestPictures",
@@ -25,7 +25,7 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "奥斯卡最佳影片(提名)",
+      title: "🎨歷屆奧斯卡最佳影片提名作品",
       description: "历届奥斯卡最佳影片获奖作品",
       requiresWebView: false,
       functionName: "loadBestPicturesnominee",
