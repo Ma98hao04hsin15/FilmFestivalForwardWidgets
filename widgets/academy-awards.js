@@ -1,13 +1,15 @@
-var WidgetMetadata = {
-  id: "academy_awards_tmdb",
-  title: "奧斯卡金像獎",
-  description: "從 TMDB 獲取第 83～97 屆奧斯卡入圍及獲獎電影列表",
-  author: "ForwardWidget",
-  site: "https://www.themoviedb.org",
-  version: "1.0.0",
+WidgetMetadata = {
+  id: "tmdbAwards",
+  title: "TMDB獎項",
+  description: "TMDB獎項",
+  author: "Ma",
+  site: "https://github.com/quantumultxx/ForwardWidgets",
+  version: "1.3.1",
   requiredVersion: "0.0.1",
-  detailCacheDuration: 86400,
+  detailCacheDuration: 60,
   modules: [
+    // =============TMDB模块=============
+    // --- 当前与趋势模块 ---
     {
       title: "獲獎 / 提名電影",
       description: "選擇屆次與篩選條件，返回 TMDB 格式電影列表",
@@ -24,19 +26,6 @@ var WidgetMetadata = {
           enumOptions: [
             { title: "第 97 屆（2025）", value: "97" },
             { title: "第 96 屆（2024）", value: "96" },
-            { title: "第 95 屆（2023）", value: "95" },
-            { title: "第 94 屆（2022）", value: "94" },
-            { title: "第 93 屆（2021）", value: "93" },
-            { title: "第 92 屆（2020）", value: "92" },
-            { title: "第 91 屆（2019）", value: "91" },
-            { title: "第 90 屆（2018）", value: "90" },
-            { title: "第 89 屆（2017）", value: "89" },
-            { title: "第 88 屆（2016）", value: "88" },
-            { title: "第 87 屆（2015）", value: "87" },
-            { title: "第 86 屆（2014）", value: "86" },
-            { title: "第 85 屆（2013）", value: "85" },
-            { title: "第 84 屆（2012）", value: "84" },
-            { title: "第 83 屆（2011）", value: "83" }
           ]
         },
         {
@@ -51,10 +40,247 @@ var WidgetMetadata = {
           ]
         }
       ]
-    }
+	},
   ]
 };
 
+// ===============辅助函数===============
+let tmdbGenresCache = null;
+
+async function fetchTmdbGenres() {
+    if (tmdbGenresCache) return tmdbGenresCache;
+
+    const [movieGenres, tvGenres] = await Promise.all([
+        Widget.tmdb.get('/genre/movie/list', { params: { language: 'zh-CN' } }),
+        Widget.tmdb.get('/genre/tv/list', { params: { language: 'zh-CN' } })
+    ]);
+
+    tmdbGenresCache = {
+        movie: movieGenres.genres.reduce((acc, g) => ({ ...acc, [g.id]: g.name }), {}),
+        tv: tvGenres.genres.reduce((acc, g) => ({ ...acc, [g.id]: g.name }), {})
+    };
+    return tmdbGenresCache;
+}
+
+function getTmdbGenreTitles(genreIds, mediaType) {
+    const genres = tmdbGenresCache?.[mediaType] || {};
+    const topThreeIds = genreIds.slice(0, 3);
+    return topThreeIds
+        .map(id => genres[id]?.trim() || `未知类型(${id})`)
+        .filter(Boolean)
+        .join('•');
+}
+
+function getBeijingDate() {
+    const now = new Date();
+    const beijingTime = now.getTime() + (8 * 60 * 60 * 1000);
+    const beijingDate = new Date(beijingTime);
+    return `${beijingDate.getUTCFullYear()}-${String(beijingDate.getUTCMonth() + 1).padStart(2, '0')}-${String(beijingDate.getUTCDate()).padStart(2, '0')}`;
+}
+
+// ===============TMDB功能函数===============
+async function fetchTmdbData(api, params) {
+    const [data, genres] = await Promise.all([
+        Widget.tmdb.get(api, { params: params }),
+        fetchTmdbGenres()
+    ]);
+
+    return data.results
+        .filter((item) => {
+            return item.poster_path &&
+                   item.id &&
+                   (item.title || item.name) &&
+                   (item.title || item.name).trim().length > 0;
+        })
+        .map((item) => {
+            const mediaType = item.media_type || (item.title ? 'movie' : 'tv');
+            const genreIds = item.genre_ids || [];
+            const genreTitle = getTmdbGenreTitles(genreIds, mediaType);
+
+            return {
+                id: item.id,
+                type: "tmdb",
+                title: item.title || item.name,
+                description: item.overview,
+                releaseDate: item.release_date || item.first_air_date,
+                backdropPath: item.backdrop_path,
+                posterPath: item.poster_path,
+                rating: item.vote_average,
+                mediaType: mediaType,
+                genreTitle: genreTitle
+            };
+        });
+}
+
+async function loadTmdbTrendingData() {
+    const response = await Widget.http.get("https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/data/TMDB_Trending.json");
+    return response.data;
+}
+
+async function loadTodayGlobalMedia() {
+    const data = await loadTmdbTrendingData();
+    return data.today_global.map(item => ({
+        id: item.id.toString(),
+        type: "tmdb",
+        title: item.title,
+        genreTitle: item.genreTitle,
+        rating: item.rating,
+        description: item.overview,
+        releaseDate: item.release_date,
+        posterPath: item.poster_url,
+        backdropPath: item.title_backdrop,
+        mediaType: item.type,
+    }));
+}
+
+async function loadWeekGlobalMovies(params) {
+    const data = await loadTmdbTrendingData();
+    return data.week_global_all.map(item => ({
+        id: item.id.toString(),
+        type: "tmdb",
+        title: item.title,
+        genreTitle: item.genreTitle,
+        rating: item.rating,
+        description: item.overview,
+        releaseDate: item.release_date,
+        posterPath: item.poster_url,
+        backdropPath: item.title_backdrop,
+        mediaType: item.type,
+    }));
+}
+
+async function tmdbPopularMovies(params) {
+    if ((parseInt(params.page) || 1) === 1) {
+        const data = await loadTmdbTrendingData();
+        return data.popular_movies
+            .slice(0, 15)
+            .map(item => ({
+                id: item.id.toString(),
+                type: "tmdb",
+                title: item.title,
+                genreTitle: item.genreTitle,
+                rating: item.rating,
+                description: item.overview,
+                releaseDate: item.release_date,
+                posterPath: item.poster_url,
+                backdropPath: item.title_backdrop,
+                mediaType: item.type
+            }));
+    }
+
+    const [data, genres] = await Promise.all([
+        Widget.tmdb.get(`/movie/popular`, {
+            params: {
+                language: params.language || 'zh-CN',
+                page: parseInt(params.page) || 1,
+                region: 'CN'
+            }
+        }),
+        fetchTmdbGenres()
+    ]);
+
+    return data.results.map(item => ({
+        id: String(item.id),
+        type: "tmdb",
+        title: item.title,
+        description: item.overview,
+        releaseDate: item.release_date,
+        backdropPath: item.backdrop_path,
+        posterPath: item.poster_path,
+        rating: item.vote_average,
+        mediaType: "movie",
+        genreTitle: getTmdbGenreTitles(item.genre_ids, "movie")
+    }));
+}
+
+async function tmdbTopRated(params) {
+    const type = params.type || 'movie';
+    const api = type === 'movie' ? `movie/top_rated` : `tv/top_rated`;
+    return await fetchTmdbData(api, params);
+}
+
+async function tmdbUpcomingMovies(params) {
+    const api = "discover/movie";
+    const beijingDate = getBeijingDate();
+    const discoverParams = {
+        language: params.language || 'zh-CN',
+        page: params.page || 1,
+        sort_by: 'primary_release_date.asc',
+        'primary_release_date.gte': params['primary_release_date.gte'] || beijingDate,
+        with_release_type: params.with_release_type || '2,3'
+    };
+
+    if (params['primary_release_date.lte']) {
+        discoverParams['primary_release_date.lte'] = params['primary_release_date.lte'];
+    }
+    if (params.with_genres) {
+        discoverParams.with_genres = params.with_genres;
+    }
+    if (params['vote_average.gte']) {
+        discoverParams['vote_average.gte'] = params['vote_average.gte'];
+    }
+    if (params['vote_count.gte']) {
+        discoverParams['vote_count.gte'] = params['vote_count.gte'];
+    }
+    if (params.with_keywords) {
+        discoverParams.with_keywords = params.with_keywords;
+    }
+
+    return await fetchTmdbData(api, discoverParams);
+}
+
+async function tmdbDiscoverByNetwork(params = {}) {
+    const api = "discover/tv";
+    const beijingDate = getBeijingDate();
+    const discoverParams = {
+        language: params.language || 'zh-CN',
+        page: params.page || 1,
+        with_networks: params.with_networks,
+        sort_by: params.sort_by || "first_air_date.desc",
+    };
+
+    if (params.air_status === 'released') {
+        discoverParams['first_air_date.lte'] = beijingDate;
+    } else if (params.air_status === 'upcoming') {
+        discoverParams['first_air_date.gte'] = beijingDate;
+    }
+
+    if (params.with_genres) {
+        discoverParams.with_genres = params.with_genres;
+    }
+
+    return await fetchTmdbData(api, discoverParams);
+}
+
+async function tmdbCompanies(params = {}) {
+    const api = "discover/movie";
+    const beijingDate = getBeijingDate();
+    const withCompanies = String(params.with_companies || '').trim();
+
+    const cleanParams = {
+        page: params.page || 1,
+        language: params.language || "zh-CN",
+        sort_by: params.sort_by || "primary_release_date.desc",
+        include_adult: false,
+        include_video: false
+    };
+
+    if (withCompanies) {
+        cleanParams.with_companies = withCompanies;
+    }
+
+    if (params.air_status === 'released') {
+        cleanParams['primary_release_date.lte'] = beijingDate;
+    } else if (params.air_status === 'upcoming') {
+        cleanParams['primary_release_date.gte'] = beijingDate;
+    }
+
+    if (params.with_genres) {
+        cleanParams.with_genres = String(params.with_genres).trim();
+    }
+
+    return await fetchTmdbData(api, cleanParams);
+}
 async function getAwardMovies(params = {}) {
   const ceremony = params.ceremony || "97";
   const filter = params.filter || "winners";
@@ -203,243 +429,4 @@ async function getAwardMovies(params = {}) {
     ...item,
     description: _isWinner ? "🏆 獲獎" : "提名"
   }));
-}
-// 基础获取TMDB数据方法
-async function fetchData(api, params, forceMediaType) {
-  try {
-    const response = await Widget.tmdb.get(api, { params: params });
-
-    if (!response) {
-      throw new Error("获取数据失败");
-    }
-
-    console.log(response);
-    let data = response.results;
-    
-    // 如果没有 forceMediaType，先过滤只保留 movie 和 tv 的数据
-    if (!forceMediaType) {
-      data = data.filter((item) => {
-        let mediaType = item.media_type;
-        if (mediaType == null) {
-          if (item.title) {
-            mediaType = "movie";
-          } else {
-            mediaType = "tv";
-          }
-        }
-        return mediaType === "movie" || mediaType === "tv";
-      });
-    }
-    
-    const result = data.map((item) => {
-      let mediaType = item.media_type;
-      if (forceMediaType) {
-        mediaType = forceMediaType;
-      } else if (mediaType == null) {
-        if (item.title) {
-          mediaType = "movie";
-        } else {
-          mediaType = "tv";
-        }
-      } 
-      return {
-        id: item.id,
-        type: "tmdb",
-        title: item.title ?? item.name,
-        description: item.overview,
-        releaseDate: item.release_date ?? item.first_air_date,
-        backdropPath: item.backdrop_path,
-        posterPath: item.poster_path,
-        rating: item.vote_average,
-        mediaType: mediaType,
-        genreTitle: genreTitleWith(item.genre_ids),
-      };
-    });
-    
-    return result;
-  } catch (error) {
-    console.error("调用 TMDB API 失败:", error);
-    throw error;
-  }
-}
-
-async function nowPlaying(params) {
-  const type = params.type;
-  let api = "tv/on_the_air";
-  if (type === "movie") {
-    api = "movie/now_playing";
-  }
-  return await fetchData(api, params, type);
-}
-
-async function trending(params) {
-  const timeWindow = params.time_window;
-  const api = `trending/all/${timeWindow}`;
-  delete params.time_window;
-  return await fetchData(api, params);
-}
-
-async function popular(params) {
-  const type = params.type;
-  let api = `movie/popular`;
-  if (type === "tv") {
-    api = `tv/popular`;
-  }
-  delete params.type;
-  return await fetchData(api, params, type);
-}
-
-async function topRated(params) {
-  const type = params.type;
-  let api = `movie/top_rated`;
-  if (type === "tv") {
-    api = `tv/top_rated`;
-  }
-  delete params.type;
-  return await fetchData(api, params, type);
-}
-
-async function categories(params) {
-  let genreId = params.with_genres;
-  let type = params.type;
-  const onlyMovieGenreIds = ["28", "53"];//动作，惊悚
-  const onlyTvGenreIds = ["10762", "10764", "10766"];//儿童，真人秀，肥皂剧
-  if (genreId == "878" && type == "tv") {
-    genreId = "10765";
-  }
-  if (onlyMovieGenreIds.includes(genreId)) {
-    type = "movie";
-  }
-  if (onlyTvGenreIds.includes(genreId)) {
-    type = "tv";
-  }
-  const api = `discover/${type}`;
-  params.with_genres = genreId;
-  delete params.type;
-  return await fetchData(api, params, type);
-}
-
-async function networks(params) {
-  let api = `discover/tv`;
-  delete params.type;
-  return await fetchData(api, params);
-}
-
-async function companies(params) {
-  let api = `discover/movie`;
-  delete params.type;
-  return await fetchData(api, params, "movie");
-}
-
-async function list(params = {}) {
-  let url = params.url;
-
-  // append ?view=grid
-  if (!url.includes("view=grid")) {
-    if (url.includes("?")) {
-      url = url + "&view=grid";
-    } else {
-      url = url + "?view=grid";
-    }
-  }
-
-  console.log("请求片单页面:", url);
-  // 发送请求获取片单页面
-  const response = await Widget.http.get(url, {
-    headers: {
-      Referer: `https://www.themoviedb.org/`,
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-    },
-  });
-
-  if (!response || !response.data) {
-    throw new Error("获取片单数据失败");
-  }
-
-
-  console.log("片单页面数据长度:", response.data.length);
-  console.log("开始解析");
-
-  // 解析 HTML 得到文档 ID
-  const $ = Widget.html.load(response.data);
-  if (!$ || $ === null) {
-    throw new Error("解析 HTML 失败");
-  }
-
-  //        // 获取所有视频项，得到元素ID数组
-  const coverElements = $(".block.aspect-poster");
-
-  console.log("items:", coverElements);
-
-  let tmdbIds = [];
-  for (const itemId of coverElements) {
-    const $item = $(itemId);
-    const link = $item.attr("href");
-    if (!link) {
-      continue;
-    }
-    const match = link.match(/^\/(movie|tv)\/([^\/-]+)-/)
-    const type = match?.[1];
-    const id = match?.[2];
-    if (id && type) {
-      tmdbIds.push({ id: `${type}.${id}`, type: 'tmdb' });
-    }
-  }
-
-  return tmdbIds;
-}
-
-function genreTitleWith(genre_ids) {
-  if (!genre_ids) {
-    return "";
-  }
-  const genreDict = [
-    {"id": 10759, "name": "动作冒险"},
-    {"id": 16, "name": "动画"},
-    {"id": 35, "name": "喜剧"},
-    {"id": 80, "name": "犯罪"},
-    {"id": 99, "name": "纪录"},
-    {"id": 18, "name": "剧情"},
-    {"id": 10751, "name": "家庭"},
-    {"id": 10762, "name": "儿童"},
-    {"id": 9648, "name": "悬疑"},
-    {"id": 10763, "name": "新闻"},
-    {"id": 10764, "name": "真人秀"},
-    {"id": 10765, "name": "Sci-Fi & Fantasy"},
-    {"id": 10766, "name": "肥皂剧"},
-    {"id": 10767, "name": "脱口秀"},
-    {"id": 10768, "name": "War & Politics"},
-    {"id": 37, "name": "西部"},
-    {"id": 28, "name": "动作"},
-    {"id": 12, "name": "冒险"},
-    {"id": 16, "name": "动画"},
-    {"id": 35, "name": "喜剧"},
-    {"id": 80, "name": "犯罪"},
-    {"id": 99, "name": "纪录"},
-    {"id": 18, "name": "剧情"},
-    {"id": 10751, "name": "家庭"},
-    {"id": 14, "name": "奇幻"},
-    {"id": 36, "name": "历史"},
-    {"id": 27, "name": "恐怖"},
-    {"id": 10402, "name": "音乐"},
-    {"id": 9648, "name": "悬疑"},
-    {"id": 10749, "name": "爱情"},
-    {"id": 878, "name": "科幻"},
-    {"id": 10770, "name": "电视电影"},
-    {"id": 53, "name": "惊悚"},
-    {"id": 10752, "name": "战争"},
-    {"id": 37, "name": "西部"},
-  ]
-  if (genre_ids.length > 2) {
-    genre_ids = genre_ids.slice(0, 2);
-  }
-  const result = genre_ids.map(id => {
-    const genre = genreDict.find(genre => genre.id == id);
-    if (genre) {
-      return genre.name;
-    }
-    return null;
-  }).filter(genre => genre !== null).join(", ");
-  return result;
 }
