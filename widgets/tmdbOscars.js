@@ -23,7 +23,7 @@ WidgetMetadata = {
                     name: "category",
                     title: "奖项分类",
                     type: "enumeration",
-                    value: "best_picture",
+                    value: "oscars",
                     enumOptions: [
                         { title: "🎭 全部作品", value: "all" },
                         { title: "🏆 獲獎作品", value: "winner" },
@@ -38,7 +38,7 @@ WidgetMetadata = {
 // ─────────────────────────────────────────────
 // 全部作品
 // ─────────────────────────────────────────────
-const oscars97 = [
+const Oscars97 = [
     {
         id: 1064213,
         type: "tmdb",
@@ -157,7 +157,7 @@ const oscars97 = [
 // ─────────────────────────────────────────────
 // 獲獎作品
 // ─────────────────────────────────────────────
-const oscars97_winner = [
+const Oscars97_winner = [
     {
         id: 1064213,
         type: "tmdb",
@@ -175,7 +175,7 @@ const oscars97_winner = [
 // ─────────────────────────────────────────────
 // 提名作品
 // ─────────────────────────────────────────────
-const BEST_PICTURE_NOMINEE = [
+const Oscars97_NOMINEE = [
     {
         id: 549509,
         type: "tmdb",
@@ -278,15 +278,15 @@ const BEST_PICTURE_NOMINEE = [
 ];
 
 async function getOscars97(params = {}) {
-    const category = params.category || "all";
+    const category = params.category || "oscars";
 
     switch (category) {
         case "winner":
-            return oscars97_winner;
+            return Oscars97_winner;
 
         case "nominee": 
-			return oscars97_nominee;
+			return Oscars97_nominee;
         		
     default:
-            return oscars97;
+            return Oscars97;
     }
