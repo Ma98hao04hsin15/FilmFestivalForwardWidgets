@@ -13,9 +13,9 @@
       "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/Oscar.js"
     },
     {
-      "id": "awards",
-      "title": "awards",
-      "description": "获取 TMDB 的奖项数据",
+      "id": "tmdb_academy_awards",
+      "title": "奥斯卡金像奖",
+      "description": "通过 TMDB API 浏览奥斯卡各届提名及获奖影片",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Ma",
