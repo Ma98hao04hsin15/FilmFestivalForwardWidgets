@@ -279,8 +279,11 @@ const Oscars97_nominee = [
 
 async function getOscars97(params = {}) {
     const category = params.category || "oscars";
-
+	
     switch (category) {
+		case "oscars":
+            return Oscars97;
+			
         case "winner":
             return Oscars97_winner;
 
