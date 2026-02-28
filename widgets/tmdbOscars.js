@@ -31,19 +31,12 @@ WidgetMetadata = {
                     ]
                 }
             ]
-        },
-		{
-            id: "best_picture",
-            title: "🏆 最佳影片",
-            functionName: "getOscars97",
-            cacheDuration: 86400,
-            params: []
         }
     ]
 };
 
 // ─────────────────────────────────────────────
-// 97th全部作品
+// 全部作品
 // ─────────────────────────────────────────────
 const oscars97 = [
     {
@@ -55,8 +48,7 @@ const oscars97 = [
         backdropPath: "/tG8QWDASd8rw0JxkDN2MDDWLEse.jpg",
         posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
         rating: 7.4,
-        mediaType: "movie",
-        genreTitle: "winner"
+        mediaType: "movie"
     },
     {
         id: 549509,
@@ -67,8 +59,7 @@ const oscars97 = [
         backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
         posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
         rating: 7.6,
-        mediaType: "movie",
-        
+        mediaType: "movie"        
     },
     {
         id: 661539,
@@ -79,8 +70,7 @@ const oscars97 = [
         backdropPath: "/kcCy5tKTe6WepVQ6SQaSewpmoCj.jpg",
         posterPath: "/cxh4GcerxbMMPcouD8RPn6xB3Ue.jpg",
         rating: 7.3,
-        mediaType: "movie",
-        
+        mediaType: "movie"        
     },
     {
         id: 974576,
@@ -91,7 +81,7 @@ const oscars97 = [
         backdropPath: "/e7Y8bMkPfJFHNMaUn6TrXCHqHAX.jpg",
         posterPath: "/1BWhKsbUTiBD0WQhrOfQlU6zrc5.jpg",
         rating: 7.3,
-        mediaType: "movie",
+        mediaType: "movie"
         
     },
     {
@@ -103,8 +93,7 @@ const oscars97 = [
         backdropPath: "/9tIgF5Ht9ndLJEwv2e6TZrExMKw.jpg",
         posterPath: "/uwPaMUnffh8JXCXA3ALJsFM4CAW.jpg",
         rating: 7.0,
-        mediaType: "movie",
-        
+        mediaType: "movie"        
     },
     {
         id: 1000837,
@@ -115,8 +104,7 @@ const oscars97 = [
         backdropPath: "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
         posterPath: "/lnWJqTA4gha5sZGJaD15oxOUyVm.jpg",
         rating: 8.1,
-        mediaType: "movie",
-        
+        mediaType: "movie"        
     },
     {
         id: 1028196,
@@ -127,7 +115,7 @@ const oscars97 = [
         backdropPath: "/kmLssINCNdXnIDjWkBsk6LUNSbe.jpg",
         posterPath: "/https://image.tmdb.org/t/p/original/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg.jpg",
         rating: 6.8,
-        mediaType: "movie",
+        mediaType: "movie"
         
     },
     {
@@ -139,8 +127,7 @@ const oscars97 = [
         backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
         posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
         rating: 7.3,
-        mediaType: "movie",
-        
+        mediaType: "movie"        
     },
     {
         id: 402431,
@@ -151,8 +138,7 @@ const oscars97 = [
         backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qS9ean.jpg",
         posterPath: "/rufGJNaU6zY0CeCnxYlRe8qYMA4.jpg",
         rating: 7.2,
-        mediaType: "movie",
-        
+        mediaType: "movie"        
     },
     {
         id: 693134,
@@ -163,8 +149,7 @@ const oscars97 = [
         backdropPath: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
         posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
         rating: 8.0,
-        mediaType: "movie",
-        
+        mediaType: "movie"        
     }
 ];
 
@@ -302,6 +287,6 @@ async function getOscars97(params = {}) {
         case "nominee": 
 			return oscars97_nominee;
         		
-        default:
-            return all;
+    default:
+            return oscars97;
     }
