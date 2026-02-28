@@ -23,7 +23,7 @@ WidgetMetadata = {
                     name: "category",
                     title: "奖项分类",
                     type: "enumeration",
-                    value: "oscars",
+                    value: "all",                          // ✅ Fix 3: 改為 "all" 與 enumOptions 對應
                     enumOptions: [
                         { title: "🎭 全部作品", value: "all" },
                         { title: "🏆 獲獎作品", value: "winner" },
@@ -59,7 +59,7 @@ const Oscars97 = [
         backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
         posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
         rating: 7.6,
-        mediaType: "movie"        
+        mediaType: "movie"
     },
     {
         id: 661539,
@@ -70,7 +70,7 @@ const Oscars97 = [
         backdropPath: "/kcCy5tKTe6WepVQ6SQaSewpmoCj.jpg",
         posterPath: "/cxh4GcerxbMMPcouD8RPn6xB3Ue.jpg",
         rating: 7.3,
-        mediaType: "movie"        
+        mediaType: "movie"
     },
     {
         id: 974576,
@@ -82,7 +82,6 @@ const Oscars97 = [
         posterPath: "/1BWhKsbUTiBD0WQhrOfQlU6zrc5.jpg",
         rating: 7.3,
         mediaType: "movie"
-        
     },
     {
         id: 974950,
@@ -93,7 +92,7 @@ const Oscars97 = [
         backdropPath: "/9tIgF5Ht9ndLJEwv2e6TZrExMKw.jpg",
         posterPath: "/uwPaMUnffh8JXCXA3ALJsFM4CAW.jpg",
         rating: 7.0,
-        mediaType: "movie"        
+        mediaType: "movie"
     },
     {
         id: 1000837,
@@ -104,7 +103,7 @@ const Oscars97 = [
         backdropPath: "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
         posterPath: "/lnWJqTA4gha5sZGJaD15oxOUyVm.jpg",
         rating: 8.1,
-        mediaType: "movie"        
+        mediaType: "movie"
     },
     {
         id: 1028196,
@@ -113,10 +112,9 @@ const Oscars97 = [
         description: "1960年代佛罗里达，两名黑人少年在严酷感化院中结下深厚友谊，共同面对种族歧视与制度暴力。",
         releaseDate: "2024-12-13",
         backdropPath: "/kmLssINCNdXnIDjWkBsk6LUNSbe.jpg",
-        posterPath: "/https://image.tmdb.org/t/p/original/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg.jpg",
+        posterPath: "/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg",  // ✅ Fix 1: 移除錯誤的完整 URL
         rating: 6.8,
         mediaType: "movie"
-        
     },
     {
         id: 933260,
@@ -127,7 +125,7 @@ const Oscars97 = [
         backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
         posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
         rating: 7.3,
-        mediaType: "movie"        
+        mediaType: "movie"
     },
     {
         id: 402431,
@@ -138,7 +136,7 @@ const Oscars97 = [
         backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qS9ean.jpg",
         posterPath: "/rufGJNaU6zY0CeCnxYlRe8qYMA4.jpg",
         rating: 7.2,
-        mediaType: "movie"        
+        mediaType: "movie"
     },
     {
         id: 693134,
@@ -149,10 +147,9 @@ const Oscars97 = [
         backdropPath: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
         posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
         rating: 8.0,
-        mediaType: "movie"        
+        mediaType: "movie"
     }
 ];
-
 
 // ─────────────────────────────────────────────
 // 獲獎作品
@@ -168,9 +165,8 @@ const Oscars97_winner = [
         posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
         rating: 7.4,
         mediaType: "movie"
-    },
+    }
 ];
-
 
 // ─────────────────────────────────────────────
 // 提名作品
@@ -186,7 +182,7 @@ const Oscars97_nominee = [
         posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
         rating: 7.6,
         mediaType: "movie"
-	},
+    },
     {
         id: 661539,
         type: "tmdb",
@@ -197,7 +193,7 @@ const Oscars97_nominee = [
         posterPath: "/cxh4GcerxbMMPcouD8RPn6xB3Ue.jpg",
         rating: 7.3,
         mediaType: "movie"
-	},
+    },
     {
         id: 974576,
         type: "tmdb",
@@ -207,8 +203,8 @@ const Oscars97_nominee = [
         backdropPath: "/e7Y8bMkPfJFHNMaUn6TrXCHqHAX.jpg",
         posterPath: "/1BWhKsbUTiBD0WQhrOfQlU6zrc5.jpg",
         rating: 7.3,
-        mediaType: "movie"            
-	},
+        mediaType: "movie"
+    },
     {
         id: 974950,
         type: "tmdb",
@@ -218,8 +214,8 @@ const Oscars97_nominee = [
         backdropPath: "/9tIgF5Ht9ndLJEwv2e6TZrExMKw.jpg",
         posterPath: "/uwPaMUnffh8JXCXA3ALJsFM4CAW.jpg",
         rating: 7.0,
-        mediaType: "movie" 
-	},
+        mediaType: "movie"
+    },
     {
         id: 1000837,
         type: "tmdb",
@@ -229,8 +225,8 @@ const Oscars97_nominee = [
         backdropPath: "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
         posterPath: "/lnWJqTA4gha5sZGJaD15oxOUyVm.jpg",
         rating: 8.1,
-        mediaType: "movie" 
-	},
+        mediaType: "movie"
+    },
     {
         id: 1028196,
         type: "tmdb",
@@ -238,10 +234,10 @@ const Oscars97_nominee = [
         description: "1960年代佛罗里达，两名黑人少年在严酷感化院中结下深厚友谊，共同面对种族歧视与制度暴力。",
         releaseDate: "2024-12-13",
         backdropPath: "/kmLssINCNdXnIDjWkBsk6LUNSbe.jpg",
-        posterPath: "/https://image.tmdb.org/t/p/original/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg.jpg",
+        posterPath: "/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg",  // ✅ Fix 1: 移除錯誤的完整 URL
         rating: 6.8,
-        mediaType: "movie" 
-	},
+        mediaType: "movie"
+    },
     {
         id: 933260,
         type: "tmdb",
@@ -251,19 +247,19 @@ const Oscars97_nominee = [
         backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
         posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
         rating: 7.3,
-        mediaType: "movie" 
-	},
+        mediaType: "movie"
+    },
     {
         id: 402431,
         type: "tmdb",
         title: "魔法坏女巫",
         description: "在翡翠城，天生绿皮肤的艾菲与人气十足的葛琳达意外成为室友，命运推向截然不同的道路。",
         releaseDate: "2024-11-22",
-        backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qS9ean.jpg",
+        backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qZ9ean.jpg",
         posterPath: "/rufGJNaU6zY0CeCnxYlRe8qYMA4.jpg",
         rating: 7.2,
-        mediaType: "movie"  
-	},
+        mediaType: "movie"
+    },
     {
         id: 693134,
         type: "tmdb",
@@ -274,22 +270,26 @@ const Oscars97_nominee = [
         posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
         rating: 8.0,
         mediaType: "movie"
-	}
+    }
 ];
 
+// ─────────────────────────────────────────────
+// 統一入口
+// ─────────────────────────────────────────────
 async function getOscars97(params = {}) {
-    const category = params.category || "oscars";
-	
+    const category = params.category || "all";
+
     switch (category) {
-		case "all":
+        case "all":
             return Oscars97;
-			
+
         case "winner":
             return Oscars97_winner;
 
-        case "nominee": 
-			return Oscars97_nominee;
-        		
-    default:
+        case "nominee":
+            return Oscars97_nominee;
+
+        default:
             return Oscars97;
     }
+}                                               // ✅ Fix 2: 補上函數結尾的 }
