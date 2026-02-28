@@ -129,7 +129,7 @@ const BEST_PICTURES = [
 ];
 
 // 历届最佳影片提名 TMDB ID（movie）
-const BEST_PICTURES = [
+const BEST_PICTURES_NOMINEE = [
   // 第97届 ~ 第77届（每届最佳影片，按届次倒序）
   { id: "1064213", year: 2025, title: "Anora", ceremony: 97 },
   
@@ -433,7 +433,7 @@ async function loadBestPicturesnominee(params = {}) {
   const page = parseInt(params.page) || 1;
   const pageSize = 10;
   const start = (page - 1) * pageSize;
-  const pageItems = BEST_PICTURES.slice(start, start + pageSize);
+  const pageItems = BEST_PICTURES_NOMINEE.slice(start, start + pageSize);
 
   if (pageItems.length === 0) return [];
 
