@@ -76,30 +76,33 @@ const BASE_URL = "https://www.themoviedb.org";
 
 // 历届最佳影片获奖 TMDB ID（movie）
 const BEST_PICTURES = [
-  // 第97届 ~ 第83届（每届最佳影片，按届次倒序）
-  { id: "1084736", year: 2025, title: "Anora", ceremony: 97 },
-  { id: "1009360", year: 2024, title: "Oppenheimer", ceremony: 96 },
-  { id: "361743", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
-  { id: "681718", year: 2022, title: "CODA", ceremony: 94 },
-  { id: "581389", year: 2021, title: "Nomadland", ceremony: 93 },
-  { id: "559788", year: 2020, title: "Parasite", ceremony: 92 },
+  // 第97届 ~ 第77届（每届最佳影片，按届次倒序）
+  { id: "1064213", year: 2025, title: "Anora", ceremony: 97 },
+  { id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
+  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
+  { id: "776503", year: 2022, title: "CODA", ceremony: 94 },
+  { id: "581734", year: 2021, title: "Nomadland", ceremony: 93 },
+  { id: "496243", year: 2020, title: "Parasite", ceremony: 92 },
   { id: "490132", year: 2019, title: "Green Book", ceremony: 91 },
   { id: "399055", year: 2018, title: "The Shape of Water", ceremony: 90 },
   { id: "376867", year: 2017, title: "Moonlight", ceremony: 89 },
-  { id: "277834", year: 2016, title: "Spotlight", ceremony: 88 },
+  { id: "314365", year: 2016, title: "Spotlight", ceremony: 88 },
   { id: "194662", year: 2015, title: "Birdman", ceremony: 87 },
   { id: "76203", year: 2014, title: "12 Years a Slave", ceremony: 86 },
   { id: "68734", year: 2013, title: "Argo", ceremony: 85 },
-  { id: "77338", year: 2012, title: "The Artist", ceremony: 84 },
+  { id: "74643", year: 2012, title: "The Artist", ceremony: 84 },
   { id: "45269", year: 2011, title: "The King's Speech", ceremony: 83 },
-  { id: "16869", year: 2010, title: "The Hurt Locker", ceremony: 82 },
-  { id: "4922", year: 2009, title: "Slumdog Millionaire", ceremony: 81 },
-  { id: "2172", year: 2008, title: "No Country for Old Men", ceremony: 80 },
-  { id: "1422", year: 2007, title: "The Departed", ceremony: 79 },
+  { id: "12162", year: 2010, title: "The Hurt Locker", ceremony: 82 },
+  { id: "12405", year: 2009, title: "Slumdog Millionaire", ceremony: 81 },
+  { id: "6977", year: 2008, title: "No Country for Old Men", ceremony: 80 },
+  { id: "1640", year: 2007, title: "The Departed", ceremony: 79 },
   { id: "1725", year: 2006, title: "Crash", ceremony: 78 },
-  { id: "4011", year: 2005, title: "Million Dollar Baby", ceremony: 77 },
+  { id: "70", year: 2005, title: "Million Dollar Baby", ceremony: 77 },
+  { id: "122", year: 2004, title: "The Lord of the Rings: The Return of the King", ceremony: 76 },
+  { id: "1574", year: 2003, title: "Chicago", ceremony: 75 },
+  { id: "453", year: 2002, title: "A Beautiful Mind", ceremony: 74 },
+  { id: "98", year: 2001, title: "Gladiator", ceremony: 73 }
 ];
-
 // ─── 工具函数 ────────────────────────────────────────────────────────────────
 
 /**
