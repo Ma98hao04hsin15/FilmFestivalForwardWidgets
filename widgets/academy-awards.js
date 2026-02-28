@@ -79,48 +79,100 @@ const BEST_PICTURES = [
 // 历届最佳影片提名 TMDB ID（movie）
 const BEST_PICTURES_NOMINEE = [
   // 第97届 ~ 第77届（每届最佳影片，按届次倒序）
-  { id: "1064213", year: 2025, title: "Anora", ceremony: 97 },
+  { id: "", year: 2025, title: "", ceremony: 97 },
   
-  { id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
+  { id: "", year: 2024, title: "", ceremony: 96 },
   
-  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
+  { id: "", year: 2023, title: "", ceremony: 95 },
   
-  { id: "776503", year: 2022, title: "CODA", ceremony: 94 },
+  { id: "", year: 2022, title: "", ceremony: 94 },
   
-  { id: "581734", year: 2021, title: "Nomadland", ceremony: 93 },
+  { id: "", year: 2021, title: "", ceremony: 93 },
   
-  { id: "496243", year: 2020, title: "Parasite", ceremony: 92 },    
+  { id: "", year: 2020, title: "", ceremony: 92 },    
   
-  { id: "490132", year: 2019, title: "Green Book", ceremony: 91 },
+  { id: "", year: 2019, title: "", ceremony: 91 },
   
-  { id: "399055", year: 2018, title: "The Shape of Water", ceremony: 90 },
+  { id: "", year: 2018, title: "", ceremony: 90 },
   
-  { id: "376867", year: 2017, title: "Moonlight", ceremony: 89 },
+  { id: "", year: 2017, title: "", ceremony: 89 },
   
-  { id: "314365", year: 2016, title: "Spotlight", ceremony: 88 },  
+  { id: "", year: 2016, title: "", ceremony: 88 },  
   
-  { id: "194662", year: 2015, title: "Birdman", ceremony: 87 },
+  { id: "190859", year: 2015, title: "American Sniper", ceremony: 87 },
+  { id: "85350", year: 2015, title: "Boyhood", ceremony: 87 },
+  { id: "120467", year: 2015, title: "The Grand Budapest Hotel", ceremony: 87 },
+  { id: "205596", year: 2015, title: "The Imitation Game", ceremony: 87 },
+  { id: "273895", year: 2015, title: "Selma", ceremony: 87 },
+  { id: "266856", year: 2015, title: "The Theory of Everything", ceremony: 87 },
+  { id: "244786", year: 2015, title: "Whiplash", ceremony: 87 },
   
-  { id: "76203", year: 2014, title: "12 Years a Slave", ceremony: 86 },
+  { id: "168672", year: 2014, title: "American Hustle", ceremony: 86 },
+  { id: "109424", year: 2014, title: "Captain Phillips", ceremony: 86 },
+  { id: "152532", year: 2014, title: "Dallas Buyers Club", ceremony: 86 },
+  { id: "49047", year: 2014, title: "Gravity", ceremony: 86 },
+  { id: "152601", year: 2014, title: "Her", ceremony: 86 },
+  { id: "129670", year: 2014, title: "Nebraska", ceremony: 86 },
+  { id: "202220", year: 2014, title: "Philomena", ceremony: 86 },
+  { id: "106646", year: 2014, title: "The Wolf of Wall Street", ceremony: 86 },
   
-  { id: "68734", year: 2013, title: "Argo", ceremony: 85 },  
+  { id: "86837", year: 2013, title: "Amour", ceremony: 85 },  
+  { id: "84175", year: 2013, title: "Beasts of the Southern Wild", ceremony: 85 }, 
+  { id: "68718", year: 2013, title: "Django Unchained", ceremony: 85 }, 
+  { id: "82695", year: 2013, title: "Les Misérables", ceremony: 85 }, 
+  { id: "87827", year: 2013, title: "Life of Pi", ceremony: 85 }, 
+  { id: "72976", year: 2013, title: "Lincoln", ceremony: 85 }, 
+  { id: "82693", year: 2013, title: "Silver Linings Playbook", ceremony: 85 }, 
+  { id: "97630", year: 2013, title: "Zero Dark Thirty", ceremony: 85 }, 
   
-  { id: "74643", year: 2012, title: "The Artist", ceremony: 84 },
+  { id: "65057", year: 2012, title: "The Descendants", ceremony: 84 },
+  { id: "64685", year: 2012, title: "Extremely Loud & Incredibly Close", ceremony: 84 },
+  { id: "50014", year: 2012, title: "The Help", ceremony: 84 },
+  { id: "44826", year: 2012, title: "Hugo", ceremony: 84 },
+  { id: "59436", year: 2012, title: "Midnight in Paris", ceremony: 84 },
+  { id: "60308", year: 2012, title: "Moneyball", ceremony: 84 },
+  { id: "8967", year: 2012, title: "The Tree of Life", ceremony: 84 },
+  { id: "57212", year: 2012, title: "War Horse", ceremony: 84 },
   
-  { id: "45269", year: 2011, title: "The King's Speech", ceremony: 83 },
+  { id: "44214", year: 2011, title: "Black Swan", ceremony: 83 },
+  { id: "45317", year: 2011, title: "The Fighter", ceremony: 83 },
+  { id: "27205", year: 2011, title: "Inception", ceremony: 83 },
+  { id: "39781", year: 2011, title: "The Kids Are All Right", ceremony: 83 },
+  { id: "44115", year: 2011, title: "127 Hours", ceremony: 83 },
+  { id: "37799", year: 2011, title: "The Social Network", ceremony: 83 },
+  { id: "10193", year: 2011, title: "Toy Story 3", ceremony: 83 },
+  { id: "44264", year: 2011, title: "True Grit", ceremony: 83 },
+  { id: "39013", year: 2011, title: "Winter's Bone", ceremony: 83 },
   
-  { id: "12162", year: 2010, title: "The Hurt Locker", ceremony: 82 },
+  { id: "19995", year: 2010, title: "Avatar", ceremony: 82 },
+  { id: "22881", year: 2010, title: "The Blind Side", ceremony: 82 },
+  { id: "17654", year: 2010, title: "District 9", ceremony: 82 },
+  { id: "24684", year: 2010, title: "An Education", ceremony: 82 },
+  { id: "16869", year: 2010, title: "Inglourious Basterds", ceremony: 82 },
+  { id: "25793", year: 2010, title: "Precious", ceremony: 82 },
+  { id: "12573", year: 2010, title: "A Serious Man", ceremony: 82 },
+  { id: "14160", year: 2010, title: "Up", ceremony: 82 },
+  { id: "22947", year: 2010, title: "Up in the Air", ceremony: 82 },
   
-  { id: "12405", year: 2009, title: "Slumdog Millionaire", ceremony: 81 },
+  { id: "4922", year: 2009, title: "The Curious Case of Benjamin Button", ceremony: 81 },
+  { id: "11499", year: 2009, title: "Frost/Nixon", ceremony: 81 },
+  { id: "10139", year: 2009, title: "Milk", ceremony: 81 },
+  { id: "8055", year: 2009, title: "The Reader", ceremony: 81 },
   
-  { id: "6977", year: 2008, title: "No Country for Old Men", ceremony: 80 },
+  { id: "4347", year: 2008, title: "Atonement", ceremony: 80 },
+  { id: "7326", year: 2008, title: "Juno", ceremony: 80 },
+  { id: "4566", year: 2008, title: "Michael Clayton", ceremony: 80 },
+  { id: "7345", year: 2008, title: "There Will Be Blood", ceremony: 80 },
   
-  { id: "1422", year: 2007, title: "The Departed", ceremony: 79 },
+  { id: "1164", year: 2007, title: "Babel", ceremony: 79 },
+  { id: "1251", year: 2007, title: "Letters from Iwo Jima", ceremony: 79 },
+  { id: "773", year: 2007, title: "Little Miss Sunshine", ceremony: 79 },
+  { id: "1165", year: 2007, title: "The Queen", ceremony: 79 },
   
-  { id: "", year: 2006, title: "", ceremony: 78 },
-  { id: "", year: 2006, title: "", ceremony: 78 },
-  { id: "", year: 2006, title: "", ceremony: 78 },
-  { id: "", year: 2006, title: "", ceremony: 78 },
+  { id: "142", year: 2006, title: "Brokeback Mountain", ceremony: 78 },
+  { id: "398", year: 2006, title: "Capote", ceremony: 78 },
+  { id: "3291", year: 2006, title: "Good Night, and Good Luck.", ceremony: 78 },
+  { id: "612", year: 2006, title: "Munich", ceremony: 78 },
   
   { id: "2567", year: 2005, title: "The Aviator", ceremony: 77 },
   { id: "866", year: 2005, title: "Finding Neverland", ceremony: 77 },
