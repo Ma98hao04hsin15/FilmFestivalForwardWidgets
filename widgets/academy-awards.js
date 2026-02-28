@@ -14,9 +14,9 @@ WidgetMetadata = {
     author: "ForwardWidget",
     modules: [
         {
-            id: "97th OSCARS",
-            title: "第97屆",
-            functionName: "97th OSCARS",
+            id: "all",
+            title: "📋 全部提名影片",
+            functionName: "getAll",
             cacheDuration: 86400,
             params: []
         }
@@ -27,7 +27,7 @@ WidgetMetadata = {
 // 97th OSCARS
 // 🏆 = 获奖
 // -------------------------------------------------------
-const 97th OSCARS = [
+const 97OSCARS = [
     {
         id: 1064213,
         type: "tmdb",
@@ -237,6 +237,6 @@ const 97th OSCARS = [
 // -------------------------------------------------------
 // 模块1：最佳影片（10部）
 // -------------------------------------------------------
-async function 97th OSCARS(params = {}) {
-    return 97th OSCARS;
+async function getAll(params = {}) {
+    return mergeUnique(97OSCARS);
 }
