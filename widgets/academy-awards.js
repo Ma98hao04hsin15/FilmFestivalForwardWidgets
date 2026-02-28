@@ -34,7 +34,7 @@ WidgetMetadata = {
             { title: "第89届 (2017)", value: "89" },
             { title: "第88届 (2016)", value: "88" },
             { title: "第87届 (2015)", value: "87" },
-            /**{ title: "第86届 (2014)", value: "86" },*/
+            { title: "第86届 (2014)", value: "86" },
             /**{ title: "第85届 (2013)", value: "85" },*/
             /**{ title: "第84届 (2012)", value: "84" },*/
             /**{ title: "第83届 (2011)", value: "83" },*/
