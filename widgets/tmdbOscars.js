@@ -144,8 +144,8 @@ const Oscars97 = [
         title: "沙丘：第二部",
         description: "保罗·厄崔迪与弗雷曼人并肩踏上复仇之路，在爱情与宇宙命运之间做出艰难抉择。",
         releaseDate: "2024-02-28",
-        backdropPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
-        posterPath: "/yaTFjMNh8D78dDHrglivOTv5YOx.jpg",
+        backdropPath: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
+        posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
         rating: 8.0,
         mediaType: "movie"
     },
@@ -155,8 +155,8 @@ const Oscars97 = [
         title: "真实的痛苦",
         description: "性格迥异的表兄弟结伴前往波兰，探访已故祖母的故土，旅途中各自直面内心的伤痛与和解。",
         releaseDate: "2024-11-12",
-        backdropPath: "/tjgW6qMaVi5WBqxXkMVmJuDNGgz.jpg",
-        posterPath: "/8Ri7qLhwegVnFuTj3VCdHy3lSzA.jpg",
+        backdropPath: "/fViElUGfdoZjtnVxvSpJX8TwxY6.jpg",
+        posterPath: "/n189wRa9O7JsHZv9bewFxdHg4j2.jpg",
         rating: 7.6,
         mediaType: "movie"
     },    
