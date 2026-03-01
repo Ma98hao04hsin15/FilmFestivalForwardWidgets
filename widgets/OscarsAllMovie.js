@@ -79,7 +79,7 @@ const BEST_PICTURES = [
 
 // 历届最佳影片提名 TMDB ID（movie）
 const BEST_PICTURES_NOMINEE = [
-	  { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
+	{ id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
     { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
     { id: "661539",  year: 2025, title: "A Complete Unknown",                     ceremony: 97 },
     { id: "974576",  year: 2025, title: "Conclave",                               ceremony: 97 },
