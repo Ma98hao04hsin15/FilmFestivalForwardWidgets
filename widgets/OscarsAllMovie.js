@@ -7,37 +7,41 @@
 
 WidgetMetadata = {
     id: "tmdboscars",
-    title: "歷屆奥斯卡金像奖",
+    title: "歷屆奥斯卡金像奖,含提名與獲獎",
     version: "2.0.0",
     requiredVersion: "0.0.1",
     description: "奥斯卡是由美國電影藝術與科學學院（AMPAS）主辦的年度電影盛事，自1929年起表彰優秀電影創作，是全球影壇最受矚目的榮譽之一。",
     author: "ForwardWidget",
     modules: [
         {
-            id: "oscars",
-            title: "歷屆奥斯卡金像奖奥斯卡全部作品",
-            functionName: "getOscars97",
+            id: "all",
+            title: "📋 全部提名影片",
+            functionName: "getAll",
             cacheDuration: 86400,
-            params: [
-                {
-                    name: "category",
-                    title: "屆數",
-                    type: "enumeration",
-                    value: "all",                          // ✅ Fix 3: 改為 "all" 與 enumOptions 對應
-                    enumOptions: [
-                        { title: "🎭 98th 全部作品", value: "98" },
-                        { title: "🎭 97th 全部作品", value: "97" },
-                    ]
-                }
-            ]
-        }
+            params: []
+        },
+        {
+            id: "98th",
+            title: "🎭 98th全部作品",
+            functionName: "98",
+            cacheDuration: 86400,
+            params: []
+        },
+        {
+            id: "97th",
+            title: "🎭 97th全部作品",
+            functionName: "97",
+            cacheDuration: 86400,
+            params: []
+        },
     ]
 };
+
 // ─────────────────────────────────────────────
 // 98th全部作品
 // ─────────────────────────────────────────────
-const Oscars98=[
-    { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
+const 98Oscars = [
+	{ id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
     { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
     { id: "1062722", year: 2026, title: "Frankenstein",                           ceremony: 98 },
     { id: "858024",  year: 2026, title: "Hamnet",                                 ceremony: 98 },
@@ -67,10 +71,10 @@ const Oscars98=[
 ];
 
 // ─────────────────────────────────────────────
-// 97th 全部作品
+// 97th全部作品
 // ─────────────────────────────────────────────
-const Oscars97 = [
-    { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
+const 98Oscars = [
+	{ id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
     { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
     { id: "661539",  year: 2025, title: "A Complete Unknown",                     ceremony: 97 },
     { id: "974576",  year: 2025, title: "Conclave",                               ceremony: 97 },
@@ -100,18 +104,40 @@ const Oscars97 = [
     { id: "799766",  year: 2025, title: "Better Man",                             ceremony: 97 },
     { id: "653346",  year: 2025, title: "Kingdom of the Planet of the Apes",      ceremony: 97 },
 ];
-// ─────────────────────────────────────────────
-// 統一入口
-// ─────────────────────────────────────────────
-async function getOscars97(params = {}) {
-    const category = params.category || "all";
 
-    switch (category) {
-        case "all":
-            return Oscars98;
-        case "97":
-            return Oscars97;
-        default:
-            return Oscars98;
+// ─────────────────────────────────────────────
+// 合并去重工具
+// ─────────────────────────────────────────────
+function mergeUnique(...arrays) {
+    const seen = new Set();
+    const result = [];
+    for (const arr of arrays) {
+        for (const item of arr) {
+            if (!seen.has(item.id)) {
+                seen.add(item.id);
+                result.push(item);
+            }
+        }
     }
-}                                               // ✅ Fix 2: 補上函數結尾的 }
+    return result;
+}
+
+// ─────────────────────────────────────────────
+// 模块函数
+// ─────────────────────────────────────────────
+async function getAll(params = {}) {
+    return mergeUnique(
+		98Oscars,
+		97Oscars,
+    );
+
+async function 98(params = {}) {
+    return 98Oscars;
+}
+
+async function 97(params = {}) {
+    return 97Oscars;
+}
+
+
+}
