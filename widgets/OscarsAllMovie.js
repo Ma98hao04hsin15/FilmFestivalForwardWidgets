@@ -12,11 +12,24 @@ WidgetMetadata = {
   modules: [
     {
       title: "🎬 全部屆次",
-      description: "歷屆奧斯卡全部作品",
+      description: "歷屆奧斯卡全部作品（可篩選第95～98屆）",
       requiresWebView: false,
       functionName: "getAll",
       cacheDuration: 604800,
       params: [
+        {
+          name: "ceremony",
+          title: "屆次篩選",
+          type: "select",
+          value: "0",
+          options: [
+            { label: "全部屆次（95～98屆）", value: "0"  },
+            { label: "🎭 第98屆",            value: "98" },
+            { label: "🎭 第97屆",            value: "97" },
+            { label: "🎭 第96屆",            value: "96" },
+            { label: "🎭 第95屆",            value: "95" },
+          ],
+        },
         {
           name: "page",
           title: "页码",
@@ -201,6 +214,26 @@ const Oscars95 = [
   { id: "361743", year: 2023, title: "Top Gun: Maverick",                 ceremony: 95 },
   { id: "497828", year: 2023, title: "Triangle of Sadness",               ceremony: 95 },
   { id: "777245", year: 2023, title: "Women Talking",                     ceremony: 95 },
+  { id: "661374", year: 2023, title: "Glass Onion: A Knives Out Mystery", ceremony: 95 },
+  { id: "760099", year: 2023, title: "Living", ceremony: 95 },
+  { id: "555604", year: 2023, title: "Guillermo del Toro's Pinocchio", ceremony: 95 },
+  { id: "869626", year: 2023, title: "Marcel the Shell with Shoes On", ceremony: 95 },
+  { id: "315162", year: 2023, title: "Puss in Boots: The Last Wish", ceremony: 95 },
+  { id: "560057", year: 2023, title: "The Sea Beast", ceremony: 95 },
+  { id: "508947", year: 2023, title: "Turning Red", ceremony: 95 },
+  { id: "714888", year: 2023, title: "Argentina, 1985", ceremony: 95 },
+  { id: "901563", year: 2023, title: "Close", ceremony: 95 },
+  { id: "785398", year: 2023, title: "EO", ceremony: 95 },
+  { id: "916405", year: 2023, title: "The Quiet Girl", ceremony: 95 },
+  { id: "615777", year: 2023, title: "Babylon", ceremony: 95 },
+  { id: "579974", year: 2023, title: "RRR", ceremony: 95 },
+  { id: "822124", year: 2023, title: "Tell It Like a Woman", ceremony: 95 },
+  { id: "505642", year: 2023, title: "Black Panther: Wakanda Forever", ceremony: 95 },
+  { id: "414906", year: 2023, title: "The Batman", ceremony: 95 },
+  { id: "685691", year: 2023, title: "Bardo, False Chronicle of a Handful of Truths", ceremony: 95 },
+  { id: "814757", year: 2023, title: "Empire of Light", ceremony: 95 },
+  { id: "785084", year: 2023, title: "The Whale", ceremony: 95 },
+  { id: "754609", year: 2023, title: "Mrs. Harris Goes to Paris", ceremony: 95 },
 ];
 
 // ✅ 修復 #3：定義 CEREMONIES 物件，供 getAll() 使用
@@ -318,21 +351,19 @@ function toWidgetItems(items) {
 
 // ─── 模块函数 ────────────────────────────────────────────────────────────────
 
-async function getAll(params = {}) {
-  const page = parseInt(params.page) || 1;
-  const pageSize = 10;
-
-  const allItems = Object.entries(CEREMONIES)
-    .sort(([a], [b]) => b - a)
-    .flatMap(([ceremony, list]) =>
-      list.map((bp) => ({ ...bp, ceremony: Number(ceremony) }))
-    );
-
-  const pageItems = allItems.slice((page - 1) * pageSize, page * pageSize);
+/**
+ * 通用：將靜態 bp 列表分頁後向 TMDB 取得詳情並回傳
+ * ceremony 傳入 null 時，標題改用每筆資料自帶的 bp.ceremony（全部模式）
+ */
+async function fetchStaticCeremonyPage(list, ceremony, page, pageSize = 10) {
+  const start = (page - 1) * pageSize;
+  const pageItems = list.slice(start, start + pageSize);
   if (pageItems.length === 0) return [];
 
   return Promise.all(
     pageItems.map(async (bp) => {
+      // 全部模式（ceremony === null）時，顯示每筆資料自己的屆次
+      const label = ceremony !== null ? ceremony : bp.ceremony;
       try {
         const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
           params: { language: "zh-CN" },
@@ -342,30 +373,88 @@ async function getAll(params = {}) {
           id: bp.id,
           type: "tmdb",
           mediaType: "movie",
-          title: `第${bp.ceremony}届入圍作品 · ${data.title || bp.title}`,
+          title: `第${label}届 · ${data.title || bp.title}`,
           description: data.overview || "",
-          rating: data.vote_average
-            ? String(data.vote_average.toFixed(1))
-            : undefined,
+          rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
           releaseDate: data.release_date,
-          posterPath: data.poster_path
-            ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-            : undefined,
-          backdropPath: data.backdrop_path
-            ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-            : undefined,
+          posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
+          backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
         };
       } catch (e) {
         console.error(`获取影片 ${bp.id} 失败:`, e);
-        return {
-          id: bp.id,
-          type: "tmdb",
-          mediaType: "movie",
-          title: `第${bp.ceremony}届入圍作品 · ${bp.title}`,
-        };
+        return { id: bp.id, type: "tmdb", mediaType: "movie", title: `第${label}届 · ${bp.title}` };
       }
     })
   );
+}
+
+/**
+ * 通用：透過爬取 TMDB 奖项页面取得指定屆次作品（第73～94屆無靜態資料時使用）
+ */
+async function fetchDynamicCeremonyPage(ceremony, page, pageSize = 10) {
+  try {
+    const html = await fetchAwardPage(ceremony);
+    const items = parseAwardItems(html);
+    const start = (page - 1) * pageSize;
+    const pageItems = items.slice(start, start + pageSize);
+    if (pageItems.length === 0) return [];
+
+    return Promise.all(
+      pageItems.map(async ({ tmdbId, mediaType, title, isWinner, category }) => {
+        try {
+          const endpoint = mediaType === "tv" ? `/tv/${tmdbId}` : `/movie/${tmdbId}`;
+          const data = await Widget.tmdb.get(endpoint, { params: { language: "zh-CN" } });
+          if (!data) throw new Error("no data");
+          const fwId = mediaType === "tv" ? `tv.${tmdbId}` : tmdbId;
+          return {
+            id: fwId,
+            type: "tmdb",
+            mediaType,
+            title: `第${ceremony}届${isWinner ? " 🏆" : ""} · ${data.title || data.name || title}`,
+            description: data.overview || "",
+            rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
+            releaseDate: data.release_date || data.first_air_date,
+            posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
+            backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
+            genreTitle: category || undefined,
+          };
+        } catch (e) {
+          console.error(`获取影片 ${tmdbId} 失败:`, e);
+          const fwId = mediaType === "tv" ? `tv.${tmdbId}` : tmdbId;
+          return { id: fwId, type: "tmdb", mediaType, title: `第${ceremony}届 · ${title}` };
+        }
+      })
+    );
+  } catch (e) {
+    console.error(`爬取第${ceremony}届失败:`, e);
+    return [];
+  }
+}
+
+/**
+ * 全部屆次（支援第95～98屆篩選）
+ *
+ * params.ceremony：
+ *   "0"  → 全部（第98～95屆合併，由新到舊）
+ *   "98" / "97" / "96" / "95" → 只顯示該屆
+ */
+async function getAll(params = {}) {
+  const page     = parseInt(params.page)     || 1;
+  const pageSize = 10;
+  const selected = parseInt(params.ceremony) || 0; // 0 = 全部
+
+  let sourceList;
+
+  if (selected !== 0) {
+    // ── 指定單一屆次 ──────────────────────────────────────────────────────────
+    sourceList = CEREMONIES[selected];
+    if (!sourceList) return [];
+  } else {
+    // ── 全部屆次：將 98→95 依序合併 ──────────────────────────────────────────
+    sourceList = [98, 97, 96, 95].flatMap((c) => CEREMONIES[c]);
+  }
+
+  return fetchStaticCeremonyPage(sourceList, selected || null, page, pageSize);
 }
 
 /**
