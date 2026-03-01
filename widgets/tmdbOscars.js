@@ -7,8 +7,8 @@
 
 WidgetMetadata = {
     id: "tmdboscars",
-    title: "歷屆奥斯卡金像奖",
-    version: "2.0.0",
+    title: "🏆歷屆奥斯卡金像奖🏆",
+    version: "2.2.0",
     requiredVersion: "0.0.1",
     description: "奥斯卡是由美國電影藝術與科學學院（AMPAS）主辦的年度電影盛事，自1929年起表彰優秀電影創作，是全球影壇最受矚目的榮譽之一。",
     author: "ForwardWidget",
