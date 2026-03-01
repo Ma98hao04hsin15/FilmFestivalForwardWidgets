@@ -222,7 +222,7 @@ function toWidgetItems(items) {
 // ─── 模块函数 ────────────────────────────────────────────────────────────────
 
 /**
- * 历届奥斯卡最佳影片獲獎作品
+ * 98屆全部作品
  */
 async function loadBestPictures(params = {}) {
   const page = parseInt(params.page) || 1;
@@ -274,7 +274,7 @@ async function loadBestPictures(params = {}) {
 }
 
 /**
- * 历届奥斯卡最佳影片提名作品
+ * 97屆全部作品
  */
 async function loadBestPicturesnominee(params = {}) {
   const page = parseInt(params.page) || 1;
