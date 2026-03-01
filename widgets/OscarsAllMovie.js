@@ -130,6 +130,7 @@ async function getAll(params = {}) {
 		98Oscars,
 		97Oscars,
     );
+}
 
 async function 98(params = {}) {
     return 98Oscars;
@@ -140,4 +141,4 @@ async function 97(params = {}) {
 }
 
 
-}
+
