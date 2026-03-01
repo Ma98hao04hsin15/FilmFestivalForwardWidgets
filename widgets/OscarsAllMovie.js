@@ -23,7 +23,7 @@ WidgetMetadata = {
           type: "select",
           value: "0",
           options: [
-            { label: "全部屆次（95～98屆）", value: "0"  },
+            { label: "🎭 全部屆次",           value: "0"  },
             { label: "🎭 第98屆",            value: "98" },
             { label: "🎭 第97屆",            value: "97" },
             { label: "🎭 第96屆",            value: "96" },
