@@ -23,7 +23,7 @@ WidgetMetadata = {
                     name: "category",
                     title: "屆數",
                     type: "enumeration",
-                    value: "edition",                // ✅ Fix 1: 改為 "98"，與 enumOptions 第一項對應
+                    value: "98",                // ✅ Fix 1: 改為 "98"，與 enumOptions 第一項對應
                     enumOptions: [
                         { title: "🎭 98th 全部作品", value: "98" },
                         { title: "🎭 97th 全部作品", value: "97" },
@@ -352,7 +352,7 @@ const Oscars73 = [
 // 統一入口
 // ─────────────────────────────────────────────
 async function getOscars(params = {}) {           // ✅ Fix 2: 函數名改為 getOscars
-    const category = params.category || "edition";     // ✅ Fix 1: 預設值改為 "98"
+    const category = params.category || "98";     // ✅ Fix 1: 預設值改為 "98"
 
     switch (category) {
         case "98": return Oscars98;
