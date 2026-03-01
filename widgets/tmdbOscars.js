@@ -27,7 +27,7 @@ WidgetMetadata = {
                     enumOptions: [
                         { title: "🎭 98th 全部作品", value: "98" },
                         { title: "🎭 97th 全部作品", value: "97" },
-                        //{ title: "🎭 96th 全部作品", value: "96" },
+                        { title: "🎭 96th 全部作品", value: "96" },
                         //{ title: "🎭 95th 全部作品", value: "95" },
                         //{ title: "🎭 94th 全部作品", value: "94" },
                         //{ title: "🎭 93th 全部作品", value: "93" },
