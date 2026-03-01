@@ -25,7 +25,7 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎭第98屆",
+      title: "🎯 第98屆",
       description: "第98屆作品",
       requiresWebView: false,
       functionName: "loadBestPictures",
@@ -33,7 +33,7 @@ WidgetMetadata = {
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎭第97屆",
+      title: "🎯 第97屆",
       description: "第97屆作品",
       requiresWebView: false,
       functionName: "loadBestPicturesnominee",
@@ -41,7 +41,7 @@ WidgetMetadata = {
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎭第96屆",
+      title: "🎯 第96屆",
       description: "第96屆作品",
       requiresWebView: false,
       functionName: "load96Oscars",
@@ -50,7 +50,7 @@ WidgetMetadata = {
     },
     {
       // ✅ 修復 BUG5：functionName 原本錯誤指向 "load96Oscars"，改為 "load95Oscars"
-      title: "🎭第95屆",
+      title: "🎯 第95屆",
       description: "第95屆作品",
       requiresWebView: false,
       functionName: "load95Oscars",
@@ -58,7 +58,7 @@ WidgetMetadata = {
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎭第73屆",
+      title: "🎯 第73屆",
       description: "第73屆作品",
       requiresWebView: false,
       functionName: "load73Oscars",
