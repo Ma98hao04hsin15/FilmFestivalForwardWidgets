@@ -25,23 +25,23 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎯 第98屆",
+      title: "🎭第98屆",
       description: "第98屆作品",
       requiresWebView: false,
-      functionName: "load98Oscars",
+      functionName: "loadBestPictures",
       cacheDuration: 604800,
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎯 第97屆",
+      title: "🎭第97屆",
       description: "第97屆作品",
       requiresWebView: false,
-      functionName: "load97Oscars",
+      functionName: "loadBestPicturesnominee",
       cacheDuration: 604800,
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎯 第96屆",
+      title: "🎭第96屆",
       description: "第96屆作品",
       requiresWebView: false,
       functionName: "load96Oscars",
@@ -50,10 +50,18 @@ WidgetMetadata = {
     },
     {
       // ✅ 修復 BUG5：functionName 原本錯誤指向 "load96Oscars"，改為 "load95Oscars"
-      title: "🎯 第95屆",
+      title: "🎭第95屆",
       description: "第95屆作品",
       requiresWebView: false,
       functionName: "load95Oscars",
+      cacheDuration: 604800,
+      params: [{ name: "page", title: "页码", type: "page" }],
+    },
+    {
+      title: "🎭第73屆",
+      description: "第73屆作品",
+      requiresWebView: false,
+      functionName: "load73Oscars",
       cacheDuration: 604800,
       params: [{ name: "page", title: "页码", type: "page" }],
     },
@@ -66,7 +74,7 @@ const AWARD_ID = "1-academy-awards";
 const BASE_URL = "https://www.themoviedb.org";
 
 // 98th 全部作品
-const Oscars98 = [
+const BEST_PICTURES = [
   { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
   { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
   { id: "1062722", year: 2026, title: "Frankenstein",                           ceremony: 98 },
@@ -97,7 +105,7 @@ const Oscars98 = [
 ];
 
 // 97th 全部作品
-const Oscars97 = [
+const BEST_PICTURES_NOMINEE = [
   { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
   { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
   { id: "661539",  year: 2025, title: "A Complete Unknown",                     ceremony: 97 },
@@ -166,44 +174,55 @@ const Oscars96 = [
 
 // ✅ 修復 BUG2：95_Oscars → Oscars95（變數名不能以數字開頭）
 const Oscars95 = [
-  { id: "545611", year: 2023, title: "Everything Everywhere All at Once",             ceremony: 95 },
-  { id: "49046",  year: 2023, title: "All Quiet on the Western Front",                ceremony: 95 },
-  { id: "76600",  year: 2023, title: "Avatar: The Way of Water",                      ceremony: 95 },
-  { id: "674324", year: 2023, title: "The Banshees of Inisherin",                     ceremony: 95 },
-  { id: "614934", year: 2023, title: "Elvis",                                         ceremony: 95 },
-  { id: "804095", year: 2023, title: "The Fabelmans",                                 ceremony: 95 },
-  { id: "817758", year: 2023, title: "Tár",                                           ceremony: 95 },
-  { id: "361743", year: 2023, title: "Top Gun: Maverick",                             ceremony: 95 },
-  { id: "497828", year: 2023, title: "Triangle of Sadness",                           ceremony: 95 },
-  { id: "777245", year: 2023, title: "Women Talking",                                 ceremony: 95 },
-  { id: "661374", year: 2023, title: "Glass Onion: A Knives Out Mystery",             ceremony: 95 },
-  { id: "760099", year: 2023, title: "Living",                                        ceremony: 95 },
-  { id: "555604", year: 2023, title: "Guillermo del Toro's Pinocchio",                ceremony: 95 },
-  { id: "869626", year: 2023, title: "Marcel the Shell with Shoes On",                ceremony: 95 },
-  { id: "315162", year: 2023, title: "Puss in Boots: The Last Wish",                  ceremony: 95 },
-  { id: "560057", year: 2023, title: "The Sea Beast",                                 ceremony: 95 },
-  { id: "508947", year: 2023, title: "Turning Red",                                   ceremony: 95 },
-  { id: "714888", year: 2023, title: "Argentina, 1985",                               ceremony: 95 },
-  { id: "901563", year: 2023, title: "Close",                                         ceremony: 95 },
-  { id: "785398", year: 2023, title: "EO",                                            ceremony: 95 },
-  { id: "916405", year: 2023, title: "The Quiet Girl",                                ceremony: 95 },
-  { id: "615777", year: 2023, title: "Babylon",                                       ceremony: 95 },
-  { id: "579974", year: 2023, title: "RRR",                                           ceremony: 95 },
-  { id: "822124", year: 2023, title: "Tell It Like a Woman",                          ceremony: 95 },
-  { id: "505642", year: 2023, title: "Black Panther: Wakanda Forever",                ceremony: 95 },
-  { id: "414906", year: 2023, title: "The Batman",                                    ceremony: 95 },
-  { id: "685691", year: 2023, title: "Bardo, False Chronicle of a Handful of Truths", ceremony: 95 },
-  { id: "814757", year: 2023, title: "Empire of Light",                               ceremony: 95 },
-  { id: "785084", year: 2023, title: "The Whale",                                     ceremony: 95 },
-  { id: "754609", year: 2023, title: "Mrs. Harris Goes to Paris",                     ceremony: 95 },
+  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
+  { id: "49046",  year: 2023, title: "All Quiet on the Western Front",    ceremony: 95 },
+  { id: "76600",  year: 2023, title: "Avatar: The Way of Water",          ceremony: 95 },
+  { id: "674324", year: 2023, title: "The Banshees of Inisherin",         ceremony: 95 },
+  { id: "614934", year: 2023, title: "Elvis",                             ceremony: 95 },
+  { id: "804095", year: 2023, title: "The Fabelmans",                     ceremony: 95 },
+  { id: "817758", year: 2023, title: "Tár",                               ceremony: 95 },
+  { id: "361743", year: 2023, title: "Top Gun: Maverick",                 ceremony: 95 },
+  { id: "497828", year: 2023, title: "Triangle of Sadness",               ceremony: 95 },
+  { id: "777245", year: 2023, title: "Women Talking",                     ceremony: 95 },
 ];
 
+
+// 73rd 全部作品（已去除重複條目：Erin Brockovich, Traffic, Crouching Tiger, The Patriot, U-571）
+const Oscars73 = [
+  { id: "392",   year: 2001, title: "Chocolat",                          ceremony: 73 },
+  { id: "146",   year: 2001, title: "Crouching Tiger, Hidden Dragon",     ceremony: 73 },
+  { id: "462",   year: 2001, title: "Erin Brockovich",                   ceremony: 73 },
+  { id: "98",    year: 2001, title: "Gladiator",                         ceremony: 73 },
+  { id: "1900",  year: 2001, title: "Traffic",                           ceremony: 73 },
+  { id: "786",   year: 2001, title: "Almost Famous",                     ceremony: 73 },
+  { id: "71",    year: 2001, title: "Billy Elliot",                      ceremony: 73 },
+  { id: "14295", year: 2001, title: "You Can Count on Me",               ceremony: 73 },
+  { id: "134",   year: 2001, title: "O Brother, Where Art Thou?",        ceremony: 73 },
+  { id: "11004", year: 2001, title: "Wonder Boys",                       ceremony: 73 },
+  { id: "55",    year: 2001, title: "Amores Perros",                     ceremony: 73 },
+  { id: "29937", year: 2001, title: "Divided We Fall",                   ceremony: 73 },
+  { id: "58886", year: 2001, title: "Everybody's Famous!",               ceremony: 73 },
+  { id: "10697", year: 2001, title: "The Taste of Others",               ceremony: 73 },
+  { id: "10867", year: 2001, title: "Malèna",                            ceremony: 73 },
+  { id: "2024",  year: 2001, title: "The Patriot",                       ceremony: 73 },
+  { id: "1597",  year: 2001, title: "Meet the Parents",                  ceremony: 73 },
+  { id: "16",    year: 2001, title: "Dancer in the Dark",                ceremony: 73 },
+  { id: "11688", year: 2001, title: "The Emperor's New Groove",          ceremony: 73 },
+  { id: "3536",  year: 2001, title: "U-571",                             ceremony: 73 },
+  { id: "5551",  year: 2001, title: "Space Cowboys",                     ceremony: 73 },
+  { id: "8358",  year: 2001, title: "Cast Away",                         ceremony: 73 },
+  { id: "2133",  year: 2001, title: "The Perfect Storm",                 ceremony: 73 },
+  { id: "8871",  year: 2001, title: "How the Grinch Stole Christmas",    ceremony: 73 },
+  { id: "10876", year: 2001, title: "Quills",                            ceremony: 73 },
+  { id: "7093",  year: 2001, title: "Vatel",                             ceremony: 73 },
+];
 // ✅ 修復 BUG4：補充定義 CEREMONIES，供 getAll() 使用
 const CEREMONIES = {
-  98: Oscars98,
-  97: Oscars97,
+  98: BEST_PICTURES,
+  97: BEST_PICTURES_NOMINEE,
   96: Oscars96,
   95: Oscars95,
+  73: Oscars73,
 };
 
 // ─── 工具函数 ────────────────────────────────────────────────────────────────
@@ -330,18 +349,18 @@ async function fetchStaticCeremonyPage(list, ceremony, page, pageSize = 10) {
  */
 async function getAll(params = {}) {
   const page = parseInt(params.page) || 1;
-  const sourceList = [98, 97, 96, 95].flatMap((c) => CEREMONIES[c]);
+  const sourceList = [98, 97, 96, 95, 73].flatMap((c) => CEREMONIES[c]);
   return fetchStaticCeremonyPage(sourceList, null, page);
 }
 
 // ✅ 修復 BUG6：load96Oscars 原本引用非法變數 96_Oscars，改為 Oscars96
 //    同時改用 fetchStaticCeremonyPage，消除重複代碼並統一 fallback 行為
-async function load98Oscars(params = {}) {
-  return fetchStaticCeremonyPage(Oscars98, 98, parseInt(params.page) || 1);
+async function loadBestPictures(params = {}) {
+  return fetchStaticCeremonyPage(BEST_PICTURES, 98, parseInt(params.page) || 1);
 }
 
-async function load97Oscars(params = {}) {
-  return fetchStaticCeremonyPage(Oscars97, 97, parseInt(params.page) || 1);
+async function loadBestPicturesnominee(params = {}) {
+  return fetchStaticCeremonyPage(BEST_PICTURES_NOMINEE, 97, parseInt(params.page) || 1);
 }
 
 async function load96Oscars(params = {}) {
@@ -351,4 +370,8 @@ async function load96Oscars(params = {}) {
 // ✅ 修復 BUG7：load95Oscars 原本引用非法變數 95_Oscars，改為 Oscars95
 async function load95Oscars(params = {}) {
   return fetchStaticCeremonyPage(Oscars95, 95, parseInt(params.page) || 1);
+}
+
+async function load73Oscars(params = {}) {
+  return fetchStaticCeremonyPage(Oscars73, 73, parseInt(params.page) || 1);
 }
