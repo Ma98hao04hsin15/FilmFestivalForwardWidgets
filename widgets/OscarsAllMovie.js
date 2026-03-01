@@ -66,7 +66,7 @@ const AWARD_ID = "1-academy-awards";
 const BASE_URL = "https://www.themoviedb.org";
 
 // 98th 全部作品
-const BEST_PICTURES = [
+const Oscars98 = [
   { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
   { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
   { id: "1062722", year: 2026, title: "Frankenstein",                           ceremony: 98 },
@@ -97,7 +97,7 @@ const BEST_PICTURES = [
 ];
 
 // 97th 全部作品
-const BEST_PICTURES_NOMINEE = [
+const Oscars97 = [
   { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
   { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
   { id: "661539",  year: 2025, title: "A Complete Unknown",                     ceremony: 97 },
@@ -200,8 +200,8 @@ const Oscars95 = [
 
 // ✅ 修復 BUG4：補充定義 CEREMONIES，供 getAll() 使用
 const CEREMONIES = {
-  98: BEST_PICTURES,
-  97: BEST_PICTURES_NOMINEE,
+  98: Oscars98,
+  97: Oscars97,
   96: Oscars96,
   95: Oscars95,
 };
@@ -337,11 +337,11 @@ async function getAll(params = {}) {
 // ✅ 修復 BUG6：load96Oscars 原本引用非法變數 96_Oscars，改為 Oscars96
 //    同時改用 fetchStaticCeremonyPage，消除重複代碼並統一 fallback 行為
 async function load98Oscars(params = {}) {
-  return fetchStaticCeremonyPage(BEST_PICTURES, 98, parseInt(params.page) || 1);
+  return fetchStaticCeremonyPage(Oscars98, 98, parseInt(params.page) || 1);
 }
 
 async function load97Oscars(params = {}) {
-  return fetchStaticCeremonyPage(BEST_PICTURES_NOMINEE, 97, parseInt(params.page) || 1);
+  return fetchStaticCeremonyPage(Oscars97, 97, parseInt(params.page) || 1);
 }
 
 async function load96Oscars(params = {}) {
