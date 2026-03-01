@@ -1,56 +1,33 @@
 /**
  * @file oscars-97.js
- * @description Forward widget for the Academy Awards.
+ * @description Forward widget for the 97th Academy Awards (2025).
  * Static data, no API key required. All IDs verified against TMDB.
- * @version 2.1.0
+ * @version 2.0.0
  */
 
 WidgetMetadata = {
     id: "tmdboscars",
     title: "歷屆奥斯卡金像奖",
-    version: "2.1.0",
+    version: "2.0.0",
     requiredVersion: "0.0.1",
     description: "奥斯卡是由美國電影藝術與科學學院（AMPAS）主辦的年度電影盛事，自1929年起表彰優秀電影創作，是全球影壇最受矚目的榮譽之一。",
     author: "ForwardWidget",
     modules: [
         {
             id: "oscars",
-            title: "歷屆奥斯卡金像奖奥斯卡全部作品",
-            functionName: "getOscars",          // ✅ Fix 2: 與下方函數名統一
+            title: "歷届奥斯卡",
+            functionName: "getOscars",
             cacheDuration: 86400,
             params: [
                 {
                     name: "category",
                     title: "屆數",
                     type: "enumeration",
-                    value: "98",                // ✅ Fix 1: 改為 "98"，與 enumOptions 第一項對應
+                    value: "all",                          // ✅ Fix 3: 改為 "all" 與 enumOptions 對應
                     enumOptions: [
-                        { title: "🎭 98th 全部作品", value: "98" },
-                        { title: "🎭 97th 全部作品", value: "97" },
-                        { title: "🎭 96th 全部作品", value: "96" },
-                        //{ title: "🎭 95th 全部作品", value: "95" },
-                        //{ title: "🎭 94th 全部作品", value: "94" },
-                        //{ title: "🎭 93th 全部作品", value: "93" },
-                       // { title: "🎭 92th 全部作品", value: "92" },
-                       // { title: "🎭 91th 全部作品", value: "91" },
-                       // { title: "🎭 90th 全部作品", value: "90" },
-                       // { title: "🎭 89th 全部作品", value: "89" },
-                      //  { title: "🎭 88th 全部作品", value: "88" },
-                      //  { title: "🎭 87th 全部作品", value: "87" },
-                        //{ title: "🎭 86th 全部作品", value: "86" },
-                      //  { title: "🎭 85th 全部作品", value: "85" },
-                        //{ title: "🎭 84th 全部作品", value: "84" },
-                     //   { title: "🎭 83th 全部作品", value: "83" },
-                     //   { title: "🎭 82th 全部作品", value: "82" },
-                     //   { title: "🎭 81th 全部作品", value: "81" },
-                     //   { title: "🎭 80th 全部作品", value: "80" },
-                     //   { title: "🎭 79th 全部作品", value: "79" },
-                     //   { title: "🎭 78th 全部作品", value: "78" },
-                     //   { title: "🎭 77th 全部作品", value: "77" },
-                     //   { title: "🎭 76th 全部作品", value: "76" },
-                     //   { title: "🎭 75th 全部作品", value: "75" },
-                     //   { title: "🎭 74th 全部作品", value: "74" },
-                      //  { title: "🎭 73th 全部作品", value: "73" },
+                        { title: "98th", value: "98" },
+                        { title: "97th", value: "97" },
+                        { title: "96th", value: "96" }
                     ]
                 }
             ]
@@ -59,7 +36,7 @@ WidgetMetadata = {
 };
 
 // ─────────────────────────────────────────────
-// 98th 全部作品
+// 98th全部作品
 // ─────────────────────────────────────────────
 const Oscars98 = [
     { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
@@ -89,10 +66,9 @@ const Oscars98 = [
     { id: "83533",   year: 2026, title: "Avatar: Fire and Ash",                   ceremony: 98 },
     { id: "1234821", year: 2026, title: "Jurassic World Rebirth",                 ceremony: 98 },
     { id: "1236470", year: 2026, title: "The Lost Bus",                           ceremony: 98 },
-];
-
+]; 
 // ─────────────────────────────────────────────
-// 97th 全部作品
+// 97th全部作品
 // ─────────────────────────────────────────────
 const Oscars97 = [
     { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
@@ -127,9 +103,9 @@ const Oscars97 = [
 ];
 
 // ─────────────────────────────────────────────
-// 96th 全部作品
+// 提名作品
 // ─────────────────────────────────────────────
-const Oscars96 = [
+const const Oscars96 = [
 	//Best Picture
 	{ id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
 	{ id: "840430", year: 2024, title: "The Holdovers", ceremony: 96 },
@@ -185,179 +161,23 @@ const Oscars96 = [
 	{ id: "940721", year: 2024, title: "Godzilla Minus One", ceremony: 96 },
 	{ id: "447365", year: 2024, title: "Guardians of the Galaxy Vol. 3", ceremony: 96 }
 ];
-
-// ─────────────────────────────────────────────
-// 95th 全部作品
-// ─────────────────────────────────────────────
-const Oscars95 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 94th 全部作品
-// ─────────────────────────────────────────────
-const Oscars94 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 93th 全部作品
-// ─────────────────────────────────────────────
-const Oscars93 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 92th 全部作品
-// ─────────────────────────────────────────────
-const Oscars92 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 91th 全部作品
-// ─────────────────────────────────────────────
-const Oscars91 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 90th 全部作品
-// ─────────────────────────────────────────────
-const Oscars90 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 89th 全部作品
-// ─────────────────────────────────────────────
-const Oscars89 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 88th 全部作品
-// ─────────────────────────────────────────────
-const Oscars88 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 87th 全部作品
-// ─────────────────────────────────────────────
-const Oscars87 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 86th 全部作品
-// ─────────────────────────────────────────────
-const Oscars86 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 85th 全部作品
-// ─────────────────────────────────────────────
-const Oscars85 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 84th 全部作品
-// ─────────────────────────────────────────────
-const Oscars84 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 83th 全部作品
-// ─────────────────────────────────────────────
-const Oscars83 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 82th 全部作品
-// ─────────────────────────────────────────────
-const Oscars82 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 81th 全部作品
-// ─────────────────────────────────────────────
-const Oscars81 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 80th 全部作品
-// ─────────────────────────────────────────────
-const Oscars80 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 79th 全部作品
-// ─────────────────────────────────────────────
-const Oscars79 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 78th 全部作品
-// ─────────────────────────────────────────────
-const Oscars78 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 77th 全部作品
-// ─────────────────────────────────────────────
-const Oscars77 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 76th 全部作品
-// ─────────────────────────────────────────────
-const Oscars76 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 75th 全部作品
-// ─────────────────────────────────────────────
-const Oscars75 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-// ─────────────────────────────────────────────
-// 74th 全部作品
-// ─────────────────────────────────────────────
-const Oscars74 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
-
-// ─────────────────────────────────────────────
-// 73th 全部作品
-// ─────────────────────────────────────────────
-const Oscars73 = [
-	{ id: "", year: 2001, title: "", ceremony: 73},
-];
-
 // ─────────────────────────────────────────────
 // 統一入口
 // ─────────────────────────────────────────────
-async function getOscars(params = {}) {           // ✅ Fix 2: 函數名改為 getOscars
-    const category = params.category || "98";     // ✅ Fix 1: 預設值改為 "98"
+async function getOscars(params = {}) {
+    const category = params.category || "all";
 
     switch (category) {
-        case "98": return Oscars98;
-        case "97": return Oscars97;
-        case "96": return Oscars96;
-        default:   return Oscars98;
+        case "98":
+            return Oscars98;
+
+        case "97":
+            return Oscars97;
+
+        case "96":
+            return Oscars96;
+
+        default:
+            return Oscars97;
     }
-}
+}                                               // ✅ Fix 2: 補上函數結尾的 }
