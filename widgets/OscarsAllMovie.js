@@ -189,7 +189,15 @@ const 96_Oscars = [
 // 95th全部作品 TMDB ID（movie）
 const 95_Oscars = [
   { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },	
-  { id: "49046", year: 2023, title: "All Quiet on the Western Front", ceremony: 95 },	
+  { id: "49046", year: 2023, title: "All Quiet on the Western Front", ceremony: 95 },
+  { id: "76600", year: 2023, title: "Avatar: The Way of Water", ceremony: 95 },
+  { id: "674324", year: 2023, title: "The Banshees of Inisherin", ceremony: 95 },
+  { id: "614934", year: 2023, title: "Elvis", ceremony: 95 },
+  { id: "804095", year: 2023, title: "The Fabelmans", ceremony: 95 },
+  { id: "817758", year: 2023, title: "Tár", ceremony: 95 },
+  { id: "361743", year: 2023, title: "Top Gun: Maverick", ceremony: 95 },
+  { id: "497828", year: 2023, title: "Triangle of Sadness", ceremony: 95 },
+  { id: "777245", year: 2023, title: "Women Talking", ceremony: 95 },
 ];
 
 // ─── 工具函数 ────────────────────────────────────────────────────────────────
