@@ -12,24 +12,11 @@ WidgetMetadata = {
   modules: [
     {
       title: "🎬 全部屆次",
-      description: "歷屆奧斯卡全部作品（可篩選第95～98屆）",
+      description: "歷屆奧斯卡全部作品",
       requiresWebView: false,
       functionName: "getAll",
       cacheDuration: 604800,
       params: [
-        {
-          name: "ceremony",
-          title: "屆次篩選",
-          type: "select",
-          value: "0",
-          options: [
-            { label: "🎭 全部屆次", value: "0"  },
-            { label: "🎭 第98屆",   value: "98" },
-            { label: "🎭 第97屆",   value: "97" },
-            { label: "🎭 第96屆",   value: "96" },
-            { label: "🎭 第95屆",   value: "95" },
-          ],
-        },
         {
           name: "page",
           title: "页码",
@@ -38,23 +25,23 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎭第98屆",
+      title: "🎯 第98屆",
       description: "第98屆作品",
       requiresWebView: false,
-      functionName: "loadBestPictures",
+      functionName: "load98Oscars",
       cacheDuration: 604800,
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎭第97屆",
+      title: "🎯 第97屆",
       description: "第97屆作品",
       requiresWebView: false,
-      functionName: "loadBestPicturesnominee",
+      functionName: "load97Oscars",
       cacheDuration: 604800,
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎭第96屆",
+      title: "🎯 第96屆",
       description: "第96屆作品",
       requiresWebView: false,
       functionName: "load96Oscars",
@@ -62,7 +49,8 @@ WidgetMetadata = {
       params: [{ name: "page", title: "页码", type: "page" }],
     },
     {
-      title: "🎭第95屆",
+      // ✅ 修復 BUG5：functionName 原本錯誤指向 "load96Oscars"，改為 "load95Oscars"
+      title: "🎯 第95屆",
       description: "第95屆作品",
       requiresWebView: false,
       functionName: "load95Oscars",
@@ -77,6 +65,7 @@ WidgetMetadata = {
 const AWARD_ID = "1-academy-awards";
 const BASE_URL = "https://www.themoviedb.org";
 
+// 98th 全部作品
 const BEST_PICTURES = [
   { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
   { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
@@ -107,6 +96,7 @@ const BEST_PICTURES = [
   { id: "1236470", year: 2026, title: "The Lost Bus",                           ceremony: 98 },
 ];
 
+// 97th 全部作品
 const BEST_PICTURES_NOMINEE = [
   { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
   { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
@@ -139,6 +129,8 @@ const BEST_PICTURES_NOMINEE = [
   { id: "653346",  year: 2025, title: "Kingdom of the Planet of the Apes",      ceremony: 97 },
 ];
 
+// ✅ 修復 BUG1：96_Oscars → Oscars96（變數名不能以數字開頭）
+// ✅ 修復 BUG3：補上陣列末尾遺漏的 ];
 const Oscars96 = [
   { id: "872585",  year: 2024, title: "Oppenheimer",                                   ceremony: 96 },
   { id: "1056360", year: 2024, title: "American Fiction",                              ceremony: 96 },
@@ -172,6 +164,7 @@ const Oscars96 = [
   { id: "447365",  year: 2024, title: "Guardians of the Galaxy Vol. 3",                ceremony: 96 },
 ];
 
+// ✅ 修復 BUG2：95_Oscars → Oscars95（變數名不能以數字開頭）
 const Oscars95 = [
   { id: "545611", year: 2023, title: "Everything Everywhere All at Once",             ceremony: 95 },
   { id: "49046",  year: 2023, title: "All Quiet on the Western Front",                ceremony: 95 },
@@ -205,6 +198,7 @@ const Oscars95 = [
   { id: "754609", year: 2023, title: "Mrs. Harris Goes to Paris",                     ceremony: 95 },
 ];
 
+// ✅ 修復 BUG4：補充定義 CEREMONIES，供 getAll() 使用
 const CEREMONIES = {
   98: BEST_PICTURES,
   97: BEST_PICTURES_NOMINEE,
@@ -293,12 +287,9 @@ function toWidgetItems(items) {
 // ─── 核心分頁函數 ─────────────────────────────────────────────────────────────
 
 /**
- * 通用靜態分頁函數，所有屆次模塊統一使用此函數。
- *
- * ceremony 傳入 null 時（全部模式），標題使用每筆資料自帶的 bp.ceremony。
- *
- * ✅ 修復：原 loadBestPictures 系列函數在 TMDB 回傳 null 時使用 continue 靜默丟失影片；
- *         此函數統一改為 catch fallback，確保每筆資料都有回傳結果。
+ * 通用靜態分頁函數，所有屆次模塊統一使用。
+ * ceremony 傳 null 時（全部模式），標題用每筆資料自帶的 bp.ceremony。
+ * TMDB 失敗時統一 fallback，不靜默丟失影片。
  */
 async function fetchStaticCeremonyPage(list, ceremony, page, pageSize = 10) {
   const start = (page - 1) * pageSize;
@@ -332,71 +323,24 @@ async function fetchStaticCeremonyPage(list, ceremony, page, pageSize = 10) {
   );
 }
 
-async function fetchDynamicCeremonyPage(ceremony, page, pageSize = 10) {
-  try {
-    const html = await fetchAwardPage(ceremony);
-    const items = parseAwardItems(html);
-    const start = (page - 1) * pageSize;
-    const pageItems = items.slice(start, start + pageSize);
-    if (pageItems.length === 0) return [];
-
-    return Promise.all(
-      pageItems.map(async ({ tmdbId, mediaType, title, isWinner, category }) => {
-        try {
-          const endpoint = mediaType === "tv" ? `/tv/${tmdbId}` : `/movie/${tmdbId}`;
-          const data = await Widget.tmdb.get(endpoint, { params: { language: "zh-CN" } });
-          if (!data) throw new Error("no data");
-          const fwId = mediaType === "tv" ? `tv.${tmdbId}` : tmdbId;
-          return {
-            id: fwId,
-            type: "tmdb",
-            mediaType,
-            title: `第${ceremony}届${isWinner ? " 🏆" : ""} · ${data.title || data.name || title}`,
-            description: data.overview || "",
-            rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
-            releaseDate: data.release_date || data.first_air_date,
-            posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
-            backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
-            genreTitle: category || undefined,
-          };
-        } catch (e) {
-          console.error(`获取影片 ${tmdbId} 失败:`, e);
-          const fwId = mediaType === "tv" ? `tv.${tmdbId}` : tmdbId;
-          return { id: fwId, type: "tmdb", mediaType, title: `第${ceremony}届 · ${title}` };
-        }
-      })
-    );
-  } catch (e) {
-    console.error(`爬取第${ceremony}届失败:`, e);
-    return [];
-  }
-}
-
 // ─── 模块函数 ────────────────────────────────────────────────────────────────
 
 /**
- * 全部屆次（支援第95～98屆篩選）
- * ceremony = "0" → 全部合併；"95"~"98" → 只顯示該屆
+ * 全部屆次（第98～95屆合併，由新到舊）
  */
 async function getAll(params = {}) {
-  const page     = parseInt(params.page)     || 1;
-  const selected = parseInt(params.ceremony) || 0;
-
-  const sourceList = selected !== 0
-    ? CEREMONIES[selected] ?? []
-    : [98, 97, 96, 95].flatMap((c) => CEREMONIES[c]);
-
-  return fetchStaticCeremonyPage(sourceList, selected || null, page);
+  const page = parseInt(params.page) || 1;
+  const sourceList = [98, 97, 96, 95].flatMap((c) => CEREMONIES[c]);
+  return fetchStaticCeremonyPage(sourceList, null, page);
 }
 
-// ✅ 修復：四個屆次模塊統一改用 fetchStaticCeremonyPage，
-//         消除重複代碼並確保 TMDB 失敗時 fallback 而非靜默丟失影片。
-
-async function loadBestPictures(params = {}) {
+// ✅ 修復 BUG6：load96Oscars 原本引用非法變數 96_Oscars，改為 Oscars96
+//    同時改用 fetchStaticCeremonyPage，消除重複代碼並統一 fallback 行為
+async function load98Oscars(params = {}) {
   return fetchStaticCeremonyPage(BEST_PICTURES, 98, parseInt(params.page) || 1);
 }
 
-async function loadBestPicturesnominee(params = {}) {
+async function load97Oscars(params = {}) {
   return fetchStaticCeremonyPage(BEST_PICTURES_NOMINEE, 97, parseInt(params.page) || 1);
 }
 
@@ -404,6 +348,7 @@ async function load96Oscars(params = {}) {
   return fetchStaticCeremonyPage(Oscars96, 96, parseInt(params.page) || 1);
 }
 
+// ✅ 修復 BUG7：load95Oscars 原本引用非法變數 95_Oscars，改為 Oscars95
 async function load95Oscars(params = {}) {
   return fetchStaticCeremonyPage(Oscars95, 95, parseInt(params.page) || 1);
 }
