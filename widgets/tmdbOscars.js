@@ -59,7 +59,7 @@ WidgetMetadata = {
 // ─────────────────────────────────────────────
 // 98th全部作品
 // ─────────────────────────────────────────────
-    const Oscars97 = [
+const Oscars98 = [
     { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
     { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
     { id: "1062722", year: 2026, title: "Frankenstein",                           ceremony: 98 },
@@ -86,7 +86,7 @@ WidgetMetadata = {
     { id: "1284120", year: 2026, title: "The Ugly Stepsister",                    ceremony: 98 },
     { id: "83533",   year: 2026, title: "Avatar: Fire and Ash",                   ceremony: 98 },
     { id: "1234821", year: 2026, title: "Jurassic World Rebirth",                 ceremony: 98 },
-    { id: "1236470", year: 2026, title: "The Lost Bus",                           ceremony: 98 },
+    { id: "1236470", year: 2026, title: "The Lost Bus",                           ceremony: 98 }
 ];
 
 // ─────────────────────────────────────────────
@@ -103,6 +103,24 @@ const Oscars97 = [
 	{ id: "1028196", year: 2025, title: "Nickel Boys", ceremony: 97 },
 	{ id: "933260", year: 2025, title: "The Substance", ceremony: 97 },
 	{ id: "402431", year: 2025, title: "Wicked", ceremony: 97 },
+	{ id: "1009476", year: 2025, title: "A Real Pain",ceremony: 97 },
+	{ id: "1064360", year: 2025, title: "September 5",ceremony: 97 },
+	{ id: "1184918", year: 2025, title: "Sing Sing",ceremony: 97 },
+	{ id: "1022796", year: 2025, title: "Flow",                                ceremony: 97 }, 
+	{ id: "1022789", year: 2025, title: "Inside Out 2",                        ceremony: 97 }, 
+	{ id: "1156593", year: 2025, title: "Memoir of a Snail",                   ceremony: 97 }, 
+	{ id: "974778",  year: 2025, title: "Wallace & Gromit: Vengeance Most Fowl",ceremony: 97 }, 
+	{ id: "698687",  year: 2025, title: "The Wild Robot",                      ceremony: 97 },
+	{ id: "1244558", year: 2025, title: "The Seed of the Sacred Fig",          ceremony: 97 },
+    { id: "1164598", year: 2025, title: "Vermiglio",                           ceremony: 97 },
+	{ id: "1061699", year: 2025, title: "The Six Triple Eight",				   ceremony: 97 },
+	{ id: "977326", year: 2025, title: "Elton John: Never Too Late",		   ceremony: 97 },
+	{ id: "426063", year: 2025, title: "Nosferatu",		   ceremony: 97 },
+	{ id: "1038263", year: 2025, title: "Maria",		   ceremony: 97 },
+	{ id: "558449", year: 2025, title: "Gladiator II",		   ceremony: 97 },
+	{ id: "945961", year: 2025, title: "Alien: Romulus",		   ceremony: 97 },
+	{ id: "799766", year: 2025, title: "Better Man",		   ceremony: 97 },
+	{ id: "653346", year: 2025, title: "Kingdom of the Planet of the Apes",		   ceremony: 97 }
 ];
 
 // ─────────────────────────────────────────────
