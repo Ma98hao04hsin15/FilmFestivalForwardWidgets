@@ -6,7 +6,7 @@
  */
 
 WidgetMetadata = {
-    id: "tmdboscars",
+    id: "OscarsAllMovie",
     title: "歷屆奥斯卡金像奖,含提名與獲獎",
     version: "2.0.0",
     requiredVersion: "0.0.1",
