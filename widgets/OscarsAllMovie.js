@@ -11,8 +11,8 @@ WidgetMetadata = {
   detailCacheDuration: 86400,
   modules: [
     {
-      title: "🎭98th",
-      description: "历届奥斯卡最佳影片获奖作品",
+      title: "🎭第98屆",
+      description: "第98屆作品",
       requiresWebView: false,
       functionName: "loadBestPictures",
       cacheDuration: 604800,
@@ -25,8 +25,8 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎭97th",
-      description: "历届奥斯卡最佳影片获奖作品",
+      title: "🎭第97屆",
+      description: "第97屆作品",
       requiresWebView: false,
       functionName: "loadBestPicturesnominee",
       cacheDuration: 604800,
