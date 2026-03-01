@@ -245,7 +245,7 @@ async function loadBestPictures(params = {}) {
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届 · ${data.title || bp.title}`,
+        title: `第${bp.ceremony}届 · ${data.title || bp.title}`,
         description: data.overview || "",
         rating: data.vote_average
           ? String(data.vote_average.toFixed(1))
@@ -265,7 +265,7 @@ async function loadBestPictures(params = {}) {
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届 · ${bp.title}`,
+        title: `第${bp.ceremony}届 · ${bp.title}`,
       });
     }
   }
@@ -297,7 +297,7 @@ async function loadBestPicturesnominee(params = {}) {
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
-        title: `🎨 第${bp.ceremony}届 · ${data.title || bp.title}`,
+        title: `第${bp.ceremony}届入圍作品 · ${data.title || bp.title}`,
         description: data.overview || "",
         rating: data.vote_average
           ? String(data.vote_average.toFixed(1))
@@ -317,7 +317,7 @@ async function loadBestPicturesnominee(params = {}) {
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
-        title: `🎨 第${bp.ceremony}届 · ${bp.title}`,
+        title: `第${bp.ceremony}届入圍作品 · ${bp.title}`,
       });
     }
   }
