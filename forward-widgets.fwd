@@ -22,7 +22,7 @@
       "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/academy-awards.js"
     },
     {
-      "id": "tmdboscars",
+      "id": "OscarsAllMovie",
       "title": "歷屆奥斯卡金像奖,含提名與獲獎",
       "description": "奥斯卡是由美國電影藝術與科學學院（AMPAS）主辦的年度電影盛事，自1929年起表彰優秀電影創作，是全球影壇最受矚目的榮譽之一。",
       "requiredVersion": "0.0.1",
