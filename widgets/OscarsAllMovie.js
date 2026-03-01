@@ -25,7 +25,7 @@ WidgetMetadata = {
           default: "all",
           // ✅ 修復 BUG3：options value 從 "98th" 改為純數字字串 "98"，與 CEREMONIES key 一致
           options: [
-            { label: "🎯 歷  屆"  value: "all" },
+            { label: "🎯 歷屆",   value: "all" },
             { label: "🎯 第98屆", value: "98"  },
             { label: "🎯 第97屆", value: "97"  },
             { label: "🎯 第96屆", value: "96"  },
