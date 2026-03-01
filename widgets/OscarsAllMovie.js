@@ -70,7 +70,7 @@ WidgetMetadata = {
       title: "🎭第95屆",
       description: "第95屆作品",
       requiresWebView: false,
-      functionName: "load96Oscars",
+      functionName: "load95Oscars", // ✅ Bug 5 修正：原本錯誤寫成 "load96Oscars"
       cacheDuration: 604800,
       params: [
         {
@@ -152,53 +152,63 @@ const BEST_PICTURES_NOMINEE = [
     { id: "653346",  year: 2025, title: "Kingdom of the Planet of the Apes",      ceremony: 97 },
 ];
 
+// ✅ Bug 1 修正：變數名稱不能以數字開頭，96_Oscars → Oscars96
 // 96th全部作品 TMDB ID（movie）
-const 96_Oscars = [
-  // 最佳影片
-  { id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
-  { id: "1056360", year: 2024, title: "American Fiction", ceremony: 96 },
-  { id: "915935", year: 2024, title: "Anatomy of a Fall", ceremony: 96 },
-  { id: "346698", year: 2024, title: "芭比", ceremony: 96 },
-  { id: "840430", year: 2024, title: "The Holdovers", ceremony: 96 },
-  { id: "466420", year: 2024, title: "Killers of the Flower Moon", ceremony: 96 },
-  { id: "523607", year: 2024, title: "Maestro", ceremony: 96 },
-  { id: "666277", year: 2024, title: "Past Lives", ceremony: 96 },
-  { id: "792307", year: 2024, title: "Poor Things", ceremony: 96 },
-  { id: "467244", year: 2024, title: "The Zone of Interest", ceremony: 96 },
-  { id: "839369", year: 2024, title: "May December", ceremony: 96 },
-  { id: "508883", year: 2024, title: "The Boy and the Heron", ceremony: 96 },
-  { id: "976573", year: 2024, title: "Elemental", ceremony: 96 },
-  { id: "961323", year: 2024, title: "Nimona", ceremony: 96 },
-  { id: "838240", year: 2024, title: "Robot Dreams ", ceremony: 96 },
-  { id: "569094", year: 2024, title: "Spider-Man: Across the Spider-Verse", ceremony: 96 },	
-  { id: "937746", year: 2024, title: "Io Capitano", ceremony: 96 },	
-  { id: "976893", year: 2024, title: "Perfect Days", ceremony: 96 },	
-  { id: "906126", year: 2024, title: "Society of the Snow", ceremony: 96 },	
-  { id: "998022", year: 2024, title: "The Teachers' Lounge", ceremony: 96 },	
-  { id: "335977", year: 2024, title: "Indiana Jones and the Dial of Destiny", ceremony: 96 },	
-  { id: "626332", year: 2024, title: "Flamin' Hot", ceremony: 96 },	
-  { id: "1171816", year: 2024, title: "American Symphony", ceremony: 96 },	
-  { id: "670292", year: 2024, title: "The Creator", ceremony: 96 },	
-  { id: "575264", year: 2024, title: "Mission: Impossible - Dead Reckoning Part One", ceremony: 96 },	
-  { id: "753342", year: 2024, title: "Napoleon", ceremony: 96 },	
-  { id: "991708", year: 2024, title: "El Conde", ceremony: 96 },	
-  { id: "899524", year: 2024, title: "Golda", ceremony: 96 },	
-  { id: "940721", year: 2024, title: "Godzilla Minus One", ceremony: 96 },		
-  { id: "447365", year: 2024, title: "Guardians of the Galaxy Vol. 3", ceremony: 96 },	
+const Oscars96 = [
+  { id: "872585",  year: 2024, title: "Oppenheimer",                              ceremony: 96 },
+  { id: "1056360", year: 2024, title: "American Fiction",                         ceremony: 96 },
+  { id: "915935",  year: 2024, title: "Anatomy of a Fall",                        ceremony: 96 },
+  { id: "346698",  year: 2024, title: "芭比",                                      ceremony: 96 },
+  { id: "840430",  year: 2024, title: "The Holdovers",                            ceremony: 96 },
+  { id: "466420",  year: 2024, title: "Killers of the Flower Moon",               ceremony: 96 },
+  { id: "523607",  year: 2024, title: "Maestro",                                  ceremony: 96 },
+  { id: "666277",  year: 2024, title: "Past Lives",                               ceremony: 96 },
+  { id: "792307",  year: 2024, title: "Poor Things",                              ceremony: 96 },
+  { id: "467244",  year: 2024, title: "The Zone of Interest",                     ceremony: 96 },
+  { id: "839369",  year: 2024, title: "May December",                             ceremony: 96 },
+  { id: "508883",  year: 2024, title: "The Boy and the Heron",                    ceremony: 96 },
+  { id: "976573",  year: 2024, title: "Elemental",                                ceremony: 96 },
+  { id: "961323",  year: 2024, title: "Nimona",                                   ceremony: 96 },
+  { id: "838240",  year: 2024, title: "Robot Dreams",                             ceremony: 96 },
+  { id: "569094",  year: 2024, title: "Spider-Man: Across the Spider-Verse",      ceremony: 96 },
+  { id: "937746",  year: 2024, title: "Io Capitano",                              ceremony: 96 },
+  { id: "976893",  year: 2024, title: "Perfect Days",                             ceremony: 96 },
+  { id: "906126",  year: 2024, title: "Society of the Snow",                      ceremony: 96 },
+  { id: "998022",  year: 2024, title: "The Teachers' Lounge",                     ceremony: 96 },
+  { id: "335977",  year: 2024, title: "Indiana Jones and the Dial of Destiny",    ceremony: 96 },
+  { id: "626332",  year: 2024, title: "Flamin' Hot",                              ceremony: 96 },
+  { id: "1171816", year: 2024, title: "American Symphony",                        ceremony: 96 },
+  { id: "670292",  year: 2024, title: "The Creator",                              ceremony: 96 },
+  { id: "575264",  year: 2024, title: "Mission: Impossible - Dead Reckoning Part One", ceremony: 96 },
+  { id: "753342",  year: 2024, title: "Napoleon",                                 ceremony: 96 },
+  { id: "991708",  year: 2024, title: "El Conde",                                 ceremony: 96 },
+  { id: "899524",  year: 2024, title: "Golda",                                    ceremony: 96 },
+  { id: "940721",  year: 2024, title: "Godzilla Minus One",                       ceremony: 96 },
+  { id: "447365",  year: 2024, title: "Guardians of the Galaxy Vol. 3",           ceremony: 96 },
+]; // ✅ Bug 3 修正：補上缺少的陣列閉合 ]
 
+// ✅ Bug 2 修正：變數名稱不能以數字開頭，95_Oscars → Oscars95
 // 95th全部作品 TMDB ID（movie）
-const 95_Oscars = [
-  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },	
-  { id: "49046", year: 2023, title: "All Quiet on the Western Front", ceremony: 95 },
-  { id: "76600", year: 2023, title: "Avatar: The Way of Water", ceremony: 95 },
-  { id: "674324", year: 2023, title: "The Banshees of Inisherin", ceremony: 95 },
-  { id: "614934", year: 2023, title: "Elvis", ceremony: 95 },
-  { id: "804095", year: 2023, title: "The Fabelmans", ceremony: 95 },
-  { id: "817758", year: 2023, title: "Tár", ceremony: 95 },
-  { id: "361743", year: 2023, title: "Top Gun: Maverick", ceremony: 95 },
-  { id: "497828", year: 2023, title: "Triangle of Sadness", ceremony: 95 },
-  { id: "777245", year: 2023, title: "Women Talking", ceremony: 95 },
+const Oscars95 = [
+  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
+  { id: "49046",  year: 2023, title: "All Quiet on the Western Front",    ceremony: 95 },
+  { id: "76600",  year: 2023, title: "Avatar: The Way of Water",          ceremony: 95 },
+  { id: "674324", year: 2023, title: "The Banshees of Inisherin",         ceremony: 95 },
+  { id: "614934", year: 2023, title: "Elvis",                             ceremony: 95 },
+  { id: "804095", year: 2023, title: "The Fabelmans",                     ceremony: 95 },
+  { id: "817758", year: 2023, title: "Tár",                               ceremony: 95 },
+  { id: "361743", year: 2023, title: "Top Gun: Maverick",                 ceremony: 95 },
+  { id: "497828", year: 2023, title: "Triangle of Sadness",               ceremony: 95 },
+  { id: "777245", year: 2023, title: "Women Talking",                     ceremony: 95 },
 ];
+
+// ✅ Bug 6 修正：定義 CEREMONIES 物件供 getAll 使用
+const CEREMONIES = {
+  98: BEST_PICTURES,
+  97: BEST_PICTURES_NOMINEE,
+  96: Oscars96,
+  95: Oscars95,
+};
 
 // ─── 工具函数 ────────────────────────────────────────────────────────────────
 
@@ -234,7 +244,6 @@ function parseAwardItems(html) {
   const items = [];
   const seen = new Set();
 
-  // TMDB 奖项页结构: 每个奖项 section 下有 .winner 和 .nominee
   $(".award_categories .award_category").each((_, section) => {
     const category = $(section).find("h3").text().trim();
 
@@ -244,7 +253,6 @@ function parseAwardItems(html) {
         const isWinner = $(el).hasClass("winner");
         const link = $(el).find("a").attr("href") || "";
 
-        // 提取 TMDB id 与 mediaType，格式通常为 /movie/12345 或 /tv/12345
         const match = link.match(/\/(movie|tv)\/(\d+)/);
         if (!match) return;
 
@@ -252,7 +260,6 @@ function parseAwardItems(html) {
         const tmdbId = match[2];
         const key = `${mediaType}-${tmdbId}`;
 
-        // 避免重复（同一部影片可能在多个奖项中出现）
         if (!seen.has(key)) {
           seen.add(key);
           const title =
@@ -265,7 +272,6 @@ function parseAwardItems(html) {
       });
   });
 
-  // 兼容备选结构：.card_list .card 内含 data-id 属性
   if (items.length === 0) {
     $(".card").each((_, el) => {
       const link = $(el).find("a").first().attr("href") || "";
@@ -297,7 +303,6 @@ function parseAwardItems(html) {
  */
 function toWidgetItems(items) {
   return items.map(({ tmdbId, mediaType, title, isWinner, category }) => {
-    // tmdb type: movie → id 直接用数字；tv → "tv.{id}"
     const fwId = mediaType === "tv" ? `tv.${tmdbId}` : tmdbId;
     return {
       id: fwId,
@@ -311,15 +316,12 @@ function toWidgetItems(items) {
 
 // ─── 模块函数 ────────────────────────────────────────────────────────────────
 
-// ─── 取得全部屆次 ────────────────────────────────────────────────────────────
-
 async function getAll(params = {}) {
   const page = parseInt(params.page) || 1;
   const pageSize = 10;
 
-  // 將所有屆次的影片合併成一個陣列，並附上屆次資訊
   const allItems = Object.entries(CEREMONIES)
-    .sort(([a], [b]) => b - a) // 由新到舊排序
+    .sort(([a], [b]) => b - a)
     .flatMap(([ceremony, list]) =>
       list.map((bp) => ({ ...bp, ceremony: Number(ceremony) }))
     );
@@ -363,43 +365,26 @@ async function loadBestPictures(params = {}) {
   if (pageItems.length === 0) return [];
 
   const results = [];
-
   for (const bp of pageItems) {
     try {
-      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
-        params: { language: "zh-CN" },
-      });
+      const data = await Widget.tmdb.get(`/movie/${bp.id}`, { params: { language: "zh-CN" } });
       if (!data) continue;
-
       results.push({
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
         title: `第${bp.ceremony}届 · ${data.title || bp.title}`,
         description: data.overview || "",
-        rating: data.vote_average
-          ? String(data.vote_average.toFixed(1))
-          : undefined,
+        rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
         releaseDate: data.release_date,
-        posterPath: data.poster_path
-          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-          : undefined,
-        backdropPath: data.backdrop_path
-          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-          : undefined,
+        posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
+        backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
       });
     } catch (e) {
       console.error(`获取影片 ${bp.id} 失败:`, e);
-      // 降级：只返回基础信息
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `第${bp.ceremony}届 · ${bp.title}`,
-      });
+      results.push({ id: bp.id, type: "tmdb", mediaType: "movie", title: `第${bp.ceremony}届 · ${bp.title}` });
     }
   }
-
   return results;
 }
 
@@ -415,46 +400,28 @@ async function loadBestPicturesnominee(params = {}) {
   if (pageItems.length === 0) return [];
 
   const results = [];
-
   for (const bp of pageItems) {
     try {
-      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
-        params: { language: "zh-CN" },
-      });
+      const data = await Widget.tmdb.get(`/movie/${bp.id}`, { params: { language: "zh-CN" } });
       if (!data) continue;
-
       results.push({
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
         title: `第${bp.ceremony}届 · ${data.title || bp.title}`,
         description: data.overview || "",
-        rating: data.vote_average
-          ? String(data.vote_average.toFixed(1))
-          : undefined,
+        rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
         releaseDate: data.release_date,
-        posterPath: data.poster_path
-          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-          : undefined,
-        backdropPath: data.backdrop_path
-          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-          : undefined,
+        posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
+        backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
       });
     } catch (e) {
       console.error(`获取影片 ${bp.id} 失败:`, e);
-      // 降级：只返回基础信息
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `第${bp.ceremony}届 · ${bp.title}`,
-      });
+      results.push({ id: bp.id, type: "tmdb", mediaType: "movie", title: `第${bp.ceremony}届 · ${bp.title}` });
     }
   }
-
   return results;
 }
-
 
 /**
  * 96屆全部作品
@@ -463,51 +430,33 @@ async function load96Oscars(params = {}) {
   const page = parseInt(params.page) || 1;
   const pageSize = 10;
   const start = (page - 1) * pageSize;
-  const pageItems = 96_Oscars.slice(start, start + pageSize);
+  const pageItems = Oscars96.slice(start, start + pageSize); // ✅ Bug 4 修正：96_Oscars → Oscars96
 
   if (pageItems.length === 0) return [];
 
   const results = [];
-
   for (const bp of pageItems) {
     try {
-      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
-        params: { language: "zh-CN" },
-      });
+      const data = await Widget.tmdb.get(`/movie/${bp.id}`, { params: { language: "zh-CN" } });
       if (!data) continue;
-
       results.push({
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
         title: `第${bp.ceremony}届 · ${data.title || bp.title}`,
         description: data.overview || "",
-        rating: data.vote_average
-          ? String(data.vote_average.toFixed(1))
-          : undefined,
+        rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
         releaseDate: data.release_date,
-        posterPath: data.poster_path
-          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-          : undefined,
-        backdropPath: data.backdrop_path
-          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-          : undefined,
+        posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
+        backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
       });
     } catch (e) {
       console.error(`获取影片 ${bp.id} 失败:`, e);
-      // 降级：只返回基础信息
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `第${bp.ceremony}届 · ${bp.title}`,
-      });
+      results.push({ id: bp.id, type: "tmdb", mediaType: "movie", title: `第${bp.ceremony}届 · ${bp.title}` });
     }
   }
-
   return results;
 }
-
 
 /**
  * 95屆全部作品
@@ -516,47 +465,30 @@ async function load95Oscars(params = {}) {
   const page = parseInt(params.page) || 1;
   const pageSize = 10;
   const start = (page - 1) * pageSize;
-  const pageItems = 95_Oscars.slice(start, start + pageSize);
+  const pageItems = Oscars95.slice(start, start + pageSize); // ✅ Bug 4 修正：95_Oscars → Oscars95
 
   if (pageItems.length === 0) return [];
 
   const results = [];
-
   for (const bp of pageItems) {
     try {
-      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
-        params: { language: "zh-CN" },
-      });
+      const data = await Widget.tmdb.get(`/movie/${bp.id}`, { params: { language: "zh-CN" } });
       if (!data) continue;
-
       results.push({
         id: bp.id,
         type: "tmdb",
         mediaType: "movie",
         title: `第${bp.ceremony}届 · ${data.title || bp.title}`,
         description: data.overview || "",
-        rating: data.vote_average
-          ? String(data.vote_average.toFixed(1))
-          : undefined,
+        rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
         releaseDate: data.release_date,
-        posterPath: data.poster_path
-          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-          : undefined,
-        backdropPath: data.backdrop_path
-          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-          : undefined,
+        posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
+        backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
       });
     } catch (e) {
       console.error(`获取影片 ${bp.id} 失败:`, e);
-      // 降级：只返回基础信息
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `第${bp.ceremony}届 · ${bp.title}`,
-      });
+      results.push({ id: bp.id, type: "tmdb", mediaType: "movie", title: `第${bp.ceremony}届 · ${bp.title}` });
     }
   }
-
   return results;
 }
