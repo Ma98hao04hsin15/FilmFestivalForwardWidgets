@@ -178,6 +178,6 @@ async function getOscars(params = {}) {
             return Oscars96;
 
         default:
-            return Oscars97;
+            return Oscars98;
     }
 }                                               // ✅ Fix 2: 補上函數結尾的 }
