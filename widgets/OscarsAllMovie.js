@@ -95,7 +95,7 @@ const BEST_PICTURES_NOMINEE = [
     { id: "823219",  year: 2025, title: "Flow",                                   ceremony: 97 }, 
     { id: "1022789", year: 2025, title: "Inside Out 2",                           ceremony: 97 },
     { id: "1064486", year: 2025, title: "Memoir of a Snail",                      ceremony: 97 }, 
-    { id: "929204", year: 2025, title: "Wallace & Gromit: Vengeance Most Fowl",  ceremony: 97 }, 
+    { id: "929204", year: 2025, title: "Wallace & Gromit: Vengeance Most Fowl",   ceremony: 97 }, 
     { id: "1184918", year: 2025, title: "The Wild Robot",                         ceremony: 97 }, 
     { id: "1278263", year: 2025, title: "The Seed of the Sacred Fig",             ceremony: 97 }, 
     { id: "1232827", year: 2025, title: "The Girl with the Needle",               ceremony: 97 },
