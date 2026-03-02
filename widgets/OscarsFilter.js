@@ -1,362 +1,485 @@
-/**
- * @file oscars-97.js
- * @description Forward widget for the 97th Academy Awards (2025).
- * Static data, no API key required. All IDs verified against TMDB.
- * @version 2.0.0
- */
-
+// 奥斯卡金像奖 ForwardWidget
+// 数据来源: TMDB Award API
 WidgetMetadata = {
-    id: "tmdboscars",
-    title: "歷屆奥斯卡金像奖",
-    version: "2.0.0",
-    requiredVersion: "0.0.1",
-    description: "奥斯卡是由美國電影藝術與科學學院（AMPAS）主辦的年度電影盛事，自1929年起表彰優秀電影創作，是全球影壇最受矚目的榮譽之一。",
-    author: "ForwardWidget",
-    modules: [
+  id: "OscarsFilter",
+  title: "🏆 奥斯卡金像奖",
+  description: "获取历届奥斯卡金像奖入围与获奖影片",
+  author: "ForwardWidget",
+  site: "https://www.themoviedb.org/award/1-academy-awards",
+  version: "1.0.0",
+  requiredVersion: "0.0.1",
+  detailCacheDuration: 86400,
+  modules: [
+    {
+      title: "🏆歷屆奧斯卡最佳影片獲獎作品",
+      description: "历届奥斯卡最佳影片获奖作品",
+      requiresWebView: false,
+      functionName: "loadBestPictures",
+      cacheDuration: 604800,
+      params: [
         {
-            id: "oscars97",
-            title: "歷届奥斯卡",
-            functionName: "getOscars97",
-            cacheDuration: 86400,
-            params: [
-                {
-                    name: "category",
-                    title: "奖项分类",
-                    type: "enumeration",
-                    value: "all",                          // ✅ Fix 3: 改為 "all" 與 enumOptions 對應
-                    enumOptions: [
-                        { title: "🎭 第97屆全部作品", value: "all" },
-                        { title: "🏆 第97屆獲獎作品", value: "winner" },
-                        { title: "🎨 第97屆提名作品", value: "nominee" },
-                        { title: "✍️ 歷屆最佳原創劇本提名作品", value: "screenplay_winner" }
-                        { title: "✍️ 歷屆最佳原創劇本獲獎作品", value: "screenplay_nominee" }
-                    ]
-                }
-            ]
-        }
-    ]
+          name: "page",
+          title: "页码",
+          type: "page",
+        },
+      ],
+    },
+    {
+      title: "🎨歷屆奧斯卡最佳影片提名作品",
+      description: "历届奥斯卡最佳影片获奖作品",
+      requiresWebView: false,
+      functionName: "loadBestPicturesnominee",
+      cacheDuration: 604800,
+      params: [
+        {
+          name: "page",
+          title: "页码",
+          type: "page",
+        },
+      ],
+    },
+  ],
 };
 
-// ─────────────────────────────────────────────
-// 全部作品
-// ─────────────────────────────────────────────
-const Oscars97 = [
-    {
-        id: 1064213,
-        type: "tmdb",
-        title: "阿诺拉",
-        description: "布鲁克林年轻性工作者阿诺拉与俄罗斯寡头之子闪婚，美梦开始便遭男方父母介入强行撤销婚姻。",
-        releaseDate: "2024-12-06",
-        backdropPath: "/tG8QWDASd8rw0JxkDN2MDDWLEse.jpg",
-        posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
-        rating: 7.4,
-        mediaType: "movie"
-    },
-    {
-        id: 549509,
-        type: "tmdb",
-        title: "粗野派",
-        description: "二战后匈牙利裔犹太建筑师拉斯洛逃往美国，在富有赞助人的支持下重建声誉，代价沉重。",
-        releaseDate: "2025-02-28",
-        backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
-        posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
-        rating: 7.6,
-        mediaType: "movie"
-    },
-    {
-        id: 661539,
-        type: "tmdb",
-        title: "摇滚诗人：未知的传奇",
-        description: "1961年，19岁的鲍勃·迪伦只身闯入纽约民谣圈，以惊人才华改写美国音乐史。",
-        releaseDate: "2025-01-24",
-        backdropPath: "/kcCy5tKTe6WepVQ6SQaSewpmoCj.jpg",
-        posterPath: "/cxh4GcerxbMMPcouD8RPn6xB3Ue.jpg",
-        rating: 7.3,
-        mediaType: "movie"
-    },
-    {
-        id: 974576,
-        type: "tmdb",
-        title: "秘密会议",
-        description: "教宗骤逝，枢机主教劳伦斯奉命主持密室选举，却在梵蒂冈高墙内身陷足以颠覆教会的阴谋。",
-        releaseDate: "2025-03-07",
-        backdropPath: "/e7Y8bMkPfJFHNMaUn6TrXCHqHAX.jpg",
-        posterPath: "/1BWhKsbUTiBD0WQhrOfQlU6zrc5.jpg",
-        rating: 7.3,
-        mediaType: "movie"
-    },
-    {
-        id: 974950,
-        type: "tmdb",
-        title: "艾米莉亚·佩雷斯",
-        description: "一名律师被墨西哥毒枭雇用，协助其悄然变性改头换面，踏上危险与救赎并存的旅程。",
-        releaseDate: "2024-08-21",
-        backdropPath: "/9tIgF5Ht9ndLJEwv2e6TZrExMKw.jpg",
-        posterPath: "/uwPaMUnffh8JXCXA3ALJsFM4CAW.jpg",
-        rating: 7.0,
-        mediaType: "movie"
-    },
-    {
-        id: 1000837,
-        type: "tmdb",
-        title: "我仍在此",
-        description: "1971年巴西军政府时期，尤妮斯的丈夫被当局带走后失踪，她独撑家庭并投身人权事业。",
-        releaseDate: "2025-04-02",
-        backdropPath: "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
-        posterPath: "/lnWJqTA4gha5sZGJaD15oxOUyVm.jpg",
-        rating: 8.1,
-        mediaType: "movie"
-    },
-    {
-        id: 1028196,
-        type: "tmdb",
-        title: "尼克男孩",
-        description: "1960年代佛罗里达，两名黑人少年在严酷感化院中结下深厚友谊，共同面对种族歧视与制度暴力。",
-        releaseDate: "2024-12-13",
-        backdropPath: "/kmLssINCNdXnIDjWkBsk6LUNSbe.jpg",
-        posterPath: "/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg",  // ✅ Fix 1: 移除錯誤的完整 URL
-        rating: 6.8,
-        mediaType: "movie"
-    },
-    {
-        id: 933260,
-        type: "tmdb",
-        title: "某种物质",
-        description: "逐渐淡出的女明星使用黑市药物创造年轻的分身，两个身份的角力走向失控深渊。",
-        releaseDate: "2024-10-18",
-        backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
-        posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
-        rating: 7.3,
-        mediaType: "movie"
-    },
-    {
-        id: 402431,
-        type: "tmdb",
-        title: "魔法坏女巫",
-        description: "在翡翠城，天生绿皮肤的艾菲与人气十足的葛琳达意外成为室友，命运推向截然不同的道路。",
-        releaseDate: "2024-11-22",
-        backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qS9ean.jpg",
-        posterPath: "/rufGJNaU6zY0CeCnxYlRe8qYMA4.jpg",
-        rating: 7.2,
-        mediaType: "movie"
-    },
-    {
-        id: 693134,
-        type: "tmdb",
-        title: "沙丘：第二部",
-        description: "保罗·厄崔迪与弗雷曼人并肩踏上复仇之路，在爱情与宇宙命运之间做出艰难抉择。",
-        releaseDate: "2024-02-28",
-        backdropPath: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
-        posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
-        rating: 8.0,
-        mediaType: "movie"
-    }
+// ─── 常量 ───────────────────────────────────────────────────────────────────
+
+const AWARD_ID = "1-academy-awards";
+const BASE_URL = "https://www.themoviedb.org";
+
+// 历届最佳影片获奖 TMDB ID（movie）
+const BEST_PICTURES = [
+  // 第97届 ~ 第77届（每届最佳影片，按届次倒序）
+  { id: "1064213", year: 2025, title: "Anora", ceremony: 97 },
+  { id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
+  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
+  { id: "776503", year: 2022, title: "CODA", ceremony: 94 },
+  { id: "581734", year: 2021, title: "Nomadland", ceremony: 93 },
+  { id: "496243", year: 2020, title: "Parasite", ceremony: 92 },
+  { id: "490132", year: 2019, title: "Green Book", ceremony: 91 },
+  { id: "399055", year: 2018, title: "The Shape of Water", ceremony: 90 },
+  { id: "376867", year: 2017, title: "Moonlight", ceremony: 89 },
+  { id: "314365", year: 2016, title: "Spotlight", ceremony: 88 },
+  { id: "194662", year: 2015, title: "Birdman", ceremony: 87 },
+  { id: "76203", year: 2014, title: "12 Years a Slave", ceremony: 86 },
+  { id: "68734", year: 2013, title: "Argo", ceremony: 85 },
+  { id: "74643", year: 2012, title: "The Artist", ceremony: 84 },
+  { id: "45269", year: 2011, title: "The King's Speech", ceremony: 83 },
+  { id: "12162", year: 2010, title: "The Hurt Locker", ceremony: 82 },
+  { id: "12405", year: 2009, title: "Slumdog Millionaire", ceremony: 81 },
+  { id: "6977", year: 2008, title: "No Country for Old Men", ceremony: 80 },
+  { id: "1422", year: 2007, title: "The Departed", ceremony: 79 },
+  { id: "1640", year: 2006, title: "Crash", ceremony: 78 },
+  { id: "70", year: 2005, title: "Million Dollar Baby", ceremony: 77 },
+  { id: "122", year: 2004, title: "The Lord of the Rings: The Return of the King", ceremony: 76 },  
+  { id: "1574", year: 2003, title: "Chicago", ceremony: 75 },
+  { id: "453", year: 2002, title: "A Beautiful Mind", ceremony: 74 },
+  { id: "98", year: 2001, title: "Gladiator", ceremony: 73 },
 ];
 
-// ─────────────────────────────────────────────
-// 最佳影片獲獎作品
-// ─────────────────────────────────────────────
-const Best_Picture_winner = [
-    {
-        id: 1064213,
+// 历届最佳影片提名 TMDB ID（movie）
+const BEST_PICTURES_NOMINEE = [
+  // 第97届 ~ 第77届（每届最佳影片，按届次倒序）
+  { id: "549509", year: 2025, title: "The Brutalist", ceremony: 97 },
+  { id: "661539", year: 2025, title: "A Complete Unknown", ceremony: 97 },
+  { id: "974576", year: 2025, title: "Conclave", ceremony: 97 },
+  { id: "693134", year: 2025, title: "Dune: Part Two", ceremony: 97 },
+  { id: "974950", year: 2025, title: "Emilia Pérez", ceremony: 97 },
+  { id: "1000837", year: 2025, title: "I'm Still Here", ceremony: 97 },
+  { id: "1028196", year: 2025, title: "Nickel Boys", ceremony: 97 },
+  { id: "933260", year: 2025, title: "The Substance", ceremony: 97 },
+  { id: "402431", year: 2025, title: "Wicked", ceremony: 97 },
+  
+  { id: "1056360", year: 2024, title: "American Fiction", ceremony: 96 },
+  { id: "915935", year: 2024, title: "Anatomy of a Fall", ceremony: 96 },
+  { id: "346698", year: 2024, title: "Barbie", ceremony: 96 },
+  { id: "840430", year: 2024, title: "The Holdovers", ceremony: 96 },
+  { id: "466420", year: 2024, title: "Killers of the Flower Moon", ceremony: 96 },
+  { id: "523607", year: 2024, title: "Maestro", ceremony: 96 },
+  { id: "666277", year: 2024, title: "Past Lives", ceremony: 96 },
+  { id: "792307", year: 2024, title: "Poor Things", ceremony: 96 },
+  { id: "467244", year: 2024, title: "The Zone of Interest", ceremony: 96 },
+  
+  { id: "49046", year: 2023, title: "All Quiet on the Western Front", ceremony: 95 },
+  { id: "76600", year: 2023, title: "Avatar: The Way of Water", ceremony: 95 },
+  { id: "674324", year: 2023, title: "The Banshees of Inisherin", ceremony: 95 },
+  { id: "614934", year: 2023, title: "Elvis", ceremony: 95 },
+  { id: "804095", year: 2023, title: "The Fabelmans", ceremony: 95 },
+  { id: "817758", year: 2023, title: "Tár", ceremony: 95 },
+  { id: "361743", year: 2023, title: "Top Gun: Maverick", ceremony: 95 },
+  { id: "497828", year: 2023, title: "Triangle of Sadness", ceremony: 95 },
+  { id: "777245", year: 2023, title: "Women Talking", ceremony: 95 },
+  
+  { id: "777270", year: 2022, title: "Belfast", ceremony: 94 },
+  { id: "646380", year: 2022, title: "Don't Look Up", ceremony: 94 },
+  { id: "758866", year: 2022, title: "Drive My Car", ceremony: 94 },
+  { id: "438631", year: 2022, title: "Dune", ceremony: 94 },
+  { id: "614917", year: 2022, title: "King Richard", ceremony: 94 },
+  { id: "718032", year: 2022, title: "Licorice Pizza", ceremony: 94 },
+  { id: "597208", year: 2022, title: "Nightmare Alley", ceremony: 94 },
+  { id: "600583", year: 2022, title: "The Power of the Dog", ceremony: 94 },
+  { id: "511809", year: 2022, title: "West Side Story", ceremony: 94 },
+  
+  { id: "600354", year: 2021, title: "The Father", ceremony: 93 },
+  { id: "583406", year: 2021, title: "Judas and the Black Messiah", ceremony: 93 },
+  { id: "614560", year: 2021, title: "Mank", ceremony: 93 },
+  { id: "615643", year: 2021, title: "Minari", ceremony: 93 },
+  { id: "582014", year: 2021, title: "Promising Young Woman", ceremony: 93 },
+  { id: "502033", year: 2021, title: "Sound of Metal", ceremony: 93 },
+  { id: "556984", year: 2021, title: "The Trial of the Chicago 7", ceremony: 93 },
+  
+  { id: "530915", year: 2020, title: "1917", ceremony: 92 },
+  { id: "359724", year: 2020, title: "Ford v Ferrari", ceremony: 92 },
+  { id: "515001", year: 2020, title: "Jojo Rabbit", ceremony: 92 },
+  { id: "475557", year: 2020, title: "Joker", ceremony: 92 },
+  { id: "331482", year: 2020, title: "Little Women", ceremony: 92 },
+  { id: "398978", year: 2020, title: "The Irishman", ceremony: 92 },
+  { id: "492188", year: 2020, title: "Marriage Story", ceremony: 92 },
+  { id: "466272", year: 2020, title: "Once Upon a Time in Hollywood", ceremony: 92 },   
+  
+  { id: "284054", year: 2019, title: "Black Panther", ceremony: 91 },
+  { id: "487558", year: 2019, title: "BlacKkKlansman", ceremony: 91 },
+  { id: "424694", year: 2019, title: "Bohemian Rhapsody", ceremony: 91 },
+  { id: "375262", year: 2019, title: "The Favourite", ceremony: 91 },
+  { id: "426426", year: 2019, title: "Roma", ceremony: 91 },
+  { id: "332562", year: 2019, title: "A Star Is Born", ceremony: 91 },
+  { id: "429197", year: 2019, title: "Vice", ceremony: 91 },
+  
+  { id: "398818", year: 2018, title: "Call Me by Your Name", ceremony: 90 },
+  { id: "399404", year: 2018, title: "Darkest Hour", ceremony: 90 },
+  { id: "374720", year: 2018, title: "Dunkirk", ceremony: 90 },
+  { id: "419430", year: 2018, title: "Get Out", ceremony: 90 },
+  { id: "391713", year: 2018, title: "Lady Bird", ceremony: 90 },
+  { id: "400617", year: 2018, title: "Phantom Thread", ceremony: 90 },
+  { id: "446354", year: 2018, title: "The Post", ceremony: 90 },
+  { id: "359940", year: 2018, title: "Three Billboards Outside Ebbing, Missouri", ceremony: 90 },
+  
+  { id: "329865", year: 2017, title: "Arrival", ceremony: 89 },
+  { id: "393457", year: 2017, title: "Fences", ceremony: 89 },
+  { id: "324786", year: 2017, title: "Hacksaw Ridge", ceremony: 89 },
+  { id: "338766", year: 2017, title: "Hell or High Water", ceremony: 89 },
+  { id: "381284", year: 2017, title: "Hidden Figures", ceremony: 89 },
+  { id: "313369", year: 2017, title: "La La Land", ceremony: 89 },
+  { id: "334543", year: 2017, title: "Lion", ceremony: 89 },
+  { id: "334541", year: 2017, title: "Manchester by the Sea", ceremony: 89 },
+  
+  { id: "318846", year: 2016, title: "The Big Short", ceremony: 88 },  
+  { id: "296098", year: 2016, title: "Bridge of Spies", ceremony: 88 },  
+  { id: "167073", year: 2016, title: "Brooklyn", ceremony: 88 },  
+  { id: "76341", year: 2016, title: "Mad Max: Fury Road", ceremony: 88 },  
+  { id: "286217", year: 2016, title: "The Martian", ceremony: 88 },  
+  { id: "281957", year: 2016, title: "The Revenant", ceremony: 88 },  
+  { id: "264644", year: 2016, title: "Room", ceremony: 88 },  
+  
+  { id: "190859", year: 2015, title: "American Sniper", ceremony: 87 },
+  { id: "85350", year: 2015, title: "Boyhood", ceremony: 87 },
+  { id: "120467", year: 2015, title: "The Grand Budapest Hotel", ceremony: 87 },
+  { id: "205596", year: 2015, title: "The Imitation Game", ceremony: 87 },
+  { id: "273895", year: 2015, title: "Selma", ceremony: 87 },
+  { id: "266856", year: 2015, title: "The Theory of Everything", ceremony: 87 },
+  { id: "244786", year: 2015, title: "Whiplash", ceremony: 87 },
+  
+  { id: "168672", year: 2014, title: "American Hustle", ceremony: 86 },
+  { id: "109424", year: 2014, title: "Captain Phillips", ceremony: 86 },
+  { id: "152532", year: 2014, title: "Dallas Buyers Club", ceremony: 86 },
+  { id: "49047", year: 2014, title: "Gravity", ceremony: 86 },
+  { id: "152601", year: 2014, title: "Her", ceremony: 86 },
+  { id: "129670", year: 2014, title: "Nebraska", ceremony: 86 },
+  { id: "202220", year: 2014, title: "Philomena", ceremony: 86 },
+  { id: "106646", year: 2014, title: "The Wolf of Wall Street", ceremony: 86 },
+  
+  { id: "86837", year: 2013, title: "Amour", ceremony: 85 },  
+  { id: "84175", year: 2013, title: "Beasts of the Southern Wild", ceremony: 85 }, 
+  { id: "68718", year: 2013, title: "Django Unchained", ceremony: 85 }, 
+  { id: "82695", year: 2013, title: "Les Misérables", ceremony: 85 }, 
+  { id: "87827", year: 2013, title: "Life of Pi", ceremony: 85 }, 
+  { id: "72976", year: 2013, title: "Lincoln", ceremony: 85 }, 
+  { id: "82693", year: 2013, title: "Silver Linings Playbook", ceremony: 85 }, 
+  { id: "97630", year: 2013, title: "Zero Dark Thirty", ceremony: 85 }, 
+  
+  { id: "65057", year: 2012, title: "The Descendants", ceremony: 84 },
+  { id: "64685", year: 2012, title: "Extremely Loud & Incredibly Close", ceremony: 84 },
+  { id: "50014", year: 2012, title: "The Help", ceremony: 84 },
+  { id: "44826", year: 2012, title: "Hugo", ceremony: 84 },
+  { id: "59436", year: 2012, title: "Midnight in Paris", ceremony: 84 },
+  { id: "60308", year: 2012, title: "Moneyball", ceremony: 84 },
+  { id: "8967", year: 2012, title: "The Tree of Life", ceremony: 84 },
+  { id: "57212", year: 2012, title: "War Horse", ceremony: 84 },
+  
+  { id: "44214", year: 2011, title: "Black Swan", ceremony: 83 },
+  { id: "45317", year: 2011, title: "The Fighter", ceremony: 83 },
+  { id: "27205", year: 2011, title: "Inception", ceremony: 83 },
+  { id: "39781", year: 2011, title: "The Kids Are All Right", ceremony: 83 },
+  { id: "44115", year: 2011, title: "127 Hours", ceremony: 83 },
+  { id: "37799", year: 2011, title: "The Social Network", ceremony: 83 },
+  { id: "10193", year: 2011, title: "Toy Story 3", ceremony: 83 },
+  { id: "44264", year: 2011, title: "True Grit", ceremony: 83 },
+  { id: "39013", year: 2011, title: "Winter's Bone", ceremony: 83 },
+  
+  { id: "19995", year: 2010, title: "Avatar", ceremony: 82 },
+  { id: "22881", year: 2010, title: "The Blind Side", ceremony: 82 },
+  { id: "17654", year: 2010, title: "District 9", ceremony: 82 },
+  { id: "24684", year: 2010, title: "An Education", ceremony: 82 },
+  { id: "16869", year: 2010, title: "Inglourious Basterds", ceremony: 82 },
+  { id: "25793", year: 2010, title: "Precious", ceremony: 82 },
+  { id: "12573", year: 2010, title: "A Serious Man", ceremony: 82 },
+  { id: "14160", year: 2010, title: "Up", ceremony: 82 },
+  { id: "22947", year: 2010, title: "Up in the Air", ceremony: 82 },
+  
+  { id: "4922", year: 2009, title: "The Curious Case of Benjamin Button", ceremony: 81 },
+  { id: "11499", year: 2009, title: "Frost/Nixon", ceremony: 81 },
+  { id: "10139", year: 2009, title: "Milk", ceremony: 81 },
+  { id: "8055", year: 2009, title: "The Reader", ceremony: 81 },
+  
+  { id: "4347", year: 2008, title: "Atonement", ceremony: 80 },
+  { id: "7326", year: 2008, title: "Juno", ceremony: 80 },
+  { id: "4566", year: 2008, title: "Michael Clayton", ceremony: 80 },
+  { id: "7345", year: 2008, title: "There Will Be Blood", ceremony: 80 },
+  
+  { id: "1164", year: 2007, title: "Babel", ceremony: 79 },
+  { id: "1251", year: 2007, title: "Letters from Iwo Jima", ceremony: 79 },
+  { id: "773", year: 2007, title: "Little Miss Sunshine", ceremony: 79 },
+  { id: "1165", year: 2007, title: "The Queen", ceremony: 79 },
+  
+  { id: "142", year: 2006, title: "Brokeback Mountain", ceremony: 78 },
+  { id: "398", year: 2006, title: "Capote", ceremony: 78 },
+  { id: "3291", year: 2006, title: "Good Night, and Good Luck.", ceremony: 78 },
+  { id: "612", year: 2006, title: "Munich", ceremony: 78 },
+  
+  { id: "2567", year: 2005, title: "The Aviator", ceremony: 77 },
+  { id: "866", year: 2005, title: "Finding Neverland", ceremony: 77 },
+  { id: "1677", year: 2005, title: "Ray", ceremony: 77 },
+  { id: "9675", year: 2005, title: "Sideways", ceremony: 77 },
+  
+  { id: "153", year: 2004, title: "Lost in Translation", ceremony: 76 },  
+  { id: "8619", year: 2004, title: "Master and Commander: The Far Side of the World", ceremony: 76 },  
+  { id: "322", year: 2004, title: "Mystic River", ceremony: 76 },  
+  { id: "4464", year: 2004, title: "Seabiscuit", ceremony: 76 },  
+  
+  { id: "3131", year: 2003, title: "Gangs of New York", ceremony: 75 },
+  { id: "590", year: 2003, title: "The Hours", ceremony: 75 },
+  { id: "121", year: 2003, title: "The Lord of the Rings: The Two Towers", ceremony: 75 },
+  { id: "423", year: 2003, title: "The Pianist", ceremony: 75 },
+  
+  { id: "5279", year: 2002, title: "Gosford Park", ceremony: 74 },
+  { id: "1999", year: 2002, title: "In the Bedroom", ceremony: 74 },
+  { id: "120", year: 2002, title: "The Lord of the Rings: The Fellowship of the Ring", ceremony: 74 },
+  { id: "824", year: 2002, title: "Moulin Rouge!", ceremony: 74 },
+  
+  { id: "392", year: 2001, title: "Chocolat", ceremony: 73 },
+  { id: "146", year: 2001, title: "Crouching Tiger, Hidden Dragon", ceremony: 73 },
+  { id: "462", year: 2001, title: "Erin Brockovich", ceremony: 73 },
+  { id: "1900", year: 2001, title: "Traffic", ceremony: 73 },
+];// ─── 工具函数 ────────────────────────────────────────────────────────────────
+
+/**
+ * 爬取 TMDB 奖项页面，返回该届所有入围/获奖影片
+ */
+async function fetchAwardPage(ceremony) {
+  const url = `${BASE_URL}/award/${AWARD_ID}/ceremony/${ceremony}?language=zh-CN`;
+  console.log("正在请求:", url);
+
+  const response = await Widget.http.get(url, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      Accept: "text/html,application/xhtml+xml",
+      "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+    },
+  });
+
+  if (!response || !response.data) {
+    throw new Error("请求失败，无法获取奥斯卡数据");
+  }
+
+  return response.data;
+}
+
+/**
+ * 解析 HTML，提取奖项条目
+ * 返回 [{ tmdbId, mediaType, title, isWinner, category }]
+ */
+function parseAwardItems(html) {
+  const $ = Widget.html.load(html);
+  const items = [];
+  const seen = new Set();
+
+  // TMDB 奖项页结构: 每个奖项 section 下有 .winner 和 .nominee
+  $(".award_categories .award_category").each((_, section) => {
+    const category = $(section).find("h3").text().trim();
+
+    $(section)
+      .find(".award_candidates .award_candidate")
+      .each((_, el) => {
+        const isWinner = $(el).hasClass("winner");
+        const link = $(el).find("a").attr("href") || "";
+
+        // 提取 TMDB id 与 mediaType，格式通常为 /movie/12345 或 /tv/12345
+        const match = link.match(/\/(movie|tv)\/(\d+)/);
+        if (!match) return;
+
+        const mediaType = match[1];
+        const tmdbId = match[2];
+        const key = `${mediaType}-${tmdbId}`;
+
+        // 避免重复（同一部影片可能在多个奖项中出现）
+        if (!seen.has(key)) {
+          seen.add(key);
+          const title =
+            $(el).find(".title").text().trim() ||
+            $(el).find("h2").text().trim() ||
+            $(el).find("p").first().text().trim();
+
+          items.push({ tmdbId, mediaType, title, isWinner, category });
+        }
+      });
+  });
+
+  // 兼容备选结构：.card_list .card 内含 data-id 属性
+  if (items.length === 0) {
+    $(".card").each((_, el) => {
+      const link = $(el).find("a").first().attr("href") || "";
+      const match = link.match(/\/(movie|tv)\/(\d+)/);
+      if (!match) return;
+
+      const mediaType = match[1];
+      const tmdbId = match[2];
+      const key = `${mediaType}-${tmdbId}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+
+      const isWinner = $(el).hasClass("winner") || $(el).closest(".winner").length > 0;
+      const title =
+        $(el).find("h2").text().trim() ||
+        $(el).find(".title").text().trim() ||
+        $(el).find("p").first().text().trim();
+
+      items.push({ tmdbId, mediaType, title, isWinner, category: "" });
+    });
+  }
+
+  console.log(`解析到 ${items.length} 条记录`);
+  return items;
+}
+
+/**
+ * 将解析结果转为 ForwardWidget 数据模型
+ */
+function toWidgetItems(items) {
+  return items.map(({ tmdbId, mediaType, title, isWinner, category }) => {
+    // tmdb type: movie → id 直接用数字；tv → "tv.{id}"
+    const fwId = mediaType === "tv" ? `tv.${tmdbId}` : tmdbId;
+    return {
+      id: fwId,
+      type: "tmdb",
+      mediaType: mediaType === "tv" ? "tv" : "movie",
+      title: isWinner ? `🏆 ${title}` : title,
+      genreTitle: category || undefined,
+    };
+  });
+}
+
+// ─── 模块函数 ────────────────────────────────────────────────────────────────
+
+/**
+ * 历届奥斯卡最佳影片獲獎作品
+ */
+async function loadBestPictures(params = {}) {
+  const page = parseInt(params.page) || 1;
+  const pageSize = 10;
+  const start = (page - 1) * pageSize;
+  const pageItems = BEST_PICTURES.slice(start, start + pageSize);
+
+  if (pageItems.length === 0) return [];
+
+  const results = [];
+
+  for (const bp of pageItems) {
+    try {
+      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
+        params: { language: "zh-CN" },
+      });
+      if (!data) continue;
+
+      results.push({
+        id: bp.id,
         type: "tmdb",
-        title: "阿诺拉",
-        description: "布鲁克林年轻性工作者阿诺拉与俄罗斯寡头之子闪婚，美梦开始便遭男方父母介入强行撤销婚姻。",
-        releaseDate: "2024-12-06",
-        backdropPath: "/tG8QWDASd8rw0JxkDN2MDDWLEse.jpg",
-        posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
-        rating: 7.4,
-        mediaType: "movie"
+        mediaType: "movie",
+        title: `🏆 第${bp.ceremony}届 · ${data.title || bp.title}`,
+        description: data.overview || "",
+        rating: data.vote_average
+          ? String(data.vote_average.toFixed(1))
+          : undefined,
+        releaseDate: data.release_date,
+        posterPath: data.poster_path
+          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+          : undefined,
+        backdropPath: data.backdrop_path
+          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
+          : undefined,
+      });
+    } catch (e) {
+      console.error(`获取影片 ${bp.id} 失败:`, e);
+      // 降级：只返回基础信息
+      results.push({
+        id: bp.id,
+        type: "tmdb",
+        mediaType: "movie",
+        title: `🏆 第${bp.ceremony}届 · ${bp.title}`,
+      });
     }
-];
+  }
 
-// ─────────────────────────────────────────────
-// 最佳影片提名作品
-// ─────────────────────────────────────────────
-const Best_Picture_nominee = [
-    {
-        id: 549509,
+  return results;
+}
+
+/**
+ * 历届奥斯卡最佳影片提名作品
+ */
+async function loadBestPicturesnominee(params = {}) {
+  const page = parseInt(params.page) || 1;
+  const pageSize = 10;
+  const start = (page - 1) * pageSize;
+  const pageItems = BEST_PICTURES_NOMINEE.slice(start, start + pageSize);
+
+  if (pageItems.length === 0) return [];
+
+  const results = [];
+
+  for (const bp of pageItems) {
+    try {
+      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
+        params: { language: "zh-CN" },
+      });
+      if (!data) continue;
+
+      results.push({
+        id: bp.id,
         type: "tmdb",
-        title: "粗野派",
-        description: "二战后匈牙利裔犹太建筑师拉斯洛逃往美国，在富有赞助人的支持下重建声誉，代价沉重。",
-        releaseDate: "2025-02-28",
-        backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
-        posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
-        rating: 7.6,
-        mediaType: "movie"
-    },
-    {
-        id: 661539,
+        mediaType: "movie",
+        title: `🎨 第${bp.ceremony}届 · ${data.title || bp.title}`,
+        description: data.overview || "",
+        rating: data.vote_average
+          ? String(data.vote_average.toFixed(1))
+          : undefined,
+        releaseDate: data.release_date,
+        posterPath: data.poster_path
+          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
+          : undefined,
+        backdropPath: data.backdrop_path
+          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
+          : undefined,
+      });
+    } catch (e) {
+      console.error(`获取影片 ${bp.id} 失败:`, e);
+      // 降级：只返回基础信息
+      results.push({
+        id: bp.id,
         type: "tmdb",
-        title: "摇滚诗人：未知的传奇",
-        description: "1961年，19岁的鲍勃·迪伦只身闯入纽约民谣圈，以惊人才华改写美国音乐史。",
-        releaseDate: "2025-01-24",
-        backdropPath: "/kcCy5tKTe6WepVQ6SQaSewpmoCj.jpg",
-        posterPath: "/cxh4GcerxbMMPcouD8RPn6xB3Ue.jpg",
-        rating: 7.3,
-        mediaType: "movie"
-    },
-    {
-        id: 974576,
-        type: "tmdb",
-        title: "秘密会议",
-        description: "教宗骤逝，枢机主教劳伦斯奉命主持密室选举，却在梵蒂冈高墙内身陷足以颠覆教会的阴谋。",
-        releaseDate: "2025-03-07",
-        backdropPath: "/e7Y8bMkPfJFHNMaUn6TrXCHqHAX.jpg",
-        posterPath: "/1BWhKsbUTiBD0WQhrOfQlU6zrc5.jpg",
-        rating: 7.3,
-        mediaType: "movie"
-    },
-    {
-        id: 974950,
-        type: "tmdb",
-        title: "艾米莉亚·佩雷斯",
-        description: "一名律师被墨西哥毒枭雇用，协助其悄然变性改头换面，踏上危险与救赎并存的旅程。",
-        releaseDate: "2024-08-21",
-        backdropPath: "/9tIgF5Ht9ndLJEwv2e6TZrExMKw.jpg",
-        posterPath: "/uwPaMUnffh8JXCXA3ALJsFM4CAW.jpg",
-        rating: 7.0,
-        mediaType: "movie"
-    },
-    {
-        id: 1000837,
-        type: "tmdb",
-        title: "我仍在此",
-        description: "1971年巴西军政府时期，尤妮斯的丈夫被当局带走后失踪，她独撑家庭并投身人权事业。",
-        releaseDate: "2025-04-02",
-        backdropPath: "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
-        posterPath: "/lnWJqTA4gha5sZGJaD15oxOUyVm.jpg",
-        rating: 8.1,
-        mediaType: "movie"
-    },
-    {
-        id: 1028196,
-        type: "tmdb",
-        title: "尼克男孩",
-        description: "1960年代佛罗里达，两名黑人少年在严酷感化院中结下深厚友谊，共同面对种族歧视与制度暴力。",
-        releaseDate: "2024-12-13",
-        backdropPath: "/kmLssINCNdXnIDjWkBsk6LUNSbe.jpg",
-        posterPath: "/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg",  // ✅ Fix 1: 移除錯誤的完整 URL
-        rating: 6.8,
-        mediaType: "movie"
-    },
-    {
-        id: 933260,
-        type: "tmdb",
-        title: "某种物质",
-        description: "逐渐淡出的女明星使用黑市药物创造年轻的分身，两个身份的角力走向失控深渊。",
-        releaseDate: "2024-10-18",
-        backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
-        posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
-        rating: 7.3,
-        mediaType: "movie"
-    },
-    {
-        id: 402431,
-        type: "tmdb",
-        title: "魔法坏女巫",
-        description: "在翡翠城，天生绿皮肤的艾菲与人气十足的葛琳达意外成为室友，命运推向截然不同的道路。",
-        releaseDate: "2024-11-22",
-        backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qZ9ean.jpg",
-        posterPath: "/rufGJNaU6zY0CeCnxYlRe8qYMA4.jpg",
-        rating: 7.2,
-        mediaType: "movie"
-    },
-    {
-        id: 693134,
-        type: "tmdb",
-        title: "沙丘：第二部",
-        description: "保罗·厄崔迪与弗雷曼人并肩踏上复仇之路，在爱情与宇宙命运之间做出艰难抉择。",
-        releaseDate: "2024-02-28",
-        backdropPath: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
-        posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
-        rating: 8.0,
-        mediaType: "movie"
+        mediaType: "movie",
+        title: `🎨 第${bp.ceremony}届 · ${bp.title}`,
+      });
     }
-];                                     // ✅ Fix 2: 補上函數結尾的 }
+  }
 
-// ─────────────────────────────────────────────
-// 最佳原創劇本（5部提名）
-// 🏆 得獎：Anora（Sean Baker）
-// ─────────────────────────────────────────────
-const Oscars97_screenplay = [
-    {
-        id: 1064213,
-        type: "tmdb",
-        title: "阿诺拉",
-        description: "布鲁克林年轻性工作者阿诺拉与俄罗斯寡头之子闪婚，美梦开始便遭男方父母介入强行撤销婚姻。",
-        releaseDate: "2024-12-06",
-        backdropPath: "/tG8QWDASd8rw0JxkDN2MDDWLEse.jpg",
-        posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
-        rating: 7.4,
-        mediaType: "movie"
-    },
-    {
-        id: 549509,
-        type: "tmdb",
-        title: "粗野派",
-        description: "二战后匈牙利裔犹太建筑师拉斯洛逃往美国，在富有赞助人的支持下重建声誉，代价沉重。",
-        releaseDate: "2025-02-28",
-        backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
-        posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
-        rating: 7.6,
-        mediaType: "movie"
-    },
-    {
-        id: 1143214,
-        type: "tmdb",
-        title: "真实的痛苦",
-        description: "性格迥异的表兄弟结伴前往波兰，探访已故祖母的故土，旅途中各自直面内心的伤痛与和解。",
-        releaseDate: "2024-10-18",
-        backdropPath: "/tjgW6qMaVi5WBqxXkMVmJuDNGgz.jpg",
-        posterPath: "/8Ri7qLhwegVnFuTj3VCdHy3lSzA.jpg",
-        rating: 7.6,
-        mediaType: "movie"
-    },
-    {
-        id: 933260,
-        type: "tmdb",
-        title: "某种物质",
-        description: "逐渐淡出的女明星使用黑市药物创造年轻的分身，两个身份的角力走向失控深渊。",
-        releaseDate: "2024-10-18",
-        backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
-        posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
-        rating: 7.3,
-        mediaType: "movie"
-    },
-    {
-        id: 1211472,
-        type: "tmdb",
-        title: "九月五日",
-        description: "1972年慕尼黑奥运会，ABC体育转播团队在直播中突然面对以色列运动员遭巴勒斯坦武装组织劫持的危机，镜头背后的道德抉择与现场压力迫在眉睫。",
-        releaseDate: "2024-11-29",
-        backdropPath: "/pkFRtd9VFo3gMN0GDi3SdYtQ2wF.jpg",
-        posterPath: "/4QSAOM3kHBIJBOlMcCpjIABanYa.jpg",
-        rating: 7.1,
-        mediaType: "movie"
-    }
-];
-
-// ─────────────────────────────────────────────
-// 統一入口
-// ─────────────────────────────────────────────
-async function getOscars97(params = {}) {
-    const category = params.category || "all";
-
-    switch (category) {
-        case "all":
-            return Oscars97;
-
-        case "winner":
-            return Best_Picture_winner;
-
-        case "nominee":
-            return Best_Picture_nominee;
-
-        case "screenplay":
-            return Oscars97_screenplay;
-
-        default:
-            return Oscars97;
-    }
-}          
+  return results;
+}
