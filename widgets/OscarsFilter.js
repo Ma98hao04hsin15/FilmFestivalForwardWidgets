@@ -58,6 +58,7 @@ WidgetMetadata = {
           enumOptions: [
             { title: "仅获奖", value: "winner" },
             { title: "全部提名", value: "all" },
+            { title: "页码",name: "page",type: "page",},
           ],
         },
       ],
