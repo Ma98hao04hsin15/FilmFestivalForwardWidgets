@@ -345,7 +345,7 @@ async function loadAwardWinnersViaApi(ceremony, filterMode) {
   console.log("使用备用方案，通过 TMDB API 获取数据");
 
   // 根据届次推算颁奖年份（奥斯卡届次 = 年份 - 1928 + 1）
-  const awardYear = parseInt(ceremony) + 1928 - 1;
+  const awardYear = parseInt(ceremony) + 1929 - 1;
 
   const results = await Widget.tmdb.get("/discover/movie", {
     params: {
