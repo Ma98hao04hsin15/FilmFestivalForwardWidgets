@@ -119,7 +119,7 @@ function mergeUnique(...arrays) {
 // ─── 统一入口 ────────────────────────────────────────────────────────────────
 
 async function getOscars(params = {}) {
-  const category = params.category || "all";
+  const category = params.category || "Oscar";
 
   switch (category) {
     case "98":
@@ -128,7 +128,8 @@ async function getOscars(params = {}) {
     case "97":
       return Oscars_97;
 
-    case "Oscar":
+  case "Oscar":
+    case "all": // Added as a fallback
     default:
       return mergeUnique(Oscars_98, Oscars_97);
   }
