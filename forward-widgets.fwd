@@ -31,13 +31,13 @@
       "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/OscarsAllMovie.js"
     },
     {
-      "id": "OscarFilter",
+      "id": "OscarsFilter",
       "title": "oscars歷屆作品",
       "description": "oscars歷屆作品",
       "requiredVersion": "0.0.1",
       "version": "1.0.0",
       "author": "Ma",
-      "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/OscarFilter.js"
+      "url": "https://raw.githubusercontent.com/Ma98hao04hsin15/FilmFestivalForwardWidgets/refs/heads/main/widgets/OscarsFilter.js"
     },
     {
       "id": "tmdbcompany",
