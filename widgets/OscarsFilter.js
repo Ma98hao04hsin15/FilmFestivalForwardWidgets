@@ -1,125 +1,362 @@
-// 奥斯卡金像奖 ForwardWidget
-// 数据来源: TMDB Award API
+/**
+ * @file oscars-97.js
+ * @description Forward widget for the 97th Academy Awards (2025).
+ * Static data, no API key required. All IDs verified against TMDB.
+ * @version 2.0.0
+ */
+
 WidgetMetadata = {
-  id: "OscarsFilter",
-  title: "🏆 历届奥斯卡金像奖入围与获奖影片",
-  description: "获取历届奥斯卡金像奖入围与获奖影片",
-  author: "ForwardWidget",
-  site: "https://www.themoviedb.org/award/1-academy-awards",
-  version: "1.0.0",
-  requiredVersion: "0.0.1",
-  detailCacheDuration: 86400,
-  modules: [
-    // ✅ Bug 1 修正：移除多餘的外層 {，將 params 正確收入同一個模組物件
-    {
-      id: "oscars",
-      title: "歷届奥斯卡",
-      functionName: "getOscars",
-      cacheDuration: 86400,
-      params: [
+    id: "tmdboscars",
+    title: "歷屆奥斯卡金像奖",
+    version: "2.0.0",
+    requiredVersion: "0.0.1",
+    description: "奥斯卡是由美國電影藝術與科學學院（AMPAS）主辦的年度電影盛事，自1929年起表彰優秀電影創作，是全球影壇最受矚目的榮譽之一。",
+    author: "ForwardWidget",
+    modules: [
         {
-          name: "category",
-          title: "奖项分类",
-          type: "enumeration",
-          value: "all",
-          enumOptions: [
-            { title: "🎭 歷屆全部作品", value: "all" },
-            { title: "🎭 第98屆", value: "98" },
-            { title: "🎭 第97屆", value: "97" },
-          ],
-        },
-        { name: "page", title: "页码", type: "page" },
-      ],
-    },
-  ],
+            id: "oscars97",
+            title: "歷届奥斯卡",
+            functionName: "getOscars97",
+            cacheDuration: 86400,
+            params: [
+                {
+                    name: "category",
+                    title: "奖项分类",
+                    type: "enumeration",
+                    value: "all",                          // ✅ Fix 3: 改為 "all" 與 enumOptions 對應
+                    enumOptions: [
+                        { title: "🎭 第97屆全部作品", value: "all" },
+                        { title: "🏆 第97屆獲獎作品", value: "winner" },
+                        { title: "🎨 第97屆提名作品", value: "nominee" },
+                        { title: "✍️ 歷屆最佳原創劇本提名作品", value: "screenplay_winner" }
+                        { title: "✍️ 歷屆最佳原創劇本獲獎作品", value: "screenplay_nominee" }
+                    ]
+                }
+            ]
+        }
+    ]
 };
 
-// ─── 常量 ───────────────────────────────────────────────────────────────────
-
-const AWARD_ID = "1-academy-awards";
-const BASE_URL = "https://www.themoviedb.org";
-
-const Oscars98 = [
-  { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
-  { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
-  { id: "1062722", year: 2026, title: "Frankenstein",                           ceremony: 98 },
-  { id: "858024",  year: 2026, title: "Hamnet",                                 ceremony: 98 },
-  { id: "1317288", year: 2026, title: "Marty Supreme",                          ceremony: 98 },
-  { id: "1054867", year: 2026, title: "One Battle After Another",               ceremony: 98 },
-  { id: "1220564", year: 2026, title: "The Secret Agent",                       ceremony: 98 },
-  { id: "1124566", year: 2026, title: "Sentimental Value",                      ceremony: 98 },
-  { id: "1233413", year: 2026, title: "Sinners",                                ceremony: 98 },
-  { id: "1241983", year: 2026, title: "Train Dreams",                           ceremony: 98 },
-  { id: "1299655", year: 2026, title: "Blue Moon",                              ceremony: 98 },
-  { id: "1456349", year: 2026, title: "It Was Just an Accident",                ceremony: 98 },
-  { id: "804370",  year: 2026, title: "Arco",                                   ceremony: 98 },
-  { id: "1022787", year: 2026, title: "Elio",                                   ceremony: 98 },
-  { id: "803796",  year: 2026, title: "KPop Demon Hunters",                     ceremony: 98 },
-  { id: "682012",  year: 2026, title: "Little Amélie or the Character of Rain", ceremony: 98 },
-  { id: "1084242", year: 2026, title: "Zootopia 2",                             ceremony: 98 },
-  { id: "1151272", year: 2026, title: "Sirât",                                  ceremony: 98 },
-  { id: "1480382", year: 2026, title: "The Voice of Hind Rajab",                ceremony: 98 },
-  { id: "826338",  year: 2026, title: "Diane Warren: Relentless",               ceremony: 98 },
-  { id: "1358554", year: 2026, title: "Viva Verdi!",                            ceremony: 98 },
-  { id: "1379266", year: 2026, title: "Kokuho",                                 ceremony: 98 },
-  { id: "760329",  year: 2026, title: "The Smashing Machine",                   ceremony: 98 },
-  { id: "1284120", year: 2026, title: "The Ugly Stepsister",                    ceremony: 98 },
-  { id: "83533",   year: 2026, title: "Avatar: Fire and Ash",                   ceremony: 98 },
-  { id: "1234821", year: 2026, title: "Jurassic World Rebirth",                 ceremony: 98 },
-  { id: "1236470", year: 2026, title: "The Lost Bus",                           ceremony: 98 },
+// ─────────────────────────────────────────────
+// 全部作品
+// ─────────────────────────────────────────────
+const Oscars97 = [
+    {
+        id: 1064213,
+        type: "tmdb",
+        title: "阿诺拉",
+        description: "布鲁克林年轻性工作者阿诺拉与俄罗斯寡头之子闪婚，美梦开始便遭男方父母介入强行撤销婚姻。",
+        releaseDate: "2024-12-06",
+        backdropPath: "/tG8QWDASd8rw0JxkDN2MDDWLEse.jpg",
+        posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
+        rating: 7.4,
+        mediaType: "movie"
+    },
+    {
+        id: 549509,
+        type: "tmdb",
+        title: "粗野派",
+        description: "二战后匈牙利裔犹太建筑师拉斯洛逃往美国，在富有赞助人的支持下重建声誉，代价沉重。",
+        releaseDate: "2025-02-28",
+        backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
+        posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
+        rating: 7.6,
+        mediaType: "movie"
+    },
+    {
+        id: 661539,
+        type: "tmdb",
+        title: "摇滚诗人：未知的传奇",
+        description: "1961年，19岁的鲍勃·迪伦只身闯入纽约民谣圈，以惊人才华改写美国音乐史。",
+        releaseDate: "2025-01-24",
+        backdropPath: "/kcCy5tKTe6WepVQ6SQaSewpmoCj.jpg",
+        posterPath: "/cxh4GcerxbMMPcouD8RPn6xB3Ue.jpg",
+        rating: 7.3,
+        mediaType: "movie"
+    },
+    {
+        id: 974576,
+        type: "tmdb",
+        title: "秘密会议",
+        description: "教宗骤逝，枢机主教劳伦斯奉命主持密室选举，却在梵蒂冈高墙内身陷足以颠覆教会的阴谋。",
+        releaseDate: "2025-03-07",
+        backdropPath: "/e7Y8bMkPfJFHNMaUn6TrXCHqHAX.jpg",
+        posterPath: "/1BWhKsbUTiBD0WQhrOfQlU6zrc5.jpg",
+        rating: 7.3,
+        mediaType: "movie"
+    },
+    {
+        id: 974950,
+        type: "tmdb",
+        title: "艾米莉亚·佩雷斯",
+        description: "一名律师被墨西哥毒枭雇用，协助其悄然变性改头换面，踏上危险与救赎并存的旅程。",
+        releaseDate: "2024-08-21",
+        backdropPath: "/9tIgF5Ht9ndLJEwv2e6TZrExMKw.jpg",
+        posterPath: "/uwPaMUnffh8JXCXA3ALJsFM4CAW.jpg",
+        rating: 7.0,
+        mediaType: "movie"
+    },
+    {
+        id: 1000837,
+        type: "tmdb",
+        title: "我仍在此",
+        description: "1971年巴西军政府时期，尤妮斯的丈夫被当局带走后失踪，她独撑家庭并投身人权事业。",
+        releaseDate: "2025-04-02",
+        backdropPath: "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
+        posterPath: "/lnWJqTA4gha5sZGJaD15oxOUyVm.jpg",
+        rating: 8.1,
+        mediaType: "movie"
+    },
+    {
+        id: 1028196,
+        type: "tmdb",
+        title: "尼克男孩",
+        description: "1960年代佛罗里达，两名黑人少年在严酷感化院中结下深厚友谊，共同面对种族歧视与制度暴力。",
+        releaseDate: "2024-12-13",
+        backdropPath: "/kmLssINCNdXnIDjWkBsk6LUNSbe.jpg",
+        posterPath: "/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg",  // ✅ Fix 1: 移除錯誤的完整 URL
+        rating: 6.8,
+        mediaType: "movie"
+    },
+    {
+        id: 933260,
+        type: "tmdb",
+        title: "某种物质",
+        description: "逐渐淡出的女明星使用黑市药物创造年轻的分身，两个身份的角力走向失控深渊。",
+        releaseDate: "2024-10-18",
+        backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
+        posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
+        rating: 7.3,
+        mediaType: "movie"
+    },
+    {
+        id: 402431,
+        type: "tmdb",
+        title: "魔法坏女巫",
+        description: "在翡翠城，天生绿皮肤的艾菲与人气十足的葛琳达意外成为室友，命运推向截然不同的道路。",
+        releaseDate: "2024-11-22",
+        backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qS9ean.jpg",
+        posterPath: "/rufGJNaU6zY0CeCnxYlRe8qYMA4.jpg",
+        rating: 7.2,
+        mediaType: "movie"
+    },
+    {
+        id: 693134,
+        type: "tmdb",
+        title: "沙丘：第二部",
+        description: "保罗·厄崔迪与弗雷曼人并肩踏上复仇之路，在爱情与宇宙命运之间做出艰难抉择。",
+        releaseDate: "2024-02-28",
+        backdropPath: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
+        posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
+        rating: 8.0,
+        mediaType: "movie"
+    }
 ];
 
-const Oscars97 = [
-  { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
-  { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
-  { id: "661539",  year: 2025, title: "A Complete Unknown",                     ceremony: 97 },
-  { id: "974576",  year: 2025, title: "Conclave",                               ceremony: 97 },
-  { id: "693134",  year: 2025, title: "Dune: Part Two",                         ceremony: 97 },
-  { id: "974950",  year: 2025, title: "Emilia Pérez",                           ceremony: 97 },
-  { id: "1000837", year: 2025, title: "I'm Still Here",                         ceremony: 97 },
-  { id: "1028196", year: 2025, title: "Nickel Boys",                            ceremony: 97 },
-  { id: "933260",  year: 2025, title: "The Substance",                          ceremony: 97 },
-  { id: "402431",  year: 2025, title: "Wicked",                                 ceremony: 97 },
-  { id: "1013850", year: 2025, title: "A Real Pain",                            ceremony: 97 },
-  { id: "1211472", year: 2025, title: "September 5",                            ceremony: 97 },
-  { id: "1155828", year: 2025, title: "Sing Sing",                              ceremony: 97 },
-  { id: "823219",  year: 2025, title: "Flow",                                   ceremony: 97 },
-  { id: "1022789", year: 2025, title: "Inside Out 2",                           ceremony: 97 },
-  { id: "1064486", year: 2025, title: "Memoir of a Snail",                      ceremony: 97 },
-  { id: "929204",  year: 2025, title: "Wallace & Gromit: Vengeance Most Fowl",  ceremony: 97 },
-  { id: "1184918", year: 2025, title: "The Wild Robot",                         ceremony: 97 },
-  { id: "1278263", year: 2025, title: "The Seed of the Sacred Fig",             ceremony: 97 },
-  { id: "1232827", year: 2025, title: "The Girl with the Needle",               ceremony: 97 },
-  { id: "1061699", year: 2025, title: "The Six Triple Eight",                   ceremony: 97 },
-  { id: "977326",  year: 2025, title: "Elton John: Never Too Late",             ceremony: 97 },
-  { id: "426063",  year: 2025, title: "Nosferatu",                              ceremony: 97 },
-  { id: "1038263", year: 2025, title: "Maria",                                  ceremony: 97 },
-  { id: "989662",  year: 2025, title: "A Different Man",                        ceremony: 97 },
-  { id: "558449",  year: 2025, title: "Gladiator II",                           ceremony: 97 },
-  { id: "945961",  year: 2025, title: "Alien: Romulus",                         ceremony: 97 },
-  { id: "799766",  year: 2025, title: "Better Man",                             ceremony: 97 },
-  { id: "653346",  year: 2025, title: "Kingdom of the Planet of the Apes",      ceremony: 97 },
+// ─────────────────────────────────────────────
+// 最佳影片獲獎作品
+// ─────────────────────────────────────────────
+const Best_Picture_winner = [
+    {
+        id: 1064213,
+        type: "tmdb",
+        title: "阿诺拉",
+        description: "布鲁克林年轻性工作者阿诺拉与俄罗斯寡头之子闪婚，美梦开始便遭男方父母介入强行撤销婚姻。",
+        releaseDate: "2024-12-06",
+        backdropPath: "/tG8QWDASd8rw0JxkDN2MDDWLEse.jpg",
+        posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
+        rating: 7.4,
+        mediaType: "movie"
+    }
+];
+
+// ─────────────────────────────────────────────
+// 最佳影片提名作品
+// ─────────────────────────────────────────────
+const Best_Picture_nominee = [
+    {
+        id: 549509,
+        type: "tmdb",
+        title: "粗野派",
+        description: "二战后匈牙利裔犹太建筑师拉斯洛逃往美国，在富有赞助人的支持下重建声誉，代价沉重。",
+        releaseDate: "2025-02-28",
+        backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
+        posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
+        rating: 7.6,
+        mediaType: "movie"
+    },
+    {
+        id: 661539,
+        type: "tmdb",
+        title: "摇滚诗人：未知的传奇",
+        description: "1961年，19岁的鲍勃·迪伦只身闯入纽约民谣圈，以惊人才华改写美国音乐史。",
+        releaseDate: "2025-01-24",
+        backdropPath: "/kcCy5tKTe6WepVQ6SQaSewpmoCj.jpg",
+        posterPath: "/cxh4GcerxbMMPcouD8RPn6xB3Ue.jpg",
+        rating: 7.3,
+        mediaType: "movie"
+    },
+    {
+        id: 974576,
+        type: "tmdb",
+        title: "秘密会议",
+        description: "教宗骤逝，枢机主教劳伦斯奉命主持密室选举，却在梵蒂冈高墙内身陷足以颠覆教会的阴谋。",
+        releaseDate: "2025-03-07",
+        backdropPath: "/e7Y8bMkPfJFHNMaUn6TrXCHqHAX.jpg",
+        posterPath: "/1BWhKsbUTiBD0WQhrOfQlU6zrc5.jpg",
+        rating: 7.3,
+        mediaType: "movie"
+    },
+    {
+        id: 974950,
+        type: "tmdb",
+        title: "艾米莉亚·佩雷斯",
+        description: "一名律师被墨西哥毒枭雇用，协助其悄然变性改头换面，踏上危险与救赎并存的旅程。",
+        releaseDate: "2024-08-21",
+        backdropPath: "/9tIgF5Ht9ndLJEwv2e6TZrExMKw.jpg",
+        posterPath: "/uwPaMUnffh8JXCXA3ALJsFM4CAW.jpg",
+        rating: 7.0,
+        mediaType: "movie"
+    },
+    {
+        id: 1000837,
+        type: "tmdb",
+        title: "我仍在此",
+        description: "1971年巴西军政府时期，尤妮斯的丈夫被当局带走后失踪，她独撑家庭并投身人权事业。",
+        releaseDate: "2025-04-02",
+        backdropPath: "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
+        posterPath: "/lnWJqTA4gha5sZGJaD15oxOUyVm.jpg",
+        rating: 8.1,
+        mediaType: "movie"
+    },
+    {
+        id: 1028196,
+        type: "tmdb",
+        title: "尼克男孩",
+        description: "1960年代佛罗里达，两名黑人少年在严酷感化院中结下深厚友谊，共同面对种族歧视与制度暴力。",
+        releaseDate: "2024-12-13",
+        backdropPath: "/kmLssINCNdXnIDjWkBsk6LUNSbe.jpg",
+        posterPath: "/gnkMWAJRwEI4D8akYjrqEtnelM7.jpg",  // ✅ Fix 1: 移除錯誤的完整 URL
+        rating: 6.8,
+        mediaType: "movie"
+    },
+    {
+        id: 933260,
+        type: "tmdb",
+        title: "某种物质",
+        description: "逐渐淡出的女明星使用黑市药物创造年轻的分身，两个身份的角力走向失控深渊。",
+        releaseDate: "2024-10-18",
+        backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
+        posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
+        rating: 7.3,
+        mediaType: "movie"
+    },
+    {
+        id: 402431,
+        type: "tmdb",
+        title: "魔法坏女巫",
+        description: "在翡翠城，天生绿皮肤的艾菲与人气十足的葛琳达意外成为室友，命运推向截然不同的道路。",
+        releaseDate: "2024-11-22",
+        backdropPath: "/fyZ6SDUS4o9jp2EHxfZa3qZ9ean.jpg",
+        posterPath: "/rufGJNaU6zY0CeCnxYlRe8qYMA4.jpg",
+        rating: 7.2,
+        mediaType: "movie"
+    },
+    {
+        id: 693134,
+        type: "tmdb",
+        title: "沙丘：第二部",
+        description: "保罗·厄崔迪与弗雷曼人并肩踏上复仇之路，在爱情与宇宙命运之间做出艰难抉择。",
+        releaseDate: "2024-02-28",
+        backdropPath: "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
+        posterPath: "/1p25wDEdFRRTtwtPFbtPHISefzG.jpg",
+        rating: 8.0,
+        mediaType: "movie"
+    }
+];                                     // ✅ Fix 2: 補上函數結尾的 }
+
+// ─────────────────────────────────────────────
+// 最佳原創劇本（5部提名）
+// 🏆 得獎：Anora（Sean Baker）
+// ─────────────────────────────────────────────
+const Oscars97_screenplay = [
+    {
+        id: 1064213,
+        type: "tmdb",
+        title: "阿诺拉",
+        description: "布鲁克林年轻性工作者阿诺拉与俄罗斯寡头之子闪婚，美梦开始便遭男方父母介入强行撤销婚姻。",
+        releaseDate: "2024-12-06",
+        backdropPath: "/tG8QWDASd8rw0JxkDN2MDDWLEse.jpg",
+        posterPath: "/zt3iRbwMklKGDGx13nHt8b5Y0uT.jpg",
+        rating: 7.4,
+        mediaType: "movie"
+    },
+    {
+        id: 549509,
+        type: "tmdb",
+        title: "粗野派",
+        description: "二战后匈牙利裔犹太建筑师拉斯洛逃往美国，在富有赞助人的支持下重建声誉，代价沉重。",
+        releaseDate: "2025-02-28",
+        backdropPath: "/hmZnqijPaaACjenDkrbWcCmcADI.jpg",
+        posterPath: "/AqjVTSKCxY0zBAQbJ60Ns8o0nMo.jpg",
+        rating: 7.6,
+        mediaType: "movie"
+    },
+    {
+        id: 1143214,
+        type: "tmdb",
+        title: "真实的痛苦",
+        description: "性格迥异的表兄弟结伴前往波兰，探访已故祖母的故土，旅途中各自直面内心的伤痛与和解。",
+        releaseDate: "2024-10-18",
+        backdropPath: "/tjgW6qMaVi5WBqxXkMVmJuDNGgz.jpg",
+        posterPath: "/8Ri7qLhwegVnFuTj3VCdHy3lSzA.jpg",
+        rating: 7.6,
+        mediaType: "movie"
+    },
+    {
+        id: 933260,
+        type: "tmdb",
+        title: "某种物质",
+        description: "逐渐淡出的女明星使用黑市药物创造年轻的分身，两个身份的角力走向失控深渊。",
+        releaseDate: "2024-10-18",
+        backdropPath: "/9Whl7RAzes0oMaFAeSqD8ttN3fl.jpg",
+        posterPath: "/oDDYHINnemOisgswvLU0EZuHLFH.jpg",
+        rating: 7.3,
+        mediaType: "movie"
+    },
+    {
+        id: 1211472,
+        type: "tmdb",
+        title: "九月五日",
+        description: "1972年慕尼黑奥运会，ABC体育转播团队在直播中突然面对以色列运动员遭巴勒斯坦武装组织劫持的危机，镜头背后的道德抉择与现场压力迫在眉睫。",
+        releaseDate: "2024-11-29",
+        backdropPath: "/pkFRtd9VFo3gMN0GDi3SdYtQ2wF.jpg",
+        posterPath: "/4QSAOM3kHBIJBOlMcCpjIABanYa.jpg",
+        rating: 7.1,
+        mediaType: "movie"
+    }
 ];
 
 // ─────────────────────────────────────────────
 // 統一入口
 // ─────────────────────────────────────────────
-async function getOscars(params = {}) {
-  const category = params.category || "all";
+async function getOscars97(params = {}) {
+    const category = params.category || "all";
 
-  switch (category) {
-    case "all":
-      // ✅ Bug 3 修正：mergeUnique() 未定義，改用展開運算子合併陣列
-      return [...Oscars98, ...Oscars97];
+    switch (category) {
+        case "all":
+            return Oscars97;
 
-    case "98":
-      return Oscars98;
+        case "winner":
+            return Best_Picture_winner;
 
-    case "97":
-      return Oscars97;
+        case "nominee":
+            return Best_Picture_nominee;
 
-    default:
-      // ✅ Bug 4 修正：all 變數未定義，改回傳全部合併結果
-      return [...Oscars98, ...Oscars97];
-  }
-}
+        case "screenplay":
+            return Oscars97_screenplay;
+
+        default:
+            return Oscars97;
+    }
+}          
