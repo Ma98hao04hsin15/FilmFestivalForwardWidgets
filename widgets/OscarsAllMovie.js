@@ -11,7 +11,7 @@ WidgetMetadata = {
   detailCacheDuration: 86400,
   modules: [
 	{ 
-		title: "🎬 全部屆次",
+		title: "🎭 全部屆次",
 		description: "歷屆奧斯卡全部作品",
 		requiresWebView: false,
 		functionName: "getAll",
