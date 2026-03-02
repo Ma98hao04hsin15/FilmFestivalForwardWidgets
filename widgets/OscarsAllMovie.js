@@ -28,7 +28,7 @@ WidgetMetadata = {
       title: "🎭第98屆",
       description: "第98屆作品",
       requiresWebView: false,
-      functionName: "loadBestPictures",
+      functionName: "load98Oscars",
       cacheDuration: 604800,
       params: [
         {
@@ -42,7 +42,7 @@ WidgetMetadata = {
       title: "🎭第97屆",
       description: "第97屆作品",
       requiresWebView: false,
-      functionName: "loadBestPicturesnominee",
+      functionName: "load97Oscars",
       cacheDuration: 604800,
       params: [
         {
@@ -89,7 +89,7 @@ const AWARD_ID = "1-academy-awards";
 const BASE_URL = "https://www.themoviedb.org";
 
 // 98th全部作品 TMDB ID（movie）
-const BEST_PICTURES = [
+const Oscars98 = [
 	{ id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
     { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
     { id: "1062722", year: 2026, title: "Frankenstein",                           ceremony: 98 },
@@ -120,7 +120,7 @@ const BEST_PICTURES = [
 ];
 
 // 97th全部作品 TMDB ID（movie）
-const BEST_PICTURES_NOMINEE = [
+const Oscars97 = [
 	{ id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
     { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
     { id: "661539",  year: 2025, title: "A Complete Unknown",                     ceremony: 97 },
@@ -204,8 +204,8 @@ const Oscars95 = [
 
 // ✅ Bug 6 修正：定義 CEREMONIES 物件供 getAll 使用
 const CEREMONIES = {
-  98: BEST_PICTURES,
-  97: BEST_PICTURES_NOMINEE,
+  98: Oscars98,
+  97: Oscars97,
   96: Oscars96,
   95: Oscars95,
 };
@@ -356,11 +356,11 @@ async function getAll(params = {}) {
 /**
  * 98屆全部作品
  */
-async function loadBestPictures(params = {}) {
+async function load98Oscars(params = {}) {
   const page = parseInt(params.page) || 1;
   const pageSize = 10;
   const start = (page - 1) * pageSize;
-  const pageItems = BEST_PICTURES.slice(start, start + pageSize);
+  const pageItems = Oscars98.slice(start, start + pageSize);
 
   if (pageItems.length === 0) return [];
 
@@ -391,11 +391,11 @@ async function loadBestPictures(params = {}) {
 /**
  * 97屆全部作品
  */
-async function loadBestPicturesnominee(params = {}) {
+async function load97Oscars(params = {}) {
   const page = parseInt(params.page) || 1;
   const pageSize = 10;
   const start = (page - 1) * pageSize;
-  const pageItems = BEST_PICTURES_NOMINEE.slice(start, start + pageSize);
+  const pageItems = Oscars97.slice(start, start + pageSize);
 
   if (pageItems.length === 0) return [];
 
