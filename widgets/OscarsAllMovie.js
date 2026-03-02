@@ -253,7 +253,7 @@ async function fetchStaticCeremonyPage(list, ceremony, page, pageSize = 10) {
           id: bp.id,
           type: "tmdb",
           mediaType: "movie",
-          title: `第${label}届 · ${data.title || bp.title}`,
+          title: `🏆 第${label}届 · ${data.title || bp.title}`,
           description: data.overview || "",
           rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
           releaseDate: data.release_date,
