@@ -22,7 +22,7 @@ const WidgetMetadata = {
           type: "enumeration",
           value: "all",
           enumOptions: [
-            { title: "🎭 歷屆全部作品", value: "all" },
+            { title: "🎭 歷屆全部作品", value: "Oscar" },
             { title: "🎭 第98屆", value: "98" },
             { title: "🎭 第97屆", value: "97" },
           ]
@@ -128,7 +128,7 @@ async function getOscars(params = {}) {
     case "97":
       return Oscars_97;
 
-    case "all":
+    case "Oscar":
     default:
       return mergeUnique(Oscars_98, Oscars_97);
   }
