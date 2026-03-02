@@ -1,7 +1,7 @@
 // 奥斯卡金像奖 ForwardWidget
 // 数据来源: TMDB Award API
 WidgetMetadata = {
-  id: "OscarsAllMovie",
+  id: "OscarsFilter",
   title: "🏆 历届奥斯卡金像奖入围与获奖影片",
   description: "获取历届奥斯卡金像奖入围与获奖影片",
   author: "ForwardWidget",
