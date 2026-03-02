@@ -11,7 +11,7 @@ WidgetMetadata = {
   detailCacheDuration: 86400,
   modules: [
 	{ 
-		title: "🎭 全部屆次",
+		title: "🎬 全部屆次",
 		description: "歷屆奧斯卡全部作品",
 		requiresWebView: false,
 		functionName: "getAll",
@@ -25,7 +25,7 @@ WidgetMetadata = {
 		]
 	},
     {
-      title: "🎭 第98屆",
+      title: "🎬 第98屆",
       description: "第98屆作品",
       requiresWebView: false,
       functionName: "load98Oscars",
@@ -39,7 +39,7 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎭 第97屆",
+      title: "🎬 第97屆",
       description: "第97屆作品",
       requiresWebView: false,
       functionName: "load97Oscars",
@@ -53,7 +53,7 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎭 第96屆",
+      title: "🎬 第96屆",
       description: "第96屆作品",
       requiresWebView: false,
       functionName: "load96Oscars",
@@ -67,7 +67,7 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎭 第95屆",
+      title: "🎬 第95屆",
       description: "第95屆作品",
       requiresWebView: false,
       functionName: "load95Oscars", // ✅ Bug 5 修正：原本錯誤寫成 "load96Oscars"
@@ -81,7 +81,7 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "🎭 第73屆",
+      title: "🎬 第73屆",
       description: "第73屆作品",
       requiresWebView: false,
       functionName: "load73Oscars", 
