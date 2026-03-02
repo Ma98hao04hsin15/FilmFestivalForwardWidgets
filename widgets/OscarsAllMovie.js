@@ -80,6 +80,20 @@ WidgetMetadata = {
         },
       ],
     },
+    {
+      title: "🎭 第73屆",
+      description: "第73屆作品",
+      requiresWebView: false,
+      functionName: "load73Oscars", 
+      cacheDuration: 604800,
+      params: [
+        {
+          name: "page",
+          title: "页码",
+          type: "page",
+        },
+      ],
+    },
   ],
 };
 
@@ -202,12 +216,41 @@ const Oscars95 = [
   { id: "777245", year: 2023, title: "Women Talking",                     ceremony: 95 },
 ];
 
+const Oscars73 = [
+  { id: "392",   year: 2001, title: "Chocolat",                             ceremony: 73 },
+  { id: "146",   year: 2001, title: "Crouching Tiger, Hidden Dragon",        ceremony: 73 },
+  { id: "462",   year: 2001, title: "Erin Brockovich",                      ceremony: 73 },
+  { id: "98",    year: 2001, title: "Gladiator",                            ceremony: 73 },
+  { id: "1900",  year: 2001, title: "Traffic",                              ceremony: 73 },
+  { id: "786",   year: 2001, title: "Almost Famous",                        ceremony: 73 },
+  { id: "71",    year: 2001, title: "Billy Elliot",                         ceremony: 73 },
+  { id: "14295", year: 2001, title: "You Can Count on Me",                  ceremony: 73 },
+  { id: "134",   year: 2001, title: "O Brother, Where Art Thou?",           ceremony: 73 },
+  { id: "11004", year: 2001, title: "Wonder Boys",                          ceremony: 73 },
+  { id: "55",    year: 2001, title: "Amores Perros",                        ceremony: 73 },
+  { id: "29937", year: 2001, title: "Divided We Fall",                      ceremony: 73 },
+  { id: "58886", year: 2001, title: "Everybody's Famous!",                  ceremony: 73 },
+  { id: "10697", year: 2001, title: "The Taste of Others",                  ceremony: 73 },
+  { id: "10867", year: 2001, title: "Malèna",                               ceremony: 73 },
+  { id: "2024",  year: 2001, title: "The Patriot",                          ceremony: 73 },
+  { id: "1597",  year: 2001, title: "Meet the Parents",                     ceremony: 73 },
+  { id: "16",    year: 2001, title: "Dancer in the Dark",                   ceremony: 73 },
+  { id: "11688", year: 2001, title: "The Emperor's New Groove",             ceremony: 73 },
+  { id: "3536",  year: 2001, title: "U-571",                                ceremony: 73 },
+  { id: "5551",  year: 2001, title: "Space Cowboys",                        ceremony: 73 },
+  { id: "8358",  year: 2001, title: "Cast Away",                            ceremony: 73 },
+  { id: "2133",  year: 2001, title: "The Perfect Storm",                    ceremony: 73 },
+  { id: "8871",  year: 2001, title: "How the Grinch Stole Christmas",       ceremony: 73 },
+  { id: "10876", year: 2001, title: "Quills",                               ceremony: 73 },
+  { id: "7093",  year: 2001, title: "Vatel",                                ceremony: 73 },
+
 // ✅ Bug 6 修正：定義 CEREMONIES 物件供 getAll 使用
 const CEREMONIES = {
   98: Oscars98,
   97: Oscars97,
   96: Oscars96,
   95: Oscars95,
+  73: Oscars73,
 };
 
 // ─── 工具函数 ────────────────────────────────────────────────────────────────
@@ -462,6 +505,43 @@ async function load96Oscars(params = {}) {
  * 95屆全部作品
  */
 async function load95Oscars(params = {}) {
+  const page = parseInt(params.page) || 1;
+  const pageSize = 10;
+  const start = (page - 1) * pageSize;
+  const pageItems = Oscars95.slice(start, start + pageSize); // ✅ Bug 4 修正：95_Oscars → Oscars95
+
+  if (pageItems.length === 0) return [];
+
+  const results = [];
+  for (const bp of pageItems) {
+    try {
+      const data = await Widget.tmdb.get(`/movie/${bp.id}`, { params: { language: "zh-CN" } });
+      if (!data) continue;
+      results.push({
+        id: bp.id,
+        type: "tmdb",
+        mediaType: "movie",
+        title: `第${bp.ceremony}届 · ${data.title || bp.title}`,
+        description: data.overview || "",
+        rating: data.vote_average ? String(data.vote_average.toFixed(1)) : undefined,
+        releaseDate: data.release_date,
+        posterPath: data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : undefined,
+        backdropPath: data.backdrop_path ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}` : undefined,
+      });
+    } catch (e) {
+      console.error(`获取影片 ${bp.id} 失败:`, e);
+      results.push({ id: bp.id, type: "tmdb", mediaType: "movie", title: `第${bp.ceremony}届 · ${bp.title}` });
+    }
+  }
+  return results;
+}
+
+
+
+/**
+ * 73屆全部作品
+ */
+async function load73Oscars(params = {}) {
   const page = parseInt(params.page) || 1;
   const pageSize = 10;
   const start = (page - 1) * pageSize;
