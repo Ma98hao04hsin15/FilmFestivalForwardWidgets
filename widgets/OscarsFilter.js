@@ -64,20 +64,6 @@ WidgetMetadata = {
       ],
     },
     {
-      title: "奥斯卡最佳影片",
-      description: "历届奥斯卡最佳影片获奖作品",
-      requiresWebView: false,
-      functionName: "loadBestPictures",
-      cacheDuration: 604800,
-      params: [
-        {
-          name: "page",
-          title: "页码",
-          type: "page",
-        },
-      ],
-    },
-    {
       title: "奥斯卡最佳影片(提名)",
       description: "历届奥斯卡最佳影片获奖作品",
       requiresWebView: false,
