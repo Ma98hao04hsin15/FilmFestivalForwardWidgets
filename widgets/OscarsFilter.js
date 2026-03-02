@@ -1,74 +1,56 @@
 /**
  * @file oscars-97.js
- * @description Forward widget for the 97th Academy Awards (2025).
+ * @description Forward widget for the Academy Awards.
  * Static data, no API key required. All IDs verified against TMDB.
- * @version 2.0.0
+ * @version 2.1.0
  */
 
 WidgetMetadata = {
     id: "tmdboscars",
     title: "歷屆奥斯卡金像奖",
-    version: "2.0.0",
+    version: "2.1.0",
     requiredVersion: "0.0.1",
     description: "奥斯卡是由美國電影藝術與科學學院（AMPAS）主辦的年度電影盛事，自1929年起表彰優秀電影創作，是全球影壇最受矚目的榮譽之一。",
     author: "ForwardWidget",
     modules: [
         {
             id: "oscars",
-            title: "歷届奥斯卡",
-            functionName: "getOscars",
+            title: "歷屆奥斯卡金像奖奥斯卡全部作品",
+            functionName: "getOscars",          // ✅ Fix 2: 與下方函數名統一
             cacheDuration: 86400,
             params: [
                 {
                     name: "category",
-                    title: "歷屆全部作品",
+                    title: "屆數",
                     type: "enumeration",
-                    value: "allmovie",                          
+                    value: "98",                // ✅ Fix 1: 改為 "98"，與 enumOptions 第一項對應
                     enumOptions: [
-						{ title: "第97届 (2025)", value: "97" },
-						{ title: "第96届 (2024)", value: "96" },
-						{ title: "第95届 (2023)", value: "95" },
-						{ title: "第94届 (2022)", value: "94" },
-						{ title: "第93届 (2021)", value: "93" },
-						{ title: "第92届 (2020)", value: "92" },
-						{ title: "第91届 (2019)", value: "91" },
-						{ title: "第90届 (2018)", value: "90" },
-						{ title: "第89届 (2017)", value: "89" },
-						{ title: "第88届 (2016)", value: "88" },
-						{ title: "第87届 (2015)", value: "87" },
-						{ title: "第86届 (2014)", value: "86" },
-						{ title: "第85届 (2013)", value: "85" },
-						{ title: "第84届 (2012)", value: "84" },
-						{ title: "第83届 (2011)", value: "83" },
-						{ title: "第82届 (2010)", value: "82" },
-						{ title: "第81届 (2009)", value: "81" },
-						{ title: "第80届 (2008)", value: "80" },
-						{ title: "第79届 (2007)", value: "79" },
-						{ title: "第78届 (2006)", value: "78" },
-						{ title: "第77届 (2005)", value: "77" },
-						{ title: "第76届 (2004)", value: "76" },
-						{ title: "第75届 (2003)", value: "75" },
- 						{ title: "第74届 (2002)", value: "74" },
-						{ title: "第73届 (2001)", value: "73" },
-                   ]
-                }
-            ]
-        },
-        {
-            id: "oscars97",
-            title: "第97届奥斯卡",
-            functionName: "getOscars97",
-            cacheDuration: 86400,
-            params: [
-                {
-                    name: "category",
-                    title: "奖项分类",
-                    type: "enumeration",
-                    value: "all",                          // ✅ Fix 3: 改為 "all" 與 enumOptions 對應
-                    enumOptions: [
-                        { title: "🎭 全部作品", value: "all" },
-                        { title: "🏆 獲獎作品", value: "winner" },
-                        { title: "🎨 提名作品", value: "nominee" }
+                        { title: "🎭 98th 全部作品", value: "98" },
+                        { title: "🎭 97th 全部作品", value: "97" },
+                        { title: "🎭 96th 全部作品", value: "96" },
+                        //{ title: "🎭 95th 全部作品", value: "95" },
+                        //{ title: "🎭 94th 全部作品", value: "94" },
+                        //{ title: "🎭 93th 全部作品", value: "93" },
+                       // { title: "🎭 92th 全部作品", value: "92" },
+                       // { title: "🎭 91th 全部作品", value: "91" },
+                       // { title: "🎭 90th 全部作品", value: "90" },
+                       // { title: "🎭 89th 全部作品", value: "89" },
+                      //  { title: "🎭 88th 全部作品", value: "88" },
+                      //  { title: "🎭 87th 全部作品", value: "87" },
+                        //{ title: "🎭 86th 全部作品", value: "86" },
+                      //  { title: "🎭 85th 全部作品", value: "85" },
+                        //{ title: "🎭 84th 全部作品", value: "84" },
+                     //   { title: "🎭 83th 全部作品", value: "83" },
+                     //   { title: "🎭 82th 全部作品", value: "82" },
+                     //   { title: "🎭 81th 全部作品", value: "81" },
+                     //   { title: "🎭 80th 全部作品", value: "80" },
+                     //   { title: "🎭 79th 全部作品", value: "79" },
+                     //   { title: "🎭 78th 全部作品", value: "78" },
+                     //   { title: "🎭 77th 全部作品", value: "77" },
+                     //   { title: "🎭 76th 全部作品", value: "76" },
+                     //   { title: "🎭 75th 全部作品", value: "75" },
+                     //   { title: "🎭 74th 全部作品", value: "74" },
+                      //  { title: "🎭 73th 全部作品", value: "73" },
                     ]
                 }
             ]
@@ -77,735 +59,305 @@ WidgetMetadata = {
 };
 
 // ─────────────────────────────────────────────
-// 最佳影片歷屆作品
+// 98th 全部作品
 // ─────────────────────────────────────────────
-const BEST_PICTURES_ALL = [
-  { id: "1064213", year: 2025, title: "Anora", ceremony: 97 },
-  { id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
-  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
-  { id: "776503", year: 2022, title: "CODA", ceremony: 94 },
-  { id: "581734", year: 2021, title: "Nomadland", ceremony: 93 },
-  { id: "496243", year: 2020, title: "Parasite", ceremony: 92 },
-  { id: "490132", year: 2019, title: "Green Book", ceremony: 91 },
-  { id: "399055", year: 2018, title: "The Shape of Water", ceremony: 90 },
-  { id: "376867", year: 2017, title: "Moonlight", ceremony: 89 },
-  { id: "314365", year: 2016, title: "Spotlight", ceremony: 88 },
-  { id: "194662", year: 2015, title: "Birdman", ceremony: 87 },
-  { id: "76203", year: 2014, title: "12 Years a Slave", ceremony: 86 },
-  { id: "68734", year: 2013, title: "Argo", ceremony: 85 },
-  { id: "74643", year: 2012, title: "The Artist", ceremony: 84 },
-  { id: "45269", year: 2011, title: "The King's Speech", ceremony: 83 },
-  { id: "12162", year: 2010, title: "The Hurt Locker", ceremony: 82 },
-  { id: "12405", year: 2009, title: "Slumdog Millionaire", ceremony: 81 },
-  { id: "6977", year: 2008, title: "No Country for Old Men", ceremony: 80 },
-  { id: "1422", year: 2007, title: "The Departed", ceremony: 79 },
-  { id: "1640", year: 2006, title: "Crash", ceremony: 78 },
-  { id: "70", year: 2005, title: "Million Dollar Baby", ceremony: 77 },
-  { id: "122", year: 2004, title: "The Lord of the Rings: The Return of the King", ceremony: 76 },  
-  { id: "1574", year: 2003, title: "Chicago", ceremony: 75 },
-  { id: "453", year: 2002, title: "A Beautiful Mind", ceremony: 74 },
-  { id: "98", year: 2001, title: "Gladiator", ceremony: 73 },
-  { id: "549509", year: 2025, title: "The Brutalist", ceremony: 97 },
-  { id: "661539", year: 2025, title: "A Complete Unknown", ceremony: 97 },
-  { id: "974576", year: 2025, title: "Conclave", ceremony: 97 },
-  { id: "693134", year: 2025, title: "Dune: Part Two", ceremony: 97 },
-  { id: "974950", year: 2025, title: "Emilia Pérez", ceremony: 97 },
-  { id: "1000837", year: 2025, title: "I'm Still Here", ceremony: 97 },
-  { id: "1028196", year: 2025, title: "Nickel Boys", ceremony: 97 },
-  { id: "933260", year: 2025, title: "The Substance", ceremony: 97 },
-  { id: "402431", year: 2025, title: "Wicked", ceremony: 97 },
-  
-  { id: "1056360", year: 2024, title: "American Fiction", ceremony: 96 },
-  { id: "915935", year: 2024, title: "Anatomy of a Fall", ceremony: 96 },
-  { id: "346698", year: 2024, title: "Barbie", ceremony: 96 },
-  { id: "840430", year: 2024, title: "The Holdovers", ceremony: 96 },
-  { id: "466420", year: 2024, title: "Killers of the Flower Moon", ceremony: 96 },
-  { id: "523607", year: 2024, title: "Maestro", ceremony: 96 },
-  { id: "666277", year: 2024, title: "Past Lives", ceremony: 96 },
-  { id: "792307", year: 2024, title: "Poor Things", ceremony: 96 },
-  { id: "467244", year: 2024, title: "The Zone of Interest", ceremony: 96 },
-  
-  { id: "49046", year: 2023, title: "All Quiet on the Western Front", ceremony: 95 },
-  { id: "76600", year: 2023, title: "Avatar: The Way of Water", ceremony: 95 },
-  { id: "674324", year: 2023, title: "The Banshees of Inisherin", ceremony: 95 },
-  { id: "614934", year: 2023, title: "Elvis", ceremony: 95 },
-  { id: "804095", year: 2023, title: "The Fabelmans", ceremony: 95 },
-  { id: "817758", year: 2023, title: "Tár", ceremony: 95 },
-  { id: "361743", year: 2023, title: "Top Gun: Maverick", ceremony: 95 },
-  { id: "497828", year: 2023, title: "Triangle of Sadness", ceremony: 95 },
-  { id: "777245", year: 2023, title: "Women Talking", ceremony: 95 },
-  
-  { id: "777270", year: 2022, title: "Belfast", ceremony: 94 },
-  { id: "646380", year: 2022, title: "Don't Look Up", ceremony: 94 },
-  { id: "758866", year: 2022, title: "Drive My Car", ceremony: 94 },
-  { id: "438631", year: 2022, title: "Dune", ceremony: 94 },
-  { id: "614917", year: 2022, title: "King Richard", ceremony: 94 },
-  { id: "718032", year: 2022, title: "Licorice Pizza", ceremony: 94 },
-  { id: "597208", year: 2022, title: "Nightmare Alley", ceremony: 94 },
-  { id: "600583", year: 2022, title: "The Power of the Dog", ceremony: 94 },
-  { id: "511809", year: 2022, title: "West Side Story", ceremony: 94 },
-  
-  { id: "600354", year: 2021, title: "The Father", ceremony: 93 },
-  { id: "583406", year: 2021, title: "Judas and the Black Messiah", ceremony: 93 },
-  { id: "614560", year: 2021, title: "Mank", ceremony: 93 },
-  { id: "615643", year: 2021, title: "Minari", ceremony: 93 },
-  { id: "582014", year: 2021, title: "Promising Young Woman", ceremony: 93 },
-  { id: "502033", year: 2021, title: "Sound of Metal", ceremony: 93 },
-  { id: "556984", year: 2021, title: "The Trial of the Chicago 7", ceremony: 93 },
-  
-  { id: "530915", year: 2020, title: "1917", ceremony: 92 },
-  { id: "359724", year: 2020, title: "Ford v Ferrari", ceremony: 92 },
-  { id: "515001", year: 2020, title: "Jojo Rabbit", ceremony: 92 },
-  { id: "475557", year: 2020, title: "Joker", ceremony: 92 },
-  { id: "331482", year: 2020, title: "Little Women", ceremony: 92 },
-  { id: "398978", year: 2020, title: "The Irishman", ceremony: 92 },
-  { id: "492188", year: 2020, title: "Marriage Story", ceremony: 92 },
-  { id: "466272", year: 2020, title: "Once Upon a Time in Hollywood", ceremony: 92 },   
-  
-  { id: "284054", year: 2019, title: "Black Panther", ceremony: 91 },
-  { id: "487558", year: 2019, title: "BlacKkKlansman", ceremony: 91 },
-  { id: "424694", year: 2019, title: "Bohemian Rhapsody", ceremony: 91 },
-  { id: "375262", year: 2019, title: "The Favourite", ceremony: 91 },
-  { id: "426426", year: 2019, title: "Roma", ceremony: 91 },
-  { id: "332562", year: 2019, title: "A Star Is Born", ceremony: 91 },
-  { id: "429197", year: 2019, title: "Vice", ceremony: 91 },
-  
-  { id: "398818", year: 2018, title: "Call Me by Your Name", ceremony: 90 },
-  { id: "399404", year: 2018, title: "Darkest Hour", ceremony: 90 },
-  { id: "374720", year: 2018, title: "Dunkirk", ceremony: 90 },
-  { id: "419430", year: 2018, title: "Get Out", ceremony: 90 },
-  { id: "391713", year: 2018, title: "Lady Bird", ceremony: 90 },
-  { id: "400617", year: 2018, title: "Phantom Thread", ceremony: 90 },
-  { id: "446354", year: 2018, title: "The Post", ceremony: 90 },
-  { id: "359940", year: 2018, title: "Three Billboards Outside Ebbing, Missouri", ceremony: 90 },
-  
-  { id: "329865", year: 2017, title: "Arrival", ceremony: 89 },
-  { id: "393457", year: 2017, title: "Fences", ceremony: 89 },
-  { id: "324786", year: 2017, title: "Hacksaw Ridge", ceremony: 89 },
-  { id: "338766", year: 2017, title: "Hell or High Water", ceremony: 89 },
-  { id: "381284", year: 2017, title: "Hidden Figures", ceremony: 89 },
-  { id: "313369", year: 2017, title: "La La Land", ceremony: 89 },
-  { id: "334543", year: 2017, title: "Lion", ceremony: 89 },
-  { id: "334541", year: 2017, title: "Manchester by the Sea", ceremony: 89 },
-  
-  { id: "318846", year: 2016, title: "The Big Short", ceremony: 88 },  
-  { id: "296098", year: 2016, title: "Bridge of Spies", ceremony: 88 },  
-  { id: "167073", year: 2016, title: "Brooklyn", ceremony: 88 },  
-  { id: "76341", year: 2016, title: "Mad Max: Fury Road", ceremony: 88 },  
-  { id: "286217", year: 2016, title: "The Martian", ceremony: 88 },  
-  { id: "281957", year: 2016, title: "The Revenant", ceremony: 88 },  
-  { id: "264644", year: 2016, title: "Room", ceremony: 88 },  
-  
-  { id: "190859", year: 2015, title: "American Sniper", ceremony: 87 },
-  { id: "85350", year: 2015, title: "Boyhood", ceremony: 87 },
-  { id: "120467", year: 2015, title: "The Grand Budapest Hotel", ceremony: 87 },
-  { id: "205596", year: 2015, title: "The Imitation Game", ceremony: 87 },
-  { id: "273895", year: 2015, title: "Selma", ceremony: 87 },
-  { id: "266856", year: 2015, title: "The Theory of Everything", ceremony: 87 },
-  { id: "244786", year: 2015, title: "Whiplash", ceremony: 87 },
-  
-  { id: "168672", year: 2014, title: "American Hustle", ceremony: 86 },
-  { id: "109424", year: 2014, title: "Captain Phillips", ceremony: 86 },
-  { id: "152532", year: 2014, title: "Dallas Buyers Club", ceremony: 86 },
-  { id: "49047", year: 2014, title: "Gravity", ceremony: 86 },
-  { id: "152601", year: 2014, title: "Her", ceremony: 86 },
-  { id: "129670", year: 2014, title: "Nebraska", ceremony: 86 },
-  { id: "202220", year: 2014, title: "Philomena", ceremony: 86 },
-  { id: "106646", year: 2014, title: "The Wolf of Wall Street", ceremony: 86 },
-  
-  { id: "86837", year: 2013, title: "Amour", ceremony: 85 },  
-  { id: "84175", year: 2013, title: "Beasts of the Southern Wild", ceremony: 85 }, 
-  { id: "68718", year: 2013, title: "Django Unchained", ceremony: 85 }, 
-  { id: "82695", year: 2013, title: "Les Misérables", ceremony: 85 }, 
-  { id: "87827", year: 2013, title: "Life of Pi", ceremony: 85 }, 
-  { id: "72976", year: 2013, title: "Lincoln", ceremony: 85 }, 
-  { id: "82693", year: 2013, title: "Silver Linings Playbook", ceremony: 85 }, 
-  { id: "97630", year: 2013, title: "Zero Dark Thirty", ceremony: 85 }, 
-  
-  { id: "65057", year: 2012, title: "The Descendants", ceremony: 84 },
-  { id: "64685", year: 2012, title: "Extremely Loud & Incredibly Close", ceremony: 84 },
-  { id: "50014", year: 2012, title: "The Help", ceremony: 84 },
-  { id: "44826", year: 2012, title: "Hugo", ceremony: 84 },
-  { id: "59436", year: 2012, title: "Midnight in Paris", ceremony: 84 },
-  { id: "60308", year: 2012, title: "Moneyball", ceremony: 84 },
-  { id: "8967", year: 2012, title: "The Tree of Life", ceremony: 84 },
-  { id: "57212", year: 2012, title: "War Horse", ceremony: 84 },
-  
-  { id: "44214", year: 2011, title: "Black Swan", ceremony: 83 },
-  { id: "45317", year: 2011, title: "The Fighter", ceremony: 83 },
-  { id: "27205", year: 2011, title: "Inception", ceremony: 83 },
-  { id: "39781", year: 2011, title: "The Kids Are All Right", ceremony: 83 },
-  { id: "44115", year: 2011, title: "127 Hours", ceremony: 83 },
-  { id: "37799", year: 2011, title: "The Social Network", ceremony: 83 },
-  { id: "10193", year: 2011, title: "Toy Story 3", ceremony: 83 },
-  { id: "44264", year: 2011, title: "True Grit", ceremony: 83 },
-  { id: "39013", year: 2011, title: "Winter's Bone", ceremony: 83 },
-  
-  { id: "19995", year: 2010, title: "Avatar", ceremony: 82 },
-  { id: "22881", year: 2010, title: "The Blind Side", ceremony: 82 },
-  { id: "17654", year: 2010, title: "District 9", ceremony: 82 },
-  { id: "24684", year: 2010, title: "An Education", ceremony: 82 },
-  { id: "16869", year: 2010, title: "Inglourious Basterds", ceremony: 82 },
-  { id: "25793", year: 2010, title: "Precious", ceremony: 82 },
-  { id: "12573", year: 2010, title: "A Serious Man", ceremony: 82 },
-  { id: "14160", year: 2010, title: "Up", ceremony: 82 },
-  { id: "22947", year: 2010, title: "Up in the Air", ceremony: 82 },
-  
-  { id: "4922", year: 2009, title: "The Curious Case of Benjamin Button", ceremony: 81 },
-  { id: "11499", year: 2009, title: "Frost/Nixon", ceremony: 81 },
-  { id: "10139", year: 2009, title: "Milk", ceremony: 81 },
-  { id: "8055", year: 2009, title: "The Reader", ceremony: 81 },
-  
-  { id: "4347", year: 2008, title: "Atonement", ceremony: 80 },
-  { id: "7326", year: 2008, title: "Juno", ceremony: 80 },
-  { id: "4566", year: 2008, title: "Michael Clayton", ceremony: 80 },
-  { id: "7345", year: 2008, title: "There Will Be Blood", ceremony: 80 },
-  
-  { id: "1164", year: 2007, title: "Babel", ceremony: 79 },
-  { id: "1251", year: 2007, title: "Letters from Iwo Jima", ceremony: 79 },
-  { id: "773", year: 2007, title: "Little Miss Sunshine", ceremony: 79 },
-  { id: "1165", year: 2007, title: "The Queen", ceremony: 79 },
-  
-  { id: "142", year: 2006, title: "Brokeback Mountain", ceremony: 78 },
-  { id: "398", year: 2006, title: "Capote", ceremony: 78 },
-  { id: "3291", year: 2006, title: "Good Night, and Good Luck.", ceremony: 78 },
-  { id: "612", year: 2006, title: "Munich", ceremony: 78 },
-  
-  { id: "2567", year: 2005, title: "The Aviator", ceremony: 77 },
-  { id: "866", year: 2005, title: "Finding Neverland", ceremony: 77 },
-  { id: "1677", year: 2005, title: "Ray", ceremony: 77 },
-  { id: "9675", year: 2005, title: "Sideways", ceremony: 77 },
-  
-  { id: "153", year: 2004, title: "Lost in Translation", ceremony: 76 },  
-  { id: "8619", year: 2004, title: "Master and Commander: The Far Side of the World", ceremony: 76 },  
-  { id: "322", year: 2004, title: "Mystic River", ceremony: 76 },  
-  { id: "4464", year: 2004, title: "Seabiscuit", ceremony: 76 },  
-  
-  { id: "3131", year: 2003, title: "Gangs of New York", ceremony: 75 },
-  { id: "590", year: 2003, title: "The Hours", ceremony: 75 },
-  { id: "121", year: 2003, title: "The Lord of the Rings: The Two Towers", ceremony: 75 },
-  { id: "423", year: 2003, title: "The Pianist", ceremony: 75 },
-  
-  { id: "5279", year: 2002, title: "Gosford Park", ceremony: 74 },
-  { id: "1999", year: 2002, title: "In the Bedroom", ceremony: 74 },
-  { id: "120", year: 2002, title: "The Lord of the Rings: The Fellowship of the Ring", ceremony: 74 },
-  { id: "824", year: 2002, title: "Moulin Rouge!", ceremony: 74 },
-  
-  { id: "392", year: 2001, title: "Chocolat", ceremony: 73 },
-  { id: "146", year: 2001, title: "Crouching Tiger, Hidden Dragon", ceremony: 73 },
-  { id: "462", year: 2001, title: "Erin Brockovich", ceremony: 73 },
-  { id: "1900", year: 2001, title: "Traffic", ceremony: 73 },
+const Oscars98 = [
+    { id: "701387",  year: 2026, title: "Bugonia",                                ceremony: 98 },
+    { id: "911430",  year: 2026, title: "F1",                                     ceremony: 98 },
+    { id: "1062722", year: 2026, title: "Frankenstein",                           ceremony: 98 },
+    { id: "858024",  year: 2026, title: "Hamnet",                                 ceremony: 98 },
+    { id: "1317288", year: 2026, title: "Marty Supreme",                          ceremony: 98 },
+    { id: "1054867", year: 2026, title: "One Battle After Another",               ceremony: 98 },
+    { id: "1220564", year: 2026, title: "The Secret Agent",                       ceremony: 98 },
+    { id: "1124566", year: 2026, title: "Sentimental Value",                      ceremony: 98 },
+    { id: "1233413", year: 2026, title: "Sinners",                                ceremony: 98 },
+    { id: "1241983", year: 2026, title: "Train Dreams",                           ceremony: 98 },
+    { id: "1299655", year: 2026, title: "Blue Moon",                              ceremony: 98 },
+    { id: "1456349", year: 2026, title: "It Was Just an Accident",                ceremony: 98 },
+    { id: "804370",  year: 2026, title: "Arco",                                   ceremony: 98 },
+    { id: "1022787", year: 2026, title: "Elio",                                   ceremony: 98 },
+    { id: "803796",  year: 2026, title: "KPop Demon Hunters",                     ceremony: 98 },
+    { id: "682012",  year: 2026, title: "Little Amélie or the Character of Rain", ceremony: 98 },
+    { id: "1084242", year: 2026, title: "Zootopia 2",                             ceremony: 98 },
+    { id: "1151272", year: 2026, title: "Sirât",                                  ceremony: 98 },
+    { id: "1480382", year: 2026, title: "The Voice of Hind Rajab",                ceremony: 98 },
+    { id: "826338",  year: 2026, title: "Diane Warren: Relentless",               ceremony: 98 },
+    { id: "1358554", year: 2026, title: "Viva Verdi!",                            ceremony: 98 },
+    { id: "1379266", year: 2026, title: "Kokuho",                                 ceremony: 98 },
+    { id: "760329",  year: 2026, title: "The Smashing Machine",                   ceremony: 98 },
+    { id: "1284120", year: 2026, title: "The Ugly Stepsister",                    ceremony: 98 },
+    { id: "83533",   year: 2026, title: "Avatar: Fire and Ash",                   ceremony: 98 },
+    { id: "1234821", year: 2026, title: "Jurassic World Rebirth",                 ceremony: 98 },
+    { id: "1236470", year: 2026, title: "The Lost Bus",                           ceremony: 98 },
 ];
 
 // ─────────────────────────────────────────────
-// 提名作品
+// 97th 全部作品
 // ─────────────────────────────────────────────
-const BEST_PICTURES = [
-  { id: "1064213", year: 2025, title: "Anora", ceremony: 97 },
-  { id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
-  { id: "545611", year: 2023, title: "Everything Everywhere All at Once", ceremony: 95 },
-  { id: "776503", year: 2022, title: "CODA", ceremony: 94 },
-  { id: "581734", year: 2021, title: "Nomadland", ceremony: 93 },
-  { id: "496243", year: 2020, title: "Parasite", ceremony: 92 },
-  { id: "490132", year: 2019, title: "Green Book", ceremony: 91 },
-  { id: "399055", year: 2018, title: "The Shape of Water", ceremony: 90 },
-  { id: "376867", year: 2017, title: "Moonlight", ceremony: 89 },
-  { id: "314365", year: 2016, title: "Spotlight", ceremony: 88 },
-  { id: "194662", year: 2015, title: "Birdman", ceremony: 87 },
-  { id: "76203", year: 2014, title: "12 Years a Slave", ceremony: 86 },
-  { id: "68734", year: 2013, title: "Argo", ceremony: 85 },
-  { id: "74643", year: 2012, title: "The Artist", ceremony: 84 },
-  { id: "45269", year: 2011, title: "The King's Speech", ceremony: 83 },
-  { id: "12162", year: 2010, title: "The Hurt Locker", ceremony: 82 },
-  { id: "12405", year: 2009, title: "Slumdog Millionaire", ceremony: 81 },
-  { id: "6977", year: 2008, title: "No Country for Old Men", ceremony: 80 },
-  { id: "1422", year: 2007, title: "The Departed", ceremony: 79 },
-  { id: "1640", year: 2006, title: "Crash", ceremony: 78 },
-  { id: "70", year: 2005, title: "Million Dollar Baby", ceremony: 77 },
-  { id: "122", year: 2004, title: "The Lord of the Rings: The Return of the King", ceremony: 76 },  
-  { id: "1574", year: 2003, title: "Chicago", ceremony: 75 },
-  { id: "453", year: 2002, title: "A Beautiful Mind", ceremony: 74 },
-  { id: "98", year: 2001, title: "Gladiator", ceremony: 73 },
+const Oscars97 = [
+    { id: "1064213", year: 2025, title: "Anora",                                  ceremony: 97 },
+    { id: "549509",  year: 2025, title: "The Brutalist",                          ceremony: 97 },
+    { id: "661539",  year: 2025, title: "A Complete Unknown",                     ceremony: 97 },
+    { id: "974576",  year: 2025, title: "Conclave",                               ceremony: 97 },
+    { id: "693134",  year: 2025, title: "Dune: Part Two",                         ceremony: 97 },
+    { id: "974950",  year: 2025, title: "Emilia Pérez",                           ceremony: 97 },
+    { id: "1000837", year: 2025, title: "I'm Still Here",                         ceremony: 97 },
+    { id: "1028196", year: 2025, title: "Nickel Boys",                            ceremony: 97 },
+    { id: "933260",  year: 2025, title: "The Substance",                          ceremony: 97 },
+    { id: "402431",  year: 2025, title: "Wicked",                                 ceremony: 97 },
+    { id: "1013850", year: 2025, title: "A Real Pain",                            ceremony: 97 },
+    { id: "1211472", year: 2025, title: "September 5",                            ceremony: 97 },
+    { id: "1155828", year: 2025, title: "Sing Sing",                              ceremony: 97 },
+    { id: "823219",  year: 2025, title: "Flow",                                   ceremony: 97 }, 
+    { id: "1022789", year: 2025, title: "Inside Out 2",                           ceremony: 97 },
+    { id: "1064486", year: 2025, title: "Memoir of a Snail",                      ceremony: 97 }, 
+    { id: "929204", year: 2025, title: "Wallace & Gromit: Vengeance Most Fowl",  ceremony: 97 }, 
+    { id: "1184918", year: 2025, title: "The Wild Robot",                         ceremony: 97 }, 
+    { id: "1278263", year: 2025, title: "The Seed of the Sacred Fig",             ceremony: 97 }, 
+    { id: "1232827", year: 2025, title: "The Girl with the Needle",               ceremony: 97 },
+    { id: "1061699", year: 2025, title: "The Six Triple Eight",                   ceremony: 97 },
+    { id: "977326",  year: 2025, title: "Elton John: Never Too Late",             ceremony: 97 },
+    { id: "426063",  year: 2025, title: "Nosferatu",                              ceremony: 97 },
+    { id: "1038263", year: 2025, title: "Maria",                                  ceremony: 97 },
+    { id: "989662", year: 2025, title: "A Different Man",                         ceremony: 97 },
+    { id: "558449",  year: 2025, title: "Gladiator II",                           ceremony: 97 },
+    { id: "945961",  year: 2025, title: "Alien: Romulus",                         ceremony: 97 },
+    { id: "799766",  year: 2025, title: "Better Man",                             ceremony: 97 },
+    { id: "653346",  year: 2025, title: "Kingdom of the Planet of the Apes",      ceremony: 97 },
 ];
 
-// 历届最佳影片提名 TMDB ID（movie）
-const BEST_PICTURES_NOMINEE = [
-  // 第97届 ~ 第77届（每届最佳影片，按届次倒序）
-  { id: "549509", year: 2025, title: "The Brutalist", ceremony: 97 },
-  { id: "661539", year: 2025, title: "A Complete Unknown", ceremony: 97 },
-  { id: "974576", year: 2025, title: "Conclave", ceremony: 97 },
-  { id: "693134", year: 2025, title: "Dune: Part Two", ceremony: 97 },
-  { id: "974950", year: 2025, title: "Emilia Pérez", ceremony: 97 },
-  { id: "1000837", year: 2025, title: "I'm Still Here", ceremony: 97 },
-  { id: "1028196", year: 2025, title: "Nickel Boys", ceremony: 97 },
-  { id: "933260", year: 2025, title: "The Substance", ceremony: 97 },
-  { id: "402431", year: 2025, title: "Wicked", ceremony: 97 },
-  
-  { id: "1056360", year: 2024, title: "American Fiction", ceremony: 96 },
-  { id: "915935", year: 2024, title: "Anatomy of a Fall", ceremony: 96 },
-  { id: "346698", year: 2024, title: "Barbie", ceremony: 96 },
-  { id: "840430", year: 2024, title: "The Holdovers", ceremony: 96 },
-  { id: "466420", year: 2024, title: "Killers of the Flower Moon", ceremony: 96 },
-  { id: "523607", year: 2024, title: "Maestro", ceremony: 96 },
-  { id: "666277", year: 2024, title: "Past Lives", ceremony: 96 },
-  { id: "792307", year: 2024, title: "Poor Things", ceremony: 96 },
-  { id: "467244", year: 2024, title: "The Zone of Interest", ceremony: 96 },
-  
-  { id: "49046", year: 2023, title: "All Quiet on the Western Front", ceremony: 95 },
-  { id: "76600", year: 2023, title: "Avatar: The Way of Water", ceremony: 95 },
-  { id: "674324", year: 2023, title: "The Banshees of Inisherin", ceremony: 95 },
-  { id: "614934", year: 2023, title: "Elvis", ceremony: 95 },
-  { id: "804095", year: 2023, title: "The Fabelmans", ceremony: 95 },
-  { id: "817758", year: 2023, title: "Tár", ceremony: 95 },
-  { id: "361743", year: 2023, title: "Top Gun: Maverick", ceremony: 95 },
-  { id: "497828", year: 2023, title: "Triangle of Sadness", ceremony: 95 },
-  { id: "777245", year: 2023, title: "Women Talking", ceremony: 95 },
-  
-  { id: "777270", year: 2022, title: "Belfast", ceremony: 94 },
-  { id: "646380", year: 2022, title: "Don't Look Up", ceremony: 94 },
-  { id: "758866", year: 2022, title: "Drive My Car", ceremony: 94 },
-  { id: "438631", year: 2022, title: "Dune", ceremony: 94 },
-  { id: "614917", year: 2022, title: "King Richard", ceremony: 94 },
-  { id: "718032", year: 2022, title: "Licorice Pizza", ceremony: 94 },
-  { id: "597208", year: 2022, title: "Nightmare Alley", ceremony: 94 },
-  { id: "600583", year: 2022, title: "The Power of the Dog", ceremony: 94 },
-  { id: "511809", year: 2022, title: "West Side Story", ceremony: 94 },
-  
-  { id: "600354", year: 2021, title: "The Father", ceremony: 93 },
-  { id: "583406", year: 2021, title: "Judas and the Black Messiah", ceremony: 93 },
-  { id: "614560", year: 2021, title: "Mank", ceremony: 93 },
-  { id: "615643", year: 2021, title: "Minari", ceremony: 93 },
-  { id: "582014", year: 2021, title: "Promising Young Woman", ceremony: 93 },
-  { id: "502033", year: 2021, title: "Sound of Metal", ceremony: 93 },
-  { id: "556984", year: 2021, title: "The Trial of the Chicago 7", ceremony: 93 },
-  
-  { id: "530915", year: 2020, title: "1917", ceremony: 92 },
-  { id: "359724", year: 2020, title: "Ford v Ferrari", ceremony: 92 },
-  { id: "515001", year: 2020, title: "Jojo Rabbit", ceremony: 92 },
-  { id: "475557", year: 2020, title: "Joker", ceremony: 92 },
-  { id: "331482", year: 2020, title: "Little Women", ceremony: 92 },
-  { id: "398978", year: 2020, title: "The Irishman", ceremony: 92 },
-  { id: "492188", year: 2020, title: "Marriage Story", ceremony: 92 },
-  { id: "466272", year: 2020, title: "Once Upon a Time in Hollywood", ceremony: 92 },   
-  
-  { id: "284054", year: 2019, title: "Black Panther", ceremony: 91 },
-  { id: "487558", year: 2019, title: "BlacKkKlansman", ceremony: 91 },
-  { id: "424694", year: 2019, title: "Bohemian Rhapsody", ceremony: 91 },
-  { id: "375262", year: 2019, title: "The Favourite", ceremony: 91 },
-  { id: "426426", year: 2019, title: "Roma", ceremony: 91 },
-  { id: "332562", year: 2019, title: "A Star Is Born", ceremony: 91 },
-  { id: "429197", year: 2019, title: "Vice", ceremony: 91 },
-  
-  { id: "398818", year: 2018, title: "Call Me by Your Name", ceremony: 90 },
-  { id: "399404", year: 2018, title: "Darkest Hour", ceremony: 90 },
-  { id: "374720", year: 2018, title: "Dunkirk", ceremony: 90 },
-  { id: "419430", year: 2018, title: "Get Out", ceremony: 90 },
-  { id: "391713", year: 2018, title: "Lady Bird", ceremony: 90 },
-  { id: "400617", year: 2018, title: "Phantom Thread", ceremony: 90 },
-  { id: "446354", year: 2018, title: "The Post", ceremony: 90 },
-  { id: "359940", year: 2018, title: "Three Billboards Outside Ebbing, Missouri", ceremony: 90 },
-  
-  { id: "329865", year: 2017, title: "Arrival", ceremony: 89 },
-  { id: "393457", year: 2017, title: "Fences", ceremony: 89 },
-  { id: "324786", year: 2017, title: "Hacksaw Ridge", ceremony: 89 },
-  { id: "338766", year: 2017, title: "Hell or High Water", ceremony: 89 },
-  { id: "381284", year: 2017, title: "Hidden Figures", ceremony: 89 },
-  { id: "313369", year: 2017, title: "La La Land", ceremony: 89 },
-  { id: "334543", year: 2017, title: "Lion", ceremony: 89 },
-  { id: "334541", year: 2017, title: "Manchester by the Sea", ceremony: 89 },
-  
-  { id: "318846", year: 2016, title: "The Big Short", ceremony: 88 },  
-  { id: "296098", year: 2016, title: "Bridge of Spies", ceremony: 88 },  
-  { id: "167073", year: 2016, title: "Brooklyn", ceremony: 88 },  
-  { id: "76341", year: 2016, title: "Mad Max: Fury Road", ceremony: 88 },  
-  { id: "286217", year: 2016, title: "The Martian", ceremony: 88 },  
-  { id: "281957", year: 2016, title: "The Revenant", ceremony: 88 },  
-  { id: "264644", year: 2016, title: "Room", ceremony: 88 },  
-  
-  { id: "190859", year: 2015, title: "American Sniper", ceremony: 87 },
-  { id: "85350", year: 2015, title: "Boyhood", ceremony: 87 },
-  { id: "120467", year: 2015, title: "The Grand Budapest Hotel", ceremony: 87 },
-  { id: "205596", year: 2015, title: "The Imitation Game", ceremony: 87 },
-  { id: "273895", year: 2015, title: "Selma", ceremony: 87 },
-  { id: "266856", year: 2015, title: "The Theory of Everything", ceremony: 87 },
-  { id: "244786", year: 2015, title: "Whiplash", ceremony: 87 },
-  
-  { id: "168672", year: 2014, title: "American Hustle", ceremony: 86 },
-  { id: "109424", year: 2014, title: "Captain Phillips", ceremony: 86 },
-  { id: "152532", year: 2014, title: "Dallas Buyers Club", ceremony: 86 },
-  { id: "49047", year: 2014, title: "Gravity", ceremony: 86 },
-  { id: "152601", year: 2014, title: "Her", ceremony: 86 },
-  { id: "129670", year: 2014, title: "Nebraska", ceremony: 86 },
-  { id: "202220", year: 2014, title: "Philomena", ceremony: 86 },
-  { id: "106646", year: 2014, title: "The Wolf of Wall Street", ceremony: 86 },
-  
-  { id: "86837", year: 2013, title: "Amour", ceremony: 85 },  
-  { id: "84175", year: 2013, title: "Beasts of the Southern Wild", ceremony: 85 }, 
-  { id: "68718", year: 2013, title: "Django Unchained", ceremony: 85 }, 
-  { id: "82695", year: 2013, title: "Les Misérables", ceremony: 85 }, 
-  { id: "87827", year: 2013, title: "Life of Pi", ceremony: 85 }, 
-  { id: "72976", year: 2013, title: "Lincoln", ceremony: 85 }, 
-  { id: "82693", year: 2013, title: "Silver Linings Playbook", ceremony: 85 }, 
-  { id: "97630", year: 2013, title: "Zero Dark Thirty", ceremony: 85 }, 
-  
-  { id: "65057", year: 2012, title: "The Descendants", ceremony: 84 },
-  { id: "64685", year: 2012, title: "Extremely Loud & Incredibly Close", ceremony: 84 },
-  { id: "50014", year: 2012, title: "The Help", ceremony: 84 },
-  { id: "44826", year: 2012, title: "Hugo", ceremony: 84 },
-  { id: "59436", year: 2012, title: "Midnight in Paris", ceremony: 84 },
-  { id: "60308", year: 2012, title: "Moneyball", ceremony: 84 },
-  { id: "8967", year: 2012, title: "The Tree of Life", ceremony: 84 },
-  { id: "57212", year: 2012, title: "War Horse", ceremony: 84 },
-  
-  { id: "44214", year: 2011, title: "Black Swan", ceremony: 83 },
-  { id: "45317", year: 2011, title: "The Fighter", ceremony: 83 },
-  { id: "27205", year: 2011, title: "Inception", ceremony: 83 },
-  { id: "39781", year: 2011, title: "The Kids Are All Right", ceremony: 83 },
-  { id: "44115", year: 2011, title: "127 Hours", ceremony: 83 },
-  { id: "37799", year: 2011, title: "The Social Network", ceremony: 83 },
-  { id: "10193", year: 2011, title: "Toy Story 3", ceremony: 83 },
-  { id: "44264", year: 2011, title: "True Grit", ceremony: 83 },
-  { id: "39013", year: 2011, title: "Winter's Bone", ceremony: 83 },
-  
-  { id: "19995", year: 2010, title: "Avatar", ceremony: 82 },
-  { id: "22881", year: 2010, title: "The Blind Side", ceremony: 82 },
-  { id: "17654", year: 2010, title: "District 9", ceremony: 82 },
-  { id: "24684", year: 2010, title: "An Education", ceremony: 82 },
-  { id: "16869", year: 2010, title: "Inglourious Basterds", ceremony: 82 },
-  { id: "25793", year: 2010, title: "Precious", ceremony: 82 },
-  { id: "12573", year: 2010, title: "A Serious Man", ceremony: 82 },
-  { id: "14160", year: 2010, title: "Up", ceremony: 82 },
-  { id: "22947", year: 2010, title: "Up in the Air", ceremony: 82 },
-  
-  { id: "4922", year: 2009, title: "The Curious Case of Benjamin Button", ceremony: 81 },
-  { id: "11499", year: 2009, title: "Frost/Nixon", ceremony: 81 },
-  { id: "10139", year: 2009, title: "Milk", ceremony: 81 },
-  { id: "8055", year: 2009, title: "The Reader", ceremony: 81 },
-  
-  { id: "4347", year: 2008, title: "Atonement", ceremony: 80 },
-  { id: "7326", year: 2008, title: "Juno", ceremony: 80 },
-  { id: "4566", year: 2008, title: "Michael Clayton", ceremony: 80 },
-  { id: "7345", year: 2008, title: "There Will Be Blood", ceremony: 80 },
-  
-  { id: "1164", year: 2007, title: "Babel", ceremony: 79 },
-  { id: "1251", year: 2007, title: "Letters from Iwo Jima", ceremony: 79 },
-  { id: "773", year: 2007, title: "Little Miss Sunshine", ceremony: 79 },
-  { id: "1165", year: 2007, title: "The Queen", ceremony: 79 },
-  
-  { id: "142", year: 2006, title: "Brokeback Mountain", ceremony: 78 },
-  { id: "398", year: 2006, title: "Capote", ceremony: 78 },
-  { id: "3291", year: 2006, title: "Good Night, and Good Luck.", ceremony: 78 },
-  { id: "612", year: 2006, title: "Munich", ceremony: 78 },
-  
-  { id: "2567", year: 2005, title: "The Aviator", ceremony: 77 },
-  { id: "866", year: 2005, title: "Finding Neverland", ceremony: 77 },
-  { id: "1677", year: 2005, title: "Ray", ceremony: 77 },
-  { id: "9675", year: 2005, title: "Sideways", ceremony: 77 },
-  
-  { id: "153", year: 2004, title: "Lost in Translation", ceremony: 76 },  
-  { id: "8619", year: 2004, title: "Master and Commander: The Far Side of the World", ceremony: 76 },  
-  { id: "322", year: 2004, title: "Mystic River", ceremony: 76 },  
-  { id: "4464", year: 2004, title: "Seabiscuit", ceremony: 76 },  
-  
-  { id: "3131", year: 2003, title: "Gangs of New York", ceremony: 75 },
-  { id: "590", year: 2003, title: "The Hours", ceremony: 75 },
-  { id: "121", year: 2003, title: "The Lord of the Rings: The Two Towers", ceremony: 75 },
-  { id: "423", year: 2003, title: "The Pianist", ceremony: 75 },
-  
-  { id: "5279", year: 2002, title: "Gosford Park", ceremony: 74 },
-  { id: "1999", year: 2002, title: "In the Bedroom", ceremony: 74 },
-  { id: "120", year: 2002, title: "The Lord of the Rings: The Fellowship of the Ring", ceremony: 74 },
-  { id: "824", year: 2002, title: "Moulin Rouge!", ceremony: 74 },
-  
-  { id: "392", year: 2001, title: "Chocolat", ceremony: 73 },
-  { id: "146", year: 2001, title: "Crouching Tiger, Hidden Dragon", ceremony: 73 },
-  { id: "462", year: 2001, title: "Erin Brockovich", ceremony: 73 },
-  { id: "1900", year: 2001, title: "Traffic", ceremony: 73 },
+// ─────────────────────────────────────────────
+// 96th 全部作品
+// ─────────────────────────────────────────────
+const Oscars96 = [
+	//Best Picture
+	{ id: "872585", year: 2024, title: "Oppenheimer", ceremony: 96 },
+	{ id: "840430", year: 2024, title: "The Holdovers", ceremony: 96 },
+	{ id: "466420", year: 2024, title: "Killers of the Flower Moon", ceremony: 96 },
+	{ id: "523607", year: 2024, title: "Maestro", ceremony: 96 },
+	{ id: "666277", year: 2024, title: "Past Lives", ceremony: 96 },
+
+	//Best Original Screenplay
+	{ id: "915935", year: 2024, title: "Anatomy of a Fall", ceremony: 96 },
+	{ id: "839369", year: 2024, title: "May December", ceremony: 96 },
+	
+	//Best Adapted Screenplay
+	{ id: "1056360", year: 2024, title: "American Fiction", ceremony: 96 },
+
+	//Best Animated Feature
+	{ id: "508883", year: 2024, title: "The Boy and the Heron", ceremony: 96 },
+	{ id: "976573", year: 2024, title: "Elemental", ceremony: 96 },
+	{ id: "961323", year: 2024, title: "Nimona", ceremony: 96 },
+	{ id: "838240", year: 2024, title: "Robot Dreams", ceremony: 96 },
+	{ id: "569094", year: 2024, title: "Spider-Man: Across the Spider-Verse", ceremony: 96 },
+
+	//Best International Feature	
+	{ id: "467244", year: 2024, title: "The Zone of Interest", ceremony: 96 },
+	{ id: "937746", year: 2024, title: "Io Capitano", ceremony: 96 },
+	{ id: "976893", year: 2024, title: "Perfect Days", ceremony: 96 },
+	{ id: "906126", year: 2024, title: "Society of the Snow", ceremony: 96 },
+	{ id: "998022", year: 2024, title: "The Teachers' Lounge", ceremony: 96 },
+
+	//Best Original Score
+	{ id: "335977", year: 2024, title: "Indiana Jones and the Dial of Destiny", ceremony: 96 },
+
+	//Best Original Song
+	{ id: "346698", year: 2024, title: "Barbie", ceremony: 96 },
+	{ id: "626332", year: 2024, title: "Flamin' Hot", ceremony: 96 },
+	{ id: "1171816", year: 2024, title: "American Symphony", ceremony: 96 },
+
+	//Best Sound
+	{ id: "670292", year: 2024, title: "The Creator", ceremony: 96 },
+	{ id: "575264", year: 2024, title: "Mission: Impossible - Dead Reckoning Part One", ceremony: 96 },
+
+	//Best Production Design
+	{ id: "792307", year: 2024, title: "Poor Things", ceremony: 96 },
+	{ id: "753342", year: 2024, title: "Napoleon", ceremony: 96 },
+
+	//Best Cinematography
+	{ id: "991708", year: 2024, title: "El Conde", ceremony: 96 },
+
+	//Best Makeup and Hairstyling
+	{ id: "899524", year: 2024, title: "Golda", ceremony: 96 },
+	{ id: "906126", year: 2024, title: "Society of the Snow", ceremony: 96 },
+
+	//Best Visual Effects
+	{ id: "940721", year: 2024, title: "Godzilla Minus One", ceremony: 96 },
+	{ id: "447365", year: 2024, title: "Guardians of the Galaxy Vol. 3", ceremony: 96 }
 ];
 
-// ─── 工具函数 ────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// 95th 全部作品
+// ─────────────────────────────────────────────
+const Oscars95 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-/**
- * 爬取 TMDB 奖项页面，返回该届所有入围/获奖影片
- */
-async function fetchAwardPage(ceremony) {
-  const url = `${BASE_URL}/award/${AWARD_ID}/ceremony/${ceremony}?language=zh-CN`;
-  console.log("正在请求:", url);
+// ─────────────────────────────────────────────
+// 94th 全部作品
+// ─────────────────────────────────────────────
+const Oscars94 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  const response = await Widget.http.get(url, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      Accept: "text/html,application/xhtml+xml",
-      "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-    },
-  });
+// ─────────────────────────────────────────────
+// 93th 全部作品
+// ─────────────────────────────────────────────
+const Oscars93 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  if (!response || !response.data) {
-    throw new Error("请求失败，无法获取奥斯卡数据");
-  }
+// ─────────────────────────────────────────────
+// 92th 全部作品
+// ─────────────────────────────────────────────
+const Oscars92 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  return response.data;
-}
+// ─────────────────────────────────────────────
+// 91th 全部作品
+// ─────────────────────────────────────────────
+const Oscars91 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-/**
- * 解析 HTML，提取奖项条目
- * 返回 [{ tmdbId, mediaType, title, isWinner, category }]
- */
-function parseAwardItems(html) {
-  const $ = Widget.html.load(html);
-  const items = [];
-  const seen = new Set();
+// ─────────────────────────────────────────────
+// 90th 全部作品
+// ─────────────────────────────────────────────
+const Oscars90 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  // TMDB 奖项页结构: 每个奖项 section 下有 .winner 和 .nominee
-  $(".award_categories .award_category").each((_, section) => {
-    const category = $(section).find("h3").text().trim();
+// ─────────────────────────────────────────────
+// 89th 全部作品
+// ─────────────────────────────────────────────
+const Oscars89 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-    $(section)
-      .find(".award_candidates .award_candidate")
-      .each((_, el) => {
-        const isWinner = $(el).hasClass("winner");
-        const link = $(el).find("a").attr("href") || "";
+// ─────────────────────────────────────────────
+// 88th 全部作品
+// ─────────────────────────────────────────────
+const Oscars88 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-        // 提取 TMDB id 与 mediaType，格式通常为 /movie/12345 或 /tv/12345
-        const match = link.match(/\/(movie|tv)\/(\d+)/);
-        if (!match) return;
+// ─────────────────────────────────────────────
+// 87th 全部作品
+// ─────────────────────────────────────────────
+const Oscars87 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-        const mediaType = match[1];
-        const tmdbId = match[2];
-        const key = `${mediaType}-${tmdbId}`;
+// ─────────────────────────────────────────────
+// 86th 全部作品
+// ─────────────────────────────────────────────
+const Oscars86 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-        // 避免重复（同一部影片可能在多个奖项中出现）
-        if (!seen.has(key)) {
-          seen.add(key);
-          const title =
-            $(el).find(".title").text().trim() ||
-            $(el).find("h2").text().trim() ||
-            $(el).find("p").first().text().trim();
+// ─────────────────────────────────────────────
+// 85th 全部作品
+// ─────────────────────────────────────────────
+const Oscars85 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-          items.push({ tmdbId, mediaType, title, isWinner, category });
-        }
-      });
-  });
+// ─────────────────────────────────────────────
+// 84th 全部作品
+// ─────────────────────────────────────────────
+const Oscars84 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  // 兼容备选结构：.card_list .card 内含 data-id 属性
-  if (items.length === 0) {
-    $(".card").each((_, el) => {
-      const link = $(el).find("a").first().attr("href") || "";
-      const match = link.match(/\/(movie|tv)\/(\d+)/);
-      if (!match) return;
+// ─────────────────────────────────────────────
+// 83th 全部作品
+// ─────────────────────────────────────────────
+const Oscars83 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-      const mediaType = match[1];
-      const tmdbId = match[2];
-      const key = `${mediaType}-${tmdbId}`;
-      if (seen.has(key)) return;
-      seen.add(key);
+// ─────────────────────────────────────────────
+// 82th 全部作品
+// ─────────────────────────────────────────────
+const Oscars82 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-      const isWinner = $(el).hasClass("winner") || $(el).closest(".winner").length > 0;
-      const title =
-        $(el).find("h2").text().trim() ||
-        $(el).find(".title").text().trim() ||
-        $(el).find("p").first().text().trim();
+// ─────────────────────────────────────────────
+// 81th 全部作品
+// ─────────────────────────────────────────────
+const Oscars81 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-      items.push({ tmdbId, mediaType, title, isWinner, category: "" });
-    });
-  }
+// ─────────────────────────────────────────────
+// 80th 全部作品
+// ─────────────────────────────────────────────
+const Oscars80 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  console.log(`解析到 ${items.length} 条记录`);
-  return items;
-}
+// ─────────────────────────────────────────────
+// 79th 全部作品
+// ─────────────────────────────────────────────
+const Oscars79 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-/**
- * 将解析结果转为 ForwardWidget 数据模型
- */
-function toWidgetItems(items) {
-  return items.map(({ tmdbId, mediaType, title, isWinner, category }) => {
-    // tmdb type: movie → id 直接用数字；tv → "tv.{id}"
-    const fwId = mediaType === "tv" ? `tv.${tmdbId}` : tmdbId;
-    return {
-      id: fwId,
-      type: "tmdb",
-      mediaType: mediaType === "tv" ? "tv" : "movie",
-      title: isWinner ? `🏆 ${title}` : title,
-      genreTitle: category || undefined,
-    };
-  });
-}
+// ─────────────────────────────────────────────
+// 78th 全部作品
+// ─────────────────────────────────────────────
+const Oscars78 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-// ─── 模块函数 ────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────
+// 77th 全部作品
+// ─────────────────────────────────────────────
+const Oscars77 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-/**
- * 历届奥斯卡最佳影片全部作品
- */
-async function loadBestPicturesAll(params = {}) {
-  const page = parseInt(params.page) || 1;
-  const pageSize = 10;
-  const start = (page - 1) * pageSize;
-  const pageItems = BEST_PICTURES_ALL.slice(start, start + pageSize);
+// ─────────────────────────────────────────────
+// 76th 全部作品
+// ─────────────────────────────────────────────
+const Oscars76 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  if (pageItems.length === 0) return [];
+// ─────────────────────────────────────────────
+// 75th 全部作品
+// ─────────────────────────────────────────────
+const Oscars75 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  const results = [];
+// ─────────────────────────────────────────────
+// 74th 全部作品
+// ─────────────────────────────────────────────
+const Oscars74 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
-  for (const bp of pageItems) {
-    try {
-      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
-        params: { language: "zh-CN" },
-      });
-      if (!data) continue;
 
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届入圍 · ${data.title || bp.title}`,
-        description: data.overview || "",
-        rating: data.vote_average
-          ? String(data.vote_average.toFixed(1))
-          : undefined,
-        releaseDate: data.release_date,
-        posterPath: data.poster_path
-          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-          : undefined,
-        backdropPath: data.backdrop_path
-          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-          : undefined,
-      });
-    } catch (e) {
-      console.error(`获取影片 ${bp.id} 失败:`, e);
-      // 降级：只返回基础信息
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届 · ${bp.title}`,
-      });
-    }
-  }
-
-  return results;
-}
-/**
- * 历届奥斯卡最佳影片獲獎作品
- */
-async function loadBestPictures(params = {}) {
-  const page = parseInt(params.page) || 1;
-  const pageSize = 10;
-  const start = (page - 1) * pageSize;
-  const pageItems = BEST_PICTURES.slice(start, start + pageSize);
-
-  if (pageItems.length === 0) return [];
-
-  const results = [];
-
-  for (const bp of pageItems) {
-    try {
-      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
-        params: { language: "zh-CN" },
-      });
-      if (!data) continue;
-
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届獲獎 · ${data.title || bp.title}`,
-        description: data.overview || "",
-        rating: data.vote_average
-          ? String(data.vote_average.toFixed(1))
-          : undefined,
-        releaseDate: data.release_date,
-        posterPath: data.poster_path
-          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-          : undefined,
-        backdropPath: data.backdrop_path
-          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-          : undefined,
-      });
-    } catch (e) {
-      console.error(`获取影片 ${bp.id} 失败:`, e);
-      // 降级：只返回基础信息
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届 · ${bp.title}`,
-      });
-    }
-  }
-
-  return results;
-}
-
-/**
- * 历届奥斯卡最佳影片提名作品
- */
-async function loadBestPicturesNominee(params = {}) {
-  const page = parseInt(params.page) || 1;
-  const pageSize = 10;
-  const start = (page - 1) * pageSize;
-  const pageItems = BEST_PICTURES_NOMINEE.slice(start, start + pageSize);
-
-  if (pageItems.length === 0) return [];
-
-  const results = [];
-
-  for (const bp of pageItems) {
-    try {
-      const data = await Widget.tmdb.get(`/movie/${bp.id}`, {
-        params: { language: "zh-CN" },
-      });
-      if (!data) continue;
-
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届提名 · ${data.title || bp.title}`,
-        description: data.overview || "",
-        rating: data.vote_average
-          ? String(data.vote_average.toFixed(1))
-          : undefined,
-        releaseDate: data.release_date,
-        posterPath: data.poster_path
-          ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
-          : undefined,
-        backdropPath: data.backdrop_path
-          ? `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
-          : undefined,
-      });
-    } catch (e) {
-      console.error(`获取影片 ${bp.id} 失败:`, e);
-      // 降级：只返回基础信息
-      results.push({
-        id: bp.id,
-        type: "tmdb",
-        mediaType: "movie",
-        title: `🏆 第${bp.ceremony}届 · ${bp.title}`,
-      });
-    }
-  }
-
-  return results;
-}
+// ─────────────────────────────────────────────
+// 73th 全部作品
+// ─────────────────────────────────────────────
+const Oscars73 = [
+	{ id: "", year: 2001, title: "", ceremony: 73},
+];
 
 // ─────────────────────────────────────────────
 // 統一入口
 // ─────────────────────────────────────────────
-async function getOscars(params = {}) {
-    const category = params.category || "all";
+async function getOscars(params = {}) {           // ✅ Fix 2: 函數名改為 getOscars
+    const category = params.category || "98";     // ✅ Fix 1: 預設值改為 "98"
 
     switch (category) {
-        case "all":
-            return BEST_PICTURES_ALL;
-
-        case "winner":
-            return BEST_PICTURES;
-
-        case "nominee":
-            return BEST_PICTURES_NOMINEE;
-
-        default:
-            return BEST_PICTURES_ALL;
+        case "98": return Oscars98;
+        case "97": return Oscars97;
+        case "96": return Oscars96;
+        default:   return Oscars98;
     }
-}                                               // ✅ Fix 2: 補上函數結尾的 }
+}
