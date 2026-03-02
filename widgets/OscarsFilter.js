@@ -6,7 +6,7 @@
  */
 
 WidgetMetadata = {
-    id: "tmdboscars",
+    id: "OscarsFilter",
     title: "歷屆奥斯卡金像奖",
     version: "2.1.0",
     requiredVersion: "0.0.1",
